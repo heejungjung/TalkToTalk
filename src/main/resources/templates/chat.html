@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon.png">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="/css/material-kit.css?v=2.0.7" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="/css/zzin.css" rel="stylesheet" />
+  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -12,18 +24,9 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
 	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
 	crossorigin="anonymous">
-
-<title>Talk-to-Talk</title>
+<title>Talk-to-Talk_chat</title>
 
 <style>
-
-.biopage {
-	width: 100%;
-	margin-left: -20%;
-	margin-top: 10%;
-	text-align: center;
-}
-
 .image_box {
 	width: 35%;
 	height: 100%;
@@ -32,7 +35,6 @@
 	align-items: center;
 	justify-content: center;
 }
-
 .image_box img {
   width: 100%;
   border:5px solid #fff;
@@ -42,35 +44,11 @@
   width:90%;
   transition:all .3s ease-in-out;
 }
-
-.user_info_box {
-	width: 49%;
-	height: 100%;
-	margin-left: 0;
-	margin-top: 10%;
-}
-
-.inner_user_info_box{
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 50%;
-}
-
-.big_wrap {
-	width: 60%;
-	height: 800px;
-	margin-left: 30%;
-	margin-top: -3%;
-	
-}
-
 .middle_wrap {
 	width: 90%;
 	height: 500px;
 	display: flex;
 }
-
 .attrHorizontal {
 	display: flex;
 	font-size: 2em;
@@ -81,30 +59,64 @@
 </head>
 
 <body style="background: linear-gradient(55deg, RGB(107,115,178) 0%, RGB(160,177,221) 51%, RGB(242,132,227) 85%);">
-	<div id="navi">
-		<a href="/"><img id="logo" alt="Talk To Talk" src="/images/logo/logo_pink.png"></a>
-		<div class="navbar-collapse">
-			<div style="position:relative;left:91%;margin-top:1%;">
-		         <a th:href="@{/account/regist}" sec:authorize="!isAuthenticated()">
-		         	<img src="/images/logo/regist.png" style="width:4%;padding:0;margin:0;"></a> &nbsp
-		         <a th:href="@{/account/login}" sec:authorize="!isAuthenticated()">
-		         	<img src="/images/logo/off.png" style="width:5%;padding:0;margin:0;"></a>
-			</div>
-			
-			<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
-				<button style="margin-left: 100px;" type="submit" id="offButton"></button>
-			</form>
-		</div>
-		<span class='hidden' id='userid' sec:authentication="name">사용자</span>
-	<a href="/mypage" id="greeting"><span id='username' class="hi" th:text="${session.nickname}">사용자</span></a>
-	</div>
+  <nav class="navbar navbar-transparent fixed-top navbar-expand-lg bg-dark">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-translate">
+	  	<a href="/"><img src="/images/logo/logo.png" alt="Circle Image" style="width:10%;"></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="dropdown nav-item">
+            <a href="javascript:;" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown">
+	            <div class="profile-photo-small" sec:authorize="isAuthenticated()">
+	               <img id="circleimg" style="width:40px;height:40px;border-radius: 100%;display: inline-block;vertical-align: middle;
+	               object-fit: cover;" alt="Circle Image" class="rounded-circle img-fluid">
+	            </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <h6 class="dropdown-header">Dropdown header</h6>
+              <a href="javascript:;" class="mypage dropdown-item">💁 내정보</a>
+              <a href="/chat" class="dropdown-item">💬 채팅방</a>
+              <a href="/logout" class="dropdown-item">👋 로그아웃</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/regist}" sec:authorize="!isAuthenticated()">
+              <div class="profile-photo-small">
+              	<img src="/images/logo/regist_black.png" alt="로그인이 필요합니다." class="img-fluid">
+              </div>
+            </a>
+            <a href="javascript:;" th:href="@{/mypage}" sec:authorize="isAuthenticated()">
+              <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
+            </a>
+              <span id='username' th:text="${session.username}" style="display:none;">사용자</span>
+          </li>
+          <li class="nav-item">
+            <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">
+              <div class="profile-photo-small">
+                <img src="/images/logo/off_black.png" alt="Circle Image" class="img-fluid">
+              </div>
+            </a>
+            <a href="javascript:;" class="profile-photo nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+              <div class="profile-photo-small">
+                <img src="/images/logo/on_black.png" alt="Circle Image" class="img-fluid">
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-->
+  </nav>
 	
+	<br><br><br><br>
 	<div>
 		<input class="hidden" id="hey" value="${user.username}">
 			<div id="room-page">
 				<div class="chat-container">
 					<div class="chat-header">
-						<h1>&nbsp &nbsp &nbsp &nbsp채팅방 목록<button id="createRoomButton"></button></h1>
+						<h1 style="text-align:center;">채팅방 목록<button id="createRoomButton"></button></h1>
 					</div>
 					<div class="room-page-bar">
 						<div class="room-page-bar-no">방번호</div>
@@ -122,6 +134,45 @@
 	                     </div>
 	                  	</div>
                		</form>
+				</div>
+			</div>
+			<div id="roommk-page" class="hidden">
+				<div class="chat-container">
+					<div class="chat-header">
+						<h1 style="text-align:center;">채팅방 개설<button id="roommkoutButton"></button></h1>
+					</div><br><br><br>
+					<div>
+						<div class="col-sm">
+							<div class="form-field">
+								<div><b>방&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp제:</b>
+									<input class="popup-button-input" id="createRoomName" type="text" placeholder="방제를 입력하세요" />
+								</div>
+							</div>
+						</div>
+						<div class="col-sm">
+							<div class="form-field">
+									<div><b>최대인원:</b>
+										<select class="popup-button-input" id="maxpp" name="maxpp">
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4" selected="selected">4</option>
+											<option value="6">6</option>
+											<option value="10">10</option>
+										</select>
+									</div>
+							</div>
+						</div><br>
+						<div class="popup-button">
+							<form id="createRoomForm" name="createRoomForm">
+								<div class="form-group">
+									<div class="input-group clearfix">
+										<button type="submit" class="popup-button-bt" id="createRoom">방 개설</button> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+										<a href="/" onclick="javascript:window.close()"><button class="popup-button-bt" type="submit">나가기</button></a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id="chat-page" class="hidden">
@@ -181,51 +232,42 @@
 				</div>
 			</div>
 			<div id="info-page" class="hidden">
-				<div class="chat-container">
+				<div class="chat-container" style="display: flex;flex-direction: column;
+				align-content: space-around;">
 					<div class="chat-header">
 						<h2>[<span id="userinfo_nickname" style="font-size: 3em; font-weight: bold;">error</span>]님의 프로필
 						<button id="profileoutButton">뒤로가기</button></h2>
 					</div>
-
-					<div style="overflow: hidden;display: flex;align-items: center;justify-content: center;">
-						
-						<div class="middle_wrap">
-						
-								<div class="image_box">
-									<img id="userinfo_pic" src=>
-								</div>
-						
-							<div class="user_info_box">
-							
-								<div class="inner_user_info_box">
-								
-										<div class="attrHorizontal">
-											<label for='getUserNickName'>아이디 : &nbsp</label> 
-											<span id="userinfo_id">id</span>
-										</div>
-										
-										<div class="attrHorizontal">
-											<label for='getUsersex'>성별 : &nbsp</label>
-											<span id="userinfo_sex">gender</span>
-										</div>
-								
-										<div class="attrHorizontal">
-											<label for='getUserBirthday'>생년월일 : &nbsp</label>
-											<span id="userinfo_birthday">birthday</span>
-										</div>
-								
-										<div class="attrHorizontal">
-											<label for='getUserEmail'>이메일 : &nbsp</label>
-											<span id="userinfo_email">email</span>
-										</div>
-										
-										<div class="attrHorizontal">
-											<label for='bio'>상태메시지 : &nbsp</label>
-											<span id="userinfo_bio">bio</span>
-										</div>
-								</div>
-							</div>
-						</div>
+					<div style="display: flex;align-items: center;justify-content: center;">
+						<table>
+							<tr>
+								<td><img id="userinfo_pic" src=></td>
+							</tr>
+							<tr>
+								<td><b>성별</b></td>
+								<td>
+								<span id="userinfo_sex">gender</span>
+								</td>
+							</tr>
+							<tr>
+								<td><b>지역</b></td>
+								<td>
+								<span id="userinfo_city">city</span>
+								</td>
+							</tr>
+							<tr>
+								<td><b>생년월일</b></td>
+								<td>
+								<span id="userinfo_birthday">birthday</span>
+								</td>
+							</tr>
+							<tr>
+								<td><b>상태메시지</b></td>
+								<td>
+								<span id="userinfo_bio">bio</span>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -245,6 +287,36 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script src="/js/main.js"></script>
-	
+	<script>
+    $(document).ready(function() {
+		$.ajax({
+		    type: "POST",
+		    url: "/homegetinfo",
+		    data: {
+		    	username: document.getElementById('username').innerHTML,
+		    	nickname: document.getElementById('nickname').innerHTML
+		    },
+		    success: function (data) {	
+				$("#circleimg").attr("src",data.pic);
+		    },
+			error : function(err) {
+				alert("homegetinfo실패");
+			}
+		})
+    });
+	 $('.mypage').click(function () {
+			$.ajax({
+			    type: "GET",
+			    url: "/mypaging",
+			    data: {
+			    	username: document.getElementById('username').innerHTML,
+			    	nickname: document.getElementById('nickname').innerHTML
+			    },
+			    success: function (data) {	
+			    	location.href='/mypage';
+			    }
+			})
+		});
+	</script>
 </body>
 </html>

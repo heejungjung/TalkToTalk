@@ -156,7 +156,7 @@ public class MainController {
 
 	@GetMapping("/infopaging")
 	public void infopaging(HttpServletRequest request, HttpServletResponse response,Model model,
-			@RequestParam("username") String username,@RequestParam("nickname") String nickname) {
+			@RequestParam("username") String username) {
 	    String personJson;
 		
 		user = new User();

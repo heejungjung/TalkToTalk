@@ -1,11 +1,16 @@
 //User Name Page Variable
-var userid = document.getElementById('userid').innerHTML;
 var username = document.getElementById('username').innerHTML;
+var nickname = document.getElementById('nickname').innerHTML;
 
 //Chat Room Page Variable
 var roomPage = document.querySelector('#room-page');
 var listOfRoom = document.querySelector('#listRoom');
 var roomName = document.querySelector('#roomName');
+
+//Chat RoomMk Page Variable
+var roommkPage = document.querySelector('#roommk-page');
+var createRoomForm = document.querySelector('#createRoomForm');
+var createRoomName = document.querySelector('#createRoomName');
 
 //Chat Page Variable
 var chatPage = document.querySelector('#chat-page');
@@ -28,7 +33,7 @@ var currentRoom = null;
 $(document).ready(function(){connect();});
 
 function connect() {
-    if(username) {
+    if(nickname) {
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
@@ -165,16 +170,14 @@ function enterRoom(newRoomId) {
 	
 	stompClient.send(`${topic}/addUser`,
 		{},
-		JSON.stringify({sender: username, type: 'JOIN', roomid: roomId})
+		JSON.stringify({sender: nickname, type: 'JOIN', roomid: roomId})
 	);
 }
 
 function onPreviousMessage(payload)
 {
-	noticeArea.textContent = JSON.parse(payload.body).notice;
-	
-	//이상함..
     var messages = JSON.parse(payload.body).messages;
+	noticeArea.textContent = JSON.parse(payload.body).notice;
 	//alert("onPreviousMessage:"+messages);
     for (var i=0, len=messages.length;i<len;i++ )
     {
@@ -217,8 +220,8 @@ function sendMessage(event) {
   else if (messageContent && stompClient) {
     
     var chatMessage = {
-      senderid: userid,
-      sender: username,
+      senderid: username,
+      sender: nickname,
       content: messageInput.value,
       type: 'CHAT'
     };
@@ -269,7 +272,7 @@ function showMessage(message)
 
         messageElement.appendChild(textElement); 
 	} else {
-		if(message.sender === username){
+		if(message.sender === nickname){
         	messageElement.classList.add('chat-message-group');
         	messageElement.classList.add('writer-user');
 		} else{
@@ -285,12 +288,11 @@ function showMessage(message)
 			image.setAttribute('src',message.pic);
 			image.setAttribute('value',message.sender);
 			image.addEventListener('click', function() {
-					sessionStorage.clear();
 			        $.ajax({
 			            type: "GET",
 			            url: "/infopaging",
 			            data: {
-			                id: message.sender
+			                username: message.senderid
 			            },
 			            success: function (responseData) {
 				            $("#ajax").remove();
@@ -300,10 +302,9 @@ function showMessage(message)
 				                return false;
 				            }
 							$("#userinfo_nickname").html(message.sender);
-							$("#userinfo_id").html(data.id);
 							$("#userinfo_sex").html(data.sex);
+							$("#userinfo_city").html(data.city);
 							$("#userinfo_birthday").html(data.birthday);
-							$("#userinfo_email").html(data.email);
 							if(data.bio!=null){
 								$("#userinfo_bio").html(data.bio);
 							}
@@ -311,19 +312,6 @@ function showMessage(message)
 								$("#userinfo_bio").html('');
 							}
 							$("#userinfo_pic").attr("src",data.picture);
-							$("#userinfo_pic").poptrox({
-									onPopupClose: function() { $body.removeClass('is-covered'); },
-									onPopupOpen: function() { $body.addClass('is-covered'); },
-									baseZIndex: 10001,
-									useBodyOverflow: false,
-									usePopupEasyClose: true,
-									overlayColor: '#000000',
-									overlayOpacity: 0.75,
-									popupLoaderText: '',
-									fadeSpeed: 500,
-									usePopupDefaultStyling: false,
-									windowMargin: (skel.breakpoint('small').active ? 5 : 50)
-								});
 							chatPage.classList.add('hidden');
 							infoPage.classList.remove('hidden');
 			            }
@@ -368,10 +356,8 @@ function showMessage(message)
 }
 
 function popup(){
-	var url = "roompopup";
-	var name = "popup test";
-	var option = "width = 500, height = 500, top = 100, left = 200, location = no"
-	window.open(url, name, option);
+    roomPage.classList.add('hidden');
+    roommkPage.classList.remove('hidden');
 }
 
 function leave(){
@@ -379,7 +365,7 @@ function leave(){
     roomPage.classList.remove('hidden');
 	
     var chatRoom = {
-      sender: username,
+      sender: nickname,
       type: 'LEAVE',
       roomid: currentRoom
     };
@@ -398,7 +384,7 @@ function leave(){
 function notice(notice){
     var noticeMessage = {
 		roomid: currentRoom,
-        sender: username,
+        sender: nickname,
         content: notice,
         type: 'NOTICE'
     };
@@ -406,10 +392,29 @@ function notice(notice){
     alert("공지등록:"+notice);
     noticeArea.textContent = notice;
 }
+function createRoom(){
+    var createRoomNameValue = createRoomName.value.trim(); 
+	var maxpp = $('#maxpp').val();
+
+    if(createRoomNameValue){
+        var chatRoom = {
+			roomid: createRoomNameValue,
+			maxpp: maxpp 
+        };
+        stompClient.send("/chatapp/chat/rooms", {}, JSON.stringify(chatRoom));
+	}
+    roommkPage.classList.add('hidden');
+    roomPage.classList.remove('hidden');
+}
 
 messageForm.addEventListener('submit', sendMessage, true);
+createRoomForm.addEventListener("submit", createRoom, true);
 document.getElementById('createRoomButton').addEventListener('click', popup);
 document.getElementById('chatoutButton').addEventListener('click', leave);
+document.getElementById('roommkoutButton').addEventListener('click', function roommkout(){
+	roomPage.classList.remove('hidden');
+	roommkPage.classList.add('hidden');
+});
 document.getElementById('profileoutButton').addEventListener('click', function profileout(){
 	chatPage.classList.remove('hidden');
 	infoPage.classList.add('hidden');
@@ -430,8 +435,8 @@ $(document).on('click', '.modal_close', function(event){
 $(document).on('click', '.Emoji', function(event){
 	var emoji = $(this).attr('value');
     var chatMessage = {
-      senderid: userid,
-      sender: username,
+      senderid: username,
+      sender: nickname,
       content: "/images/emoji/"+emoji+".png",
       type: 'EMOJI'
     };
