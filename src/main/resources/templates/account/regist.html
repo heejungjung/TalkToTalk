@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8" />
+<link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon.png">
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>Talk To Talk_Regist</title>
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+<!--     Fonts and icons     -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- CSS Files -->
+<link href="/css/material-kit.css?v=2.0.7" rel="stylesheet" />
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9517644de294e13dec105fef93fbd4cf&libraries=services"></script>
+<!-- CSS Just for demo purpose, don't include it in your project -->
+<link href="/css/demo.css" rel="stylesheet" />
+<link rel="stylesheet" href="/scss/FM.scss">
+<style>
+input[type=radio]:checked + label>img {
+	background: linear-gradient(45deg,purple,RGB(27,48,79));
+	border-radius:50%;
+}
+</style>
+</head>
+
+<body class="index-page sidebar-collapse" style="background-image: url('/images/bg.jpg'); background-size: cover;">
+	<nav class="navbar navbar-transparent fixed-top navbar-expand-lg bg-dark">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-translate">
+				<a href="/"><img src="/images/logo/logo.png" alt="Circle Image"
+					style="width: 10%;"></a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav ml-auto">
+					<li class="dropdown nav-item"><a href="javascript:;"
+						class="profile-photo dropdown-toggle nav-link"
+						data-toggle="dropdown">
+							<div class="profile-photo-small" sec:authorize="isAuthenticated()">
+								<img id="circleimg"
+									style="width: 40px; height: 40px; border-radius: 100%; display: inline-block; vertical-align: middle; object-fit: cover;"
+									alt="Circle Image" class="rounded-circle img-fluid">
+							</div>
+					</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<h6 class="dropdown-header">Dropdown header</h6>
+							<a href="javascript:;" class="mypage dropdown-item">💁 내정보</a> <a
+								href="/chat" class="dropdown-item">💬 채팅방</a> <a href="/logout"
+								class="dropdown-item">👋 로그아웃</a>
+						</div></li>
+					<li class="nav-item"><a href="javascript:;"
+						class="profile-photo nav-link" th:href="@{/account/regist}"
+						sec:authorize="!isAuthenticated()">
+							<div class="profile-photo-small">
+								<img src="/images/logo/regist.png" alt="로그인이 필요합니다."
+									class="img-fluid">
+							</div>
+					</a> <a href="javascript:;" th:href="@{/mypage}"
+						sec:authorize="isAuthenticated()"> <span id='username'
+							class='mypage' th:text="${session.nickname}"
+							style="color: black;">사용자</span>
+					</a></li>
+					<li class="nav-item"><a href="javascript:;"
+						class="profile-photo nav-link" th:href="@{/account/login}"
+						sec:authorize="!isAuthenticated()">
+							<div class="profile-photo-small">
+								<img src="/images/logo/off.png" alt="Circle Image"
+									class="img-fluid">
+							</div>
+					</a> <a href="javascript:;" class="profile-photo nav-link"
+						th:href="@{/logout}" sec:authorize="isAuthenticated()">
+							<div class="profile-photo-small">
+								<img src="/images/logo/on.png" alt="Circle Image"
+									class="img-fluid">
+							</div>
+					</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-->
+	</nav>
+	<div class="section section-signup page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6 mx-auto">
+					<div class="card card-login">
+						<form th:action="@{/account/regist}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form form-horizontal">
+							<div class="card-header card-header-primary text-center">
+								<h4 class="card-title">Registration</h4>
+							</div>
+							<div class="card-body" style="height:600px;overflow-y:auto">
+								<div class="input-group">
+									<img id="pview" style="display:block; margin:auto; width:100px; height:100px;
+									object-fit: cover;" class="rounded-circle img-fluid"/>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">camera_alt</i>
+										</span>
+									</div>
+									<input type="file" class="form-control" name="files" id="imgInput"/>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">face</i>
+										</span>
+									</div>
+									<input type="text" id="username" name="username" class="form-control" placeholder="Id" required autofocus style="ime-mode:disabled">
+									<div style="white-space: nowrap; display: inline;">
+										<input id="idCheckOk" class="idCheckOk" type="hidden" value="false">
+										<input type="button" class="myButton_id btn btn-warning btn-round btn-sm" value="Check 🕵">
+									</div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">lock_outline</i>
+										</span>
+									</div>
+									<input id="inputPassword" name="password" type="password"
+										class="form-control" placeholder="Password" autocomplete="" required>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">favorite</i>
+										</span>
+									</div>
+									<input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" />
+									<div style="white-space: nowrap; display: inline;">
+										<input id="nnCheckOk" class="nnCheckOk" type="hidden"value="false">
+										<input type="button" class="myButton_nn btn btn-warning btn-round btn-sm" value="Check 🕵">
+									</div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">wc</i>
+										</span>
+									</div>
+									<div style="display: flex;justify-content: space-around; width:70%;">
+									    <input type="radio" name="sex" id="sexF" value="F" style="position: absolute;left: -9999px;"/>
+										<label for="sexF">
+										  <img src="/images/logo/woman.png" alt="I'm a girl" width="50px"/>
+										</label>
+										<input type="radio" name="sex" id="sexM" value="M" style="position: absolute;left: -9999px;"/>
+										<label for="sexM">
+										  <img src="/images/logo/man.png" alt="I'm a boy" width="50px"/>
+										</label>
+									</div>
+								</div>
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">location_on</i>
+										</span>
+									</div>
+									<input type="text" class="form-control" id="address" name="address" placeholder="Address">
+									<input type="button" onclick="sample5_execDaumPostcode()" class="btn btn-success btn-round btn-sm"
+									value="Search 🌏"> <br>
+									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">today</i>
+										</span>
+									</div>
+									<input type='date' id='birthday' name='birthday' style="text-align:center;width:80%;" value="yyyy-mm-dd">
+								</div>
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">mail</i>
+										</span>
+									</div>
+									<input type="email" class="form-control" name="email" id="email" placeholder="Email">
+								</div>
+							</div>
+							<div class="footer text-center">
+								<input type="submit" id="submit" class="btn btn-primary btn-round btn-sm" value="Register In 👏"/>
+								<a href="/"><input type="button" class="btn btn-primary btn-round btn-sm" value="Back 👈"></a>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--  End Modal -->
+	<footer class="footer" data-background-color="black">
+		<div class="container">
+			<nav class="float-left">
+				<ul>
+					<li><a href="https://www.creative-tim.com/"> Creative Tim
+					</a></li>
+					<li><a href="https://www.creative-tim.com/presentation">
+							About Us </a></li>
+					<li><a href="https://www.creative-tim.com/blog"> Blog </a></li>
+					<li><a href="https://www.creative-tim.com/license">
+							Licenses </a></li>
+				</ul>
+			</nav>
+			<div class="copyright float-right">
+				&copy;
+				<script>
+					document.write(new Date().getFullYear())
+				</script>
+				, made with <i class="material-icons">favorite</i> by <a
+					href="https://www.creative-tim.com/" target="_blank">Creative
+					Tim</a> for a better web.
+			</div>
+		</div>
+	</footer>
+</body>
+<!--   Core JS Files   -->
+<script src="/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/js/core/bootstrap-material-design.min.js"
+	type="text/javascript"></script>
+<script src="/js/plugins/moment.min.js"></script>
+<!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+<script src="/js/plugins/bootstrap-datetimepicker.js"
+	type="text/javascript"></script>
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<!-- what people think -->
+<script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+</body>
+<script type="text/javascript">
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#pview').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$("#imgInput").change(function() {
+		readURL(this);
+	});
+
+	birthday.max = new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+	
+	 $('.myButton_id').click(function () {
+         if ($('#username').val() != '') {
+	        $.ajax({
+	            type: "GET",
+	            url: "/account/idCheck",
+	            data: {
+	                id: $('#username').val()
+	            },
+	            success: function (data) {	
+	                if ($.trim(data) == "YES") {
+						alert("Available 😻");
+                        $('#idCheckOk').val(true);
+	                } else {
+						alert("Not Available 😿");
+                        $('#username').val('');
+                        $('#username').focus();
+	                }
+	            }
+	        })}
+	    });
+	 
+	 $('.myButton_nn').click(function () {
+         if ($('#nickname').val() != '') {
+	        $.ajax({
+	            type: "GET",
+	            url: "/account/nnCheck",
+	            data: {
+	            	nickname: $('#nickname').val()
+	            },
+	            success: function (data) {	
+	                if ($.trim(data) == "YES") {
+						alert("Available 😻");
+	                    $('#nnCheckOk').val(true);
+	                } else {
+						alert("Not Available 😿");
+                        $('#nickname').val('');
+                        $('#nickname').focus();
+	                }
+	            }
+	        })}
+	    });
+
+	 $(document).ready(function(){ 
+		 $("#submit").click(function(){
+			 if($("#username").val().length==0){ alert("Nickname Required 😿"); $("#username").focus(); return false; }
+			 if($('#idCheckOk').val() != "true")
+			 {
+				alert("Check Id Availability 🕵"); 
+				$("#username").focus();
+				return false;
+			 }	
+			 if($("#inputPassword").val().length==0){ alert("Password Required 😿"); $("#inputPassword").focus(); return false; }
+			 if($("#nickname").val().length==0){ alert("Nickname Required 😿"); $("#nickname").focus(); return false; }
+			 if($('#nnCheckOk').val() != "true")
+			 {
+				alert("Check Nickname Availability 🕵"); 
+				$("#nickname").focus();
+				return false;
+			 }	
+			 if(!$("input:radio[name=sex]").is(':checked')){ alert("Gender Required 😿"); $("input:radio[id=sexM]").prop("checked", true); return false; }
+			 if($("#address").val().length==0){ alert("Address Required 😿"); $("#address").focus(); return false; }
+			 if($("#birthday").val().length==0){ alert("Birthday Required 😿"); $("#birthday").focus(); return false; }
+			 if($("#email").val().length==0){ alert("Email Required 😿"); $("#email").focus(); return false; }
+			 });
+		 });
+
+	 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	 	mapOption = {
+	 		center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+	 		level: 5 // 지도의 확대 레벨
+	 	};
+ 	//지도를 미리 생성
+ 	var map = new daum.maps.Map(mapContainer, mapOption);
+ 	//주소-좌표 변환 객체를 생성
+ 	var geocoder = new daum.maps.services.Geocoder();
+ 	//마커를 미리 생성
+ 	var marker = new daum.maps.Marker({
+ 		position: new daum.maps.LatLng(37.537187, 127.005476),
+ 		map: map
+ 	});
+ 	function sample5_execDaumPostcode() {
+ 		new daum.Postcode({
+ 			oncomplete: function(data) {
+ 				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+ 				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+ 				var fullAddr = data.address; // 최종 주소 변수
+ 				var extraAddr = ''; // 조합형 주소 변수
+ 				
+ 				// 기본 주소가 도로명 타입일때 조합한다.
+ 				if(data.addressType === 'R'){
+ 					//법정동명이 있을 경우 추가한다.
+ 					if(data.bname !== ''){
+ 						extraAddr += data.bname;
+ 					}
+ 					// 건물명이 있을 경우 추가한다.
+ 					if(data.buildingName !== ''){
+ 						extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+ 					}
+ 					// 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+ 					fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+ 				}
+ 				
+ 				// 주소 정보를 해당 필드에 넣는다.
+ 				document.getElementById("address").value = fullAddr;
+ 				// 주소로 상세 정보를 검색
+ 				geocoder.addressSearch(data.address, function(results, status) {
+ 					// 정상적으로 검색이 완료됐으면
+ 					if (status === daum.maps.services.Status.OK) {
+ 						var result = results[0]; //첫번째 결과의 값을 활용
+ 						// 해당 주소에 대한 좌표를 받아서
+ 						var coords = new daum.maps.LatLng(result.y, result.x);
+ 						// 지도를 보여준다.
+ 						mapContainer.style.display = "block";
+ 						map.relayout();
+ 						// 지도 중심을 변경한다.
+ 						map.setCenter(coords);
+ 						// 마커를 결과값으로 받은 위치로 옮긴다.
+ 						marker.setPosition(coords)
+ 						}
+ 					});
+ 				}
+ 		}).open();
+ 	}
+</script>
+</html>

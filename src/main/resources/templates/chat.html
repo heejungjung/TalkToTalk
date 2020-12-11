@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/css/zzin.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+	crossorigin="anonymous">
+
+<title>Talk-to-Talk</title>
+
+<style>
+
+.biopage {
+	width: 100%;
+	margin-left: -20%;
+	margin-top: 10%;
+	text-align: center;
+}
+
+.image_box {
+	width: 35%;
+	height: 100%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.image_box img {
+  width: 100%;
+  border:5px solid #fff;
+  box-shadow:0 0 3px rgba(0, 0, 0, .25);
+  float:left;
+  margin-right:30px;
+  width:90%;
+  transition:all .3s ease-in-out;
+}
+
+.user_info_box {
+	width: 49%;
+	height: 100%;
+	margin-left: 0;
+	margin-top: 10%;
+}
+
+.inner_user_info_box{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 50%;
+}
+
+.big_wrap {
+	width: 60%;
+	height: 800px;
+	margin-left: 30%;
+	margin-top: -3%;
+	
+}
+
+.middle_wrap {
+	width: 90%;
+	height: 500px;
+	display: flex;
+}
+
+.attrHorizontal {
+	display: flex;
+	font-size: 2em;
+	margin-left: 10%;
+}
+
+</style>
+</head>
+
+<body style="background: linear-gradient(55deg, RGB(107,115,178) 0%, RGB(160,177,221) 51%, RGB(242,132,227) 85%);">
+	<div id="navi">
+		<a href="/"><img id="logo" alt="Talk To Talk" src="/images/logo/logo_pink.png"></a>
+		<div class="navbar-collapse">
+			<div style="position:relative;left:91%;margin-top:1%;">
+		         <a th:href="@{/account/regist}" sec:authorize="!isAuthenticated()">
+		         	<img src="/images/logo/regist.png" style="width:4%;padding:0;margin:0;"></a> &nbsp
+		         <a th:href="@{/account/login}" sec:authorize="!isAuthenticated()">
+		         	<img src="/images/logo/off.png" style="width:5%;padding:0;margin:0;"></a>
+			</div>
+			
+			<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+				<button style="margin-left: 100px;" type="submit" id="offButton"></button>
+			</form>
+		</div>
+		<span class='hidden' id='userid' sec:authentication="name">사용자</span>
+	<a href="/mypage" id="greeting"><span id='username' class="hi" th:text="${session.nickname}">사용자</span></a>
+	</div>
+	
+	<div>
+		<input class="hidden" id="hey" value="${user.username}">
+			<div id="room-page">
+				<div class="chat-container">
+					<div class="chat-header">
+						<h1>&nbsp &nbsp &nbsp &nbsp채팅방 목록<button id="createRoomButton"></button></h1>
+					</div>
+					<div class="room-page-bar">
+						<div class="room-page-bar-no">방번호</div>
+						<div class="room-page-bar-title">방제목</div>
+						<div class="room-page-bar-people">현재인원/최대인원</div>
+					</div>
+					<ul id="listRoom" class="list-group">
+
+					</ul>
+					<form action="/chat/search" id="searchForm" method="get">
+	                  	<div class="form-group">
+	                     <div class="input-group clearfix">
+	                        <input type="text" id="search" name="search" placeholder="검색하기" autocomplete="off" class="form-control" />
+							<input type="image" src="/images/logo/search.png" style="width:6%; margin:1%; margin-top:0%; padding:0;">
+	                     </div>
+	                  	</div>
+               		</form>
+				</div>
+			</div>
+			<div id="chat-page" class="hidden">
+				<div class="chat-container">
+					<div class="chat-header">
+						<h2>채팅방 [<span id="room-id-display"></span>]
+						<button id="chatoutButton"></button></h2>
+					</div>
+					<h2 class="noticeArea" id="noticeArea" name="noticeArea" th:text="${session.notice}">공지사항</h2>
+					<div class="connecting">연결중...</div>
+					<ul id="messageArea">
+
+					</ul>
+					<form id="messageForm" name="messageForm" nameForm="messageForm">
+						<div class="form-group">
+							<div class="input-group clearfix">
+									<input type="text" id="message" placeholder="/leave -방을 떠나기   /notice -공지 남기기 "
+										autocomplete="off" class="form-control col-lg-10"/>
+								<input type="image" src="/images/logo/send.png" style="width:6%; margin:0%; margin-left:1%; padding:0;">
+								<input type="image" id="EmojiButton" src="/images/emoji/dance.png" style="width:6%; margin:0%; margin-left:1%; padding:0;">
+								<div id="EmojiBox" class="hidden">
+									<div type="button" class="modal_close" for="open-pop"></div>
+									<h2> 이모티콘 </h2>
+									<button class="Emoji" value="ahaha" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/ahaha.png" style="width:50%;"></button>
+									<button class="Emoji" value="cheers" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/cheers.png" style="width:50%;"></button>
+									<button class="Emoji" value="crying" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/crying.png" style="width:50%;"></button>
+									<button class="Emoji" value="curious" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/curious.png" style="width:50%;"></button>
+									<button class="Emoji" value="cute" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/cute.png" style="width:50%;"></button>
+									<button class="Emoji" value="dance" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/dance.png" style="width:50%;"></button>
+									<button class="Emoji" value="despair" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/despair.png" style="width:50%;"></button>
+									<button class="Emoji" value="fart" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/fart.png" style="width:50%;"></button>
+									<button class="Emoji" value="full" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/full.png" style="width:50%;"></button>
+									<button class="Emoji" value="glance" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/glance.png" style="width:50%;"></button>
+									<button class="Emoji" value="gross" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/gross.png" style="width:50%;"></button>
+									<button class="Emoji" value="guard" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/guard.png" style="width:50%;"></button>
+									<button class="Emoji" value="knockdown" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/knockdown.png" style="width:50%;"></button>
+									<button class="Emoji" value="lookingforward" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/lookingforward.png" style="width:50%;"></button>
+									<button class="Emoji" value="love" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/love.png" style="width:50%;"></button>
+									<button class="Emoji" value="mad" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/mad.png" style="width:50%;"></button>
+									<button class="Emoji" value="mask" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/mask.png" style="width:50%;"></button>
+									<button class="Emoji" value="mermaid" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/mermaid.png" style="width:50%;"></button>
+									<button class="Emoji" value="normal" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/normal.png" style="width:50%;"></button>
+									<button class="Emoji" value="omg" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/omg.png" style="width:50%;"></button>
+									<button class="Emoji" value="shining" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/shining.png" style="width:50%;"></button>
+									<button class="Emoji" value="sleeping" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/sleeping.png" style="width:50%;"></button>
+									<button class="Emoji" value="smile" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/smile.png" style="width:50%;"></button>
+									<button class="Emoji" value="sneak" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/sneak.png" style="width:50%;"></button>
+									<button class="Emoji" value="sullen" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/sullen.png" style="width:50%;"></button>
+									<button class="Emoji" value="swag" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/swag.png" style="width:50%;"></button>
+									<button class="Emoji" value="thumb" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/thumb.png" style="width:50%;"></button>
+									<button class="Emoji" value="touchhorn" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/touchhorn.png" style="width:50%;"></button>
+									<button class="Emoji" value="vomit" style="padding:0;margin:0;height:20%;background:white;background:white;"><img src="/images/emoji/vomit.png" style="width:50%;"></button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="info-page" class="hidden">
+				<div class="chat-container">
+					<div class="chat-header">
+						<h2>[<span id="userinfo_nickname" style="font-size: 3em; font-weight: bold;">error</span>]님의 프로필
+						<button id="profileoutButton">뒤로가기</button></h2>
+					</div>
+
+					<div style="overflow: hidden;display: flex;align-items: center;justify-content: center;">
+						
+						<div class="middle_wrap">
+						
+								<div class="image_box">
+									<img id="userinfo_pic" src=>
+								</div>
+						
+							<div class="user_info_box">
+							
+								<div class="inner_user_info_box">
+								
+										<div class="attrHorizontal">
+											<label for='getUserNickName'>아이디 : &nbsp</label> 
+											<span id="userinfo_id">id</span>
+										</div>
+										
+										<div class="attrHorizontal">
+											<label for='getUsersex'>성별 : &nbsp</label>
+											<span id="userinfo_sex">gender</span>
+										</div>
+								
+										<div class="attrHorizontal">
+											<label for='getUserBirthday'>생년월일 : &nbsp</label>
+											<span id="userinfo_birthday">birthday</span>
+										</div>
+								
+										<div class="attrHorizontal">
+											<label for='getUserEmail'>이메일 : &nbsp</label>
+											<span id="userinfo_email">email</span>
+										</div>
+										
+										<div class="attrHorizontal">
+											<label for='bio'>상태메시지 : &nbsp</label>
+											<span id="userinfo_bio">bio</span>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script src="/js/main.js"></script>
+	
+</body>
+</html>
