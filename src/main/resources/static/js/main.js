@@ -302,7 +302,12 @@ function showMessage(message)
 				                return false;
 				            }
 							$("#userinfo_nickname").html(message.sender);
-							$("#userinfo_sex").html(data.sex);
+							if(data.sex=="F"){
+								$("#userinfo_sex").html("🧚‍♀");
+							}
+							else{
+								$("#userinfo_sex").html("🧚‍♂");
+							}
 							$("#userinfo_city").html(data.city);
 							$("#userinfo_birthday").html(data.birthday);
 							if(data.bio!=null){
@@ -312,6 +317,7 @@ function showMessage(message)
 								$("#userinfo_bio").html('');
 							}
 							$("#userinfo_pic").attr("src",data.picture);
+							$("#userinfo_pic_a").attr("href",data.picture);
 							chatPage.classList.add('hidden');
 							infoPage.classList.remove('hidden');
 			            }

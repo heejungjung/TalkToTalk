@@ -25,36 +25,33 @@
 	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
 	crossorigin="anonymous">
 <title>Talk-to-Talk_chat</title>
-
 <style>
-.image_box {
-	width: 35%;
-	height: 100%;
-	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.bio-message {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    background: #5a99ee;
+    display: inline-block;
+    padding: 10px 20px;
+    position: relative;
 }
-.image_box img {
-  width: 100%;
-  border:5px solid #fff;
-  box-shadow:0 0 3px rgba(0, 0, 0, .25);
-  float:left;
-  margin-right:30px;
-  width:90%;
-  transition:all .3s ease-in-out;
+.bio-message p {
+    line-height: 18px;
+    margin: 0;
+    padding: 0;
 }
-.middle_wrap {
-	width: 90%;
-	height: 500px;
-	display: flex;
+.bio-message:before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    width: 0;
+    height: 0;
 }
-.attrHorizontal {
-	display: flex;
-	font-size: 2em;
-	margin-left: 10%;
+.bio-message:before {
+    left: -12px;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid #5a99ee;
 }
-
 </style>
 </head>
 
@@ -126,14 +123,14 @@
 					<ul id="listRoom" class="list-group">
 
 					</ul>
-					<form action="/chat/search" id="searchForm" method="get">
-	                  	<div class="form-group">
-	                     <div class="input-group clearfix">
-	                        <input type="text" id="search" name="search" placeholder="검색하기" autocomplete="off" class="form-control" />
-							<input type="image" src="/images/logo/search.png" style="width:6%; margin:1%; margin-top:0%; padding:0;">
-	                     </div>
-	                  	</div>
-               		</form>
+	                <form action="/chat/search" id="searchForm" class="form-inline ml-auto col-md-12" method="get">
+	                  <div class="form-group">
+	                    <input type="text" id="search" name="search" class="form-control" placeholder="Search" autocomplete="off">
+	                  </div>
+	                  <button type="submit" class="btn btn-white btn-raised btn-fab btn-round">
+	                    <i class="material-icons">search</i>
+	                  </button>
+	                </form>
 				</div>
 			</div>
 			<div id="roommk-page" class="hidden">
@@ -232,44 +229,41 @@
 				</div>
 			</div>
 			<div id="info-page" class="hidden">
-				<div class="chat-container" style="display: flex;flex-direction: column;
-				align-content: space-around;">
-					<div class="chat-header">
-						<h2>[<span id="userinfo_nickname" style="font-size: 3em; font-weight: bold;">error</span>]님의 프로필
-						<button id="profileoutButton">뒤로가기</button></h2>
-					</div>
-					<div style="display: flex;align-items: center;justify-content: center;">
-						<table>
-							<tr>
-								<td><img id="userinfo_pic" src=></td>
-							</tr>
-							<tr>
-								<td><b>성별</b></td>
-								<td>
-								<span id="userinfo_sex">gender</span>
-								</td>
-							</tr>
-							<tr>
-								<td><b>지역</b></td>
-								<td>
-								<span id="userinfo_city">city</span>
-								</td>
-							</tr>
-							<tr>
-								<td><b>생년월일</b></td>
-								<td>
-								<span id="userinfo_birthday">birthday</span>
-								</td>
-							</tr>
-							<tr>
-								<td><b>상태메시지</b></td>
-								<td>
-								<span id="userinfo_bio">bio</span>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</div>
+				<div class="chat-container text-center" style="display:flex;flex-direction:column;align-content:space-around;">
+						<div class="chat-header">
+							<h1>I'm <span id="userinfo_nickname" style="font-weight:bold;">error</span> 😉.
+							<button id="profileoutButton">뒤로가기</button></h1>
+						</div>
+				        <div class="profile-content"><br>
+					        <div style="overflow:hidden;display:flex;align-items:center;
+							justify-content:center;width:100%;height:300px;">
+								<img width="300px" class="userinfo_pic" id="userinfo_pic"
+								style="border: 1px solid #ddd;border-radius: 4px;padding: 5px;border-radius:10px 30px 50px 80px;" src=>
+							</div><br>
+				            <div class="bio-message">
+				            	<h2>👄<span id="userinfo_bio">bio</span>👄</h2>
+				            </div><br><br>
+				            <div class="row">
+				                <div class="col-xs-4">
+				                    <div style="color: #777;">
+				                        <h2>🌈 gender 🌈</h2>
+										<h3 id="userinfo_sex">gender</h3>
+				                	</div>
+				                </div>
+				                <div class="col-xs-4">
+				                    <div style="color: #777;">
+				                        <h2>🏠 city 🏠</h2>
+										<h3 id="userinfo_city">city</h3>
+				                	</div>
+				                </div>
+				                <div class="col-xs-4">
+				                    <div style="color: #777;">
+				                        <h2>🍰 birthday 🍰</h2>
+										<h3 id="userinfo_birthday">birthday</h3>
+				                	</div>
+				            	</div>
+							</div>
+				    	</div>
 			</div>
 	</div>
 	

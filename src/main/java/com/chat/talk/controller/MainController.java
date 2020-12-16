@@ -77,6 +77,11 @@ public class MainController {
 	public String test3() {
 		return "test3";
 	}
+	
+	@GetMapping("/cam")
+	public String cam() {
+		return "cam";
+	}
 
 	@GetMapping("/logging")
 	public String index(HttpServletRequest request, HttpServletResponse response,Model model,
@@ -169,7 +174,7 @@ public class MainController {
 	        personJson = "{\"id\":\""+username
 	                    +"\",\"sex\":\""+user.getSex()
 	                    +"\",\"birthday\":\""+user.getBirthday()
-	                    +"\",\"email\":\""+user.getEmail()
+	                    +"\",\"city\":\""+user.getCity()
 	                    +"\",\"picture\":\""+files.getFileurl()+files.getFilename()
 	                    +"\",\"bio\":\""+files.getMessage()+"\"}";
 	    }

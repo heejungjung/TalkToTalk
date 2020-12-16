@@ -34,11 +34,10 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        System.out.println("@@@@@@@@@@@@   "+headerAccessor);
 
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         String roomId = (String) headerAccessor.getSessionAttributes().get("roomId");
-        System.out.println("$$$$$$$$$$$$$   "+username+",$$$$"+roomId);
+
         if (username != null) {
             logger.info("User Disconnected: " + username);
 

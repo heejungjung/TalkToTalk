@@ -25,4 +25,7 @@ public class DBMsg {
 	
 	private String msgContent;
 	private String regdt;
+	private String username;
+	private String sex;
+	private String birthday;
 }

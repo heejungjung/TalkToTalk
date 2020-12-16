@@ -54,7 +54,7 @@ public class ChatAppController
        System.out.println("Search Rooms size: "+rooms.size());
        model.addAttribute("searchRooms", searchRooms);
        
-       return "/chat";
+       return "redirect:";
     }
     
     @MessageMapping("/chat/{roomId}/sendMessage")
@@ -80,9 +80,6 @@ public class ChatAppController
     @SubscribeMapping("/chat/rooms")
     public List<ChatRoom> listOfRoom()
     {
-    	System.out.println("3333");
-    	System.out.println("Rooms size: "+rooms.size());
-
         List<ChatRoom> result = new ArrayList<ChatRoom>();
     	
     	for(ChatRoom room:rooms)
