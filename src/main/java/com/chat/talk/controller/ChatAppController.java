@@ -1,6 +1,8 @@
 package com.chat.talk.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +42,15 @@ public class ChatAppController
 	
     List<ChatRoom> rooms;
     List<ChatRoom> searchRooms;
-
+    
+    public String now() {
+    	Calendar calendar = Calendar.getInstance();
+    	java.util.Date date = calendar.getTime();
+    	String time = (new SimpleDateFormat("H:mm:ss").format(date));
+    	
+    	return time;
+    }
+    
     @Autowired
     public void ChatController()
     {
@@ -63,6 +73,7 @@ public class ChatAppController
     	addmessage(roomId,chatMessage);
     	chatMessage.setPic(filesService.profile(chatMessage.getSenderid()));
     	chatMessage.setSex(userService.sex(chatMessage.getSenderid()));
+    	chatMessage.setTime(now());
         messagingTemplate.convertAndSend("/room/"+roomId, chatMessage);
     }
     
@@ -139,7 +150,6 @@ public class ChatAppController
             if(room.getRoomid().equals(roomid))
             {
                 List<Message> messages = room.getMessages();
-            	//System.out.println("@@@message: "+message.toString());
                 break;
             }
         }

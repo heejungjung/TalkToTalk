@@ -12,6 +12,8 @@ public class Message {
     private String senderid;
     private String pic;
     private String sex;
+    private String time;
+    
 	public String getRoomid() {
 		return roomid;
 	}
@@ -54,10 +56,16 @@ public class Message {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	@Override
 	public String toString() {
 		return "Message [roomid=" + roomid + ", messageType=" + messageType + ", content=" + content + ", sender="
-				+ sender + ", senderid=" + senderid + ", pic=" + pic + ", sex=" + sex + "]";
+				+ sender + ", senderid=" + senderid + ", pic=" + pic + ", sex=" + sex + ", time=" + time + "]";
 	}
 	
 }

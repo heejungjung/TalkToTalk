@@ -56,7 +56,9 @@
 </head>
 
 <body style="background: linear-gradient(55deg, RGB(107,115,178) 0%, RGB(160,177,221) 51%, RGB(242,132,227) 85%);">
-  <nav class="navbar navbar-transparent fixed-top navbar-expand-lg bg-dark">
+    <iframe src="https://localhost:3000/" width="1600" height="800" frameborder="0"></iframe>
+
+  <nav class="navbar navbar-transparent fixed-top navbar-expand-lg">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-translate">
@@ -66,39 +68,35 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="dropdown nav-item">
-            <a href="javascript:;" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown">
-	            <div class="profile-photo-small" sec:authorize="isAuthenticated()">
-	               <img id="circleimg" style="width:40px;height:40px;border-radius: 100%;display: inline-block;vertical-align: middle;
-	               object-fit: cover;" alt="Circle Image" class="rounded-circle img-fluid">
-	            </div>
+            <a class="nav-link profile-photo-small" data-toggle="dropdown" sec:authorize="isAuthenticated()">
+               <img id="circleimg" style="width:40px;height:40px;border-radius: 100%;display: inline-block;vertical-align: middle;
+               object-fit: cover;" alt="Circle Image">
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-with-icons">
               <h6 class="dropdown-header">Dropdown header</h6>
               <a href="javascript:;" class="mypage dropdown-item">💁 내정보</a>
               <a href="/chat" class="dropdown-item">💬 채팅방</a>
               <a href="/logout" class="dropdown-item">👋 로그아웃</a>
             </div>
-          </li>
-          <li class="nav-item">
             <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/regist}" sec:authorize="!isAuthenticated()">
-              <div class="profile-photo-small">
-              	<img src="/images/logo/regist_black.png" alt="로그인이 필요합니다." class="img-fluid">
-              </div>
+              <i class="fa fa-user-plus"></i>
             </a>
-            <a href="javascript:;" th:href="@{/mypage}" sec:authorize="isAuthenticated()">
+          </li>
+          <li class="nav-item" style="width:100px;" sec:authorize="isAuthenticated()">
+            <a href="javascript:;" th:href="@{/mypage}">
               <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
-            </a>
               <span id='username' th:text="${session.username}" style="display:none;">사용자</span>
+            </a>
           </li>
           <li class="nav-item">
             <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">
               <div class="profile-photo-small">
-                <img src="/images/logo/off_black.png" alt="Circle Image" class="img-fluid">
+                <img id="offcolor" src="/images/logo/off.png" alt="Circle Image" class="img-fluid">
               </div>
             </a>
             <a href="javascript:;" class="profile-photo nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">
               <div class="profile-photo-small">
-                <img src="/images/logo/on_black.png" alt="Circle Image" class="img-fluid">
+                <img id="oncolor" src="/images/logo/on.png" alt="Circle Image" class="img-fluid">
               </div>
             </a>
           </li>
@@ -106,7 +104,6 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-->
   </nav>
-	
 	<br><br><br><br>
 	<div>
 		<input class="hidden" id="hey" value="${user.username}">
@@ -287,8 +284,8 @@
 		    type: "POST",
 		    url: "/homegetinfo",
 		    data: {
-		    	username: document.getElementById('username').innerHTML,
-		    	nickname: document.getElementById('nickname').innerHTML
+		    	username: document.getElementById('username').innerText,
+		    	nickname: document.getElementById('nickname').innerText
 		    },
 		    success: function (data) {	
 				$("#circleimg").attr("src",data.pic);
@@ -303,8 +300,8 @@
 			    type: "GET",
 			    url: "/mypaging",
 			    data: {
-			    	username: document.getElementById('username').innerHTML,
-			    	nickname: document.getElementById('nickname').innerHTML
+			    	username: document.getElementById('username').innerText,
+			    	nickname: document.getElementById('nickname').innerText
 			    },
 			    success: function (data) {	
 			    	location.href='/mypage';

@@ -1,6 +1,6 @@
 //User Name Page Variable
-var username = document.getElementById('username').innerHTML;
-var nickname = document.getElementById('nickname').innerHTML;
+var username = document.getElementById('username').innerText;
+var nickname = document.getElementById('nickname').innerText;
 
 //Chat Room Page Variable
 var roomPage = document.querySelector('#room-page');
@@ -71,7 +71,7 @@ function searchlistRoom()
 // Result form subscribe function of listRoom is processed here
 function onListofRoom(payload)
 {
-	document.getElementById('listRoom').innerHTML = "";
+	document.getElementById('listRoom').innerText = "";
 	
 	var rooms = JSON.parse(payload.body);
 	
@@ -352,7 +352,10 @@ function showMessage(message)
 		    var textElement = document.createElement('p');
 		    var messageText = document.createTextNode(message.content);
 	        	textElement.classList.add('message');
+		    var timeElement = document.createElement('span');
+			timeElement.setAttribute('style','position: absolute;left: 0;bottom: -15px;color: rgba(255,255,255,0.5);font-size: 10px;');
 		    textElement.appendChild(messageText);
+		    textElement.appendChild(timeElement);
 		    div_msg.appendChild(textElement);
 		    messageElement.appendChild(div_msg);
 		}

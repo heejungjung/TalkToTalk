@@ -83,7 +83,7 @@
 		type : "POST",
 		url : "/mypagegetpic",
 		data: {
-			username: document.getElementById('username').innerHTML
+	    	username: document.getElementById('username').innerText
 	    },
 		success : function(data) {
 			$("#pic").attr("src",data.pic);
@@ -106,11 +106,11 @@
 	        type: "GET",
 	        url: "/msgchange",
 	        data: {
-	        	username: document.getElementById('username').innerHTML,
+		    	username: document.getElementById('username').innerText,
 	        	message: input
 	        },
 	        success: function (data) {
-				document.getElementById("bio").innerHTML = data;
+				document.getElementById("bio").innerText = data;
 			}
 		})
 	});

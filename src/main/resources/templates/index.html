@@ -2,8 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon.png">
-  <link rel="icon" type="image/png" href="/images/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>Talk To Talk</title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
@@ -152,58 +150,105 @@
 #TopBtn:hover {
   background-color: RGB(193,142,141); /* Add a dark-grey background on hover */
 }
-.navbar-fixed-top.scrolled {
-  background-color: #fff !important;
-  transition: background-color 200ms linear;
+
+nav ul {
+      list-style: none;
+      background: rgba(0, 0, 0, 0);
+      padding: 0;
+      text-align: right;
+      margin: 0;
+      padding-right: 40px;
+      transition: 1s;
 }
-  </style>
+
+nav ul li {
+      display: inline-block;
+      padding: 16px 40px;;
+}
+
+nav ul li a {
+      font-size: 16px;
+}
+
+.menu-icon {
+      line-height: 60px;
+      width: 100%;
+      background: #000;
+      text-align: right;
+      box-sizing: border-box;
+      padding: 15px 24px;
+      cursor: pointer;
+      display: none;
+}
+
+@media(max-width: 786px) {
+      .logo {
+            position: fixed;
+            top: 0;
+            margin-top: 16px;
+      }
+      nav ul {
+            max-height: 0px;
+            background: #000;
+      }
+      .showing {
+            max-height: 34em;
+      }
+      nav ul li {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 24px;
+            text-align: center;
+      }
+      .menu-icon {
+            display: block;
+      }
+}
+
+</style>
 </head>
 
 <body class="index-page sidebar-collapse">
 <button onclick="topFunction()" id="TopBtn" title="Go to top">☝</button>
-  <nav class="navbar navbar-transparent fixed-top navbar-expand-lg bg-dark">
+
+  <nav class="navbar fixed-top navbar-expand-lg">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-translate">
-	  	<a href="/"><img src="/images/logo/logo.png" alt="Circle Image" style="width:10%;"></a>
-      </div>
+	  <a href="/"><img src="/images/logo/logo.png" alt="Circle Image" style="width:90px;"></a>
+      <div class="menu-icon"></div>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="dropdown nav-item">
-            <a href="javascript:;" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown">
-	            <div class="profile-photo-small" sec:authorize="isAuthenticated()">
-	               <img id="circleimg" style="width:40px;height:40px;border-radius: 100%;display: inline-block;vertical-align: middle;
-	               object-fit: cover;" alt="Circle Image" class="rounded-circle img-fluid">
-	            </div>
+      <div class="menu">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link profile-photo-small" data-toggle="dropdown" sec:authorize="isAuthenticated()">
+               <img id="circleimg" style="width:40px;height:40px;border-radius: 100%;display: inline-block;vertical-align: middle;
+               object-fit: cover;" alt="Circle Image">
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-with-icons">
               <h6 class="dropdown-header">Dropdown header</h6>
               <a href="javascript:;" class="mypage dropdown-item">💁 내정보</a>
               <a href="/chat" class="dropdown-item">💬 채팅방</a>
               <a href="/logout" class="dropdown-item">👋 로그아웃</a>
             </div>
-          </li>
-          <li class="nav-item">
             <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/regist}" sec:authorize="!isAuthenticated()">
-              <div class="profile-photo-small">
-              	<img src="/images/logo/regist_black.png" alt="로그인이 필요합니다." class="img-fluid">
-              </div>
+              <i class="fa fa-user-plus"></i>
             </a>
-            <a href="javascript:;" th:href="@{/mypage}" sec:authorize="isAuthenticated()">
+          </li>
+          <li class="nav-item" style="width:100px;" sec:authorize="isAuthenticated()">
+            <a href="javascript:;" th:href="@{/mypage}">
               <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
-            </a>
               <span id='username' th:text="${session.username}" style="display:none;">사용자</span>
+            </a>
           </li>
           <li class="nav-item">
             <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">
               <div class="profile-photo-small">
-                <img src="/images/logo/off_black.png" alt="Circle Image" class="img-fluid">
+                <img id="offcolor" src="/images/logo/off.png" alt="Circle Image" class="img-fluid">
               </div>
             </a>
             <a href="javascript:;" class="profile-photo nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">
               <div class="profile-photo-small">
-                <img src="/images/logo/on_black.png" alt="Circle Image" class="img-fluid">
+                <img id="oncolor" src="/images/logo/on.png" alt="Circle Image" class="img-fluid">
               </div>
             </a>
           </li>
@@ -211,7 +256,7 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-->
   </nav>
-  
+
   <div class="page-header header-filter clear-filter" data-parallax="true" style="background-image: url('/images/vllo.gif');">
     <div class="container">
        <div class="col-md-8 ml-auto mr-auto">
@@ -225,6 +270,7 @@
   
   <div class="main main-raised">
     <div class="section section-basic">
+    
     
 	<!-- What people think -->
     <div class="landing-page landing-page1">
@@ -339,30 +385,6 @@
                 <span class="form-control-feedback">
                   <i class="material-icons">clear</i>
                 </span>
-              </div>
-            </div>
-            <div class="col-lg-3 col-sm-4">
-              <div class="form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">group</i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="With Material Icons">
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-sm-4">
-              <div class="form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="fa fa-group"></i>
-                    </span>
-                  </div>
-                  <input type="text" class="form-control" placeholder="With Font Awesome Icons">
-                </div>
               </div>
             </div>
           </div>
@@ -530,14 +552,6 @@
           </div>
         </div>
         <div id="sliders">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="title">
-                <h3>Sliders</h3>
-              </div>
-              <div id="sliderRegular" class="slider"></div>
-              <div id="sliderDouble" class="slider slider-info"></div>
-            </div>
             <div class="col-md-6 ml-auto">
               <div class="title">
                 <h3>Badges </h3>
@@ -550,7 +564,6 @@
               <span class="badge badge-pill badge-danger">Danger</span>
               <span class="badge badge-pill badge-rose">Rose</span>
             </div>
-          </div>
         </div>
       </div>
     </div>
@@ -759,19 +772,6 @@
       </div>
     </div>
     <!--         end carousel -->
-    <div class="section">
-      <div class="container text-center">
-        <div class="row">
-          <div class="col-md-8 mx-auto text-center">
-            <h2>Completed with examples</h2>
-            <h4>The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. More importantly, looking at them will give you a picture of what you can built with this powerful kit.</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12 text-center">
-      <a href="examples/login-page" class="btn btn-link btn-primary btn-lg" target="_blank">View Login Page</a>
-    </div>
     <div class="section section-download" id="downloadSection">
       <div class="container">
         <div class="row text-center">
@@ -785,18 +785,6 @@
             </a>
             <a href="https://themeisle.com/themes/hestia/?utm_campaign=mkfree-hestia&amp;utm_source=creativetim&amp;utm_medium=website" target="_blank" class="btn btn-primary btn-lg" rel="nofollow">
               <i class="fa fa-wordpress"></i> Wordpress Theme
-            </a>
-          </div>
-        </div>
-        <br><br>
-        <div class="row text-center">
-          <div class="col-md-8 mx-auto">
-            <h2>Want more?</h2>
-            <h4>We've just launched <a href="https://demos.creative-tim.com/material-kit-pro/presentation.html?ref=utp-mk-demos" target="_blank">Material Kit PRO</a>. It has a huge number of components, sections and example pages. Start Your Development With A Badass Bootstrap UI Kit inspired by Material Design.</h4>
-          </div>
-          <div class="col-sm-8 col-md-5 mx-auto">
-            <a href="https://demos.creative-tim.com/material-kit-pro/presentation.html?ref=utp-mk-demos" class="btn btn-rose btn-upgrade btn-lg" target="_blank">
-              <i class="material-icons">unarchive</i> Upgrade to PRO
             </a>
           </div>
         </div>
@@ -883,15 +871,6 @@
   </footer>
   </div>
 </body>
-  <!--   Core JS Files   -->
-  <script src="/js/core/jquery.min.js" type="text/javascript"></script>
-  <script src="/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-  <script src="/js/plugins/moment.min.js"></script>
-  <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-  <script src="/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-  <script src="/js/plugins/nouislider.min.js" type="text/javascript"></script>
   <!-- what people think -->
     <script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
 	<script src="/js/bootstrap.min.js" type="text/javascript"></script>
@@ -901,8 +880,8 @@
 		    type: "POST",
 		    url: "/homegetinfo",
 		    data: {
-		    	username: document.getElementById('username').innerHTML,
-		    	nickname: document.getElementById('nickname').innerHTML
+		    	username: document.getElementById('username').innerText,
+		    	nickname: document.getElementById('nickname').innerText
 		    },
 		    success: function (data) {	
 				$("#circleimg").attr("src",data.pic);
@@ -917,8 +896,8 @@
 			    type: "GET",
 			    url: "/mypaging",
 			    data: {
-			    	username: document.getElementById('username').innerHTML,
-			    	nickname: document.getElementById('nickname').innerHTML
+			    	username: document.getElementById('username').innerText,
+			    	nickname: document.getElementById('nickname').innerText
 			    },
 			    success: function (data) {	
 			    	location.href='/mypage';
@@ -945,5 +924,22 @@
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
+    //nav
+      $(window).on("scroll", function() {
+            if($(window).scrollTop()) {
+				$('nav').removeClass('navbar-transparent');
+				$('#oncolor').attr("src","/images/logo/on_black.png");
+				$('#offcolor').attr("src","/images/logo/off_black.png");
+            }
+
+            else {
+				$('nav').addClass('navbar-transparent');
+				$('#oncolor').attr("src","/images/logo/on.png");
+				$('#offcolor').attr("src","/images/logo/off.png");
+            }
+      })
+      $(".menu-icon").on("click", function() {
+                  $("nav ul").toggleClass("showing");
+		});
   </script>
 </html>

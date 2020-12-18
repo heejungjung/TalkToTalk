@@ -17,60 +17,53 @@
 <link href="/css/material-kit.css?v=2.0.7" rel="stylesheet" />
 </head>
 <body class="index-page sidebar-collapse" style="background-image: url('/images/bg.jpg'); background-size: cover;">
-	<nav class="navbar navbar-transparent fixed-top navbar-expand-lg bg-dark">
-		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-translate">
-				<a href="/"><img src="/images/logo/logo.png" alt="Circle Image"
-					style="width: 10%;"></a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse">
-				<ul class="navbar-nav ml-auto">
-					<li class="dropdown nav-item"><a href="javascript:;"
-						class="profile-photo dropdown-toggle nav-link"
-						data-toggle="dropdown">
-							<div class="profile-photo-small" sec:authorize="isAuthenticated()">
-								<img id="circleimg"
-									style="width: 40px; height: 40px; border-radius: 100%; display: inline-block; vertical-align: middle; object-fit: cover;"
-									alt="Circle Image" class="rounded-circle img-fluid">
-							</div>
-					</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<h6 class="dropdown-header">Dropdown header</h6>
-							<a href="javascript:;" class="mypage dropdown-item">💁 내정보</a> <a
-								href="/chat" class="dropdown-item">💬 채팅방</a> <a href="/logout"
-								class="dropdown-item">👋 로그아웃</a>
-						</div></li>
-					<li class="nav-item"><a href="javascript:;"
-						class="profile-photo nav-link" th:href="@{/account/regist}"
-						sec:authorize="!isAuthenticated()">
-							<div class="profile-photo-small">
-								<img src="/images/logo/regist.png" alt="로그인이 필요합니다." class="img-fluid">
-							</div>
-					</a> <a href="javascript:;" th:href="@{/mypage}"
-						sec:authorize="isAuthenticated()"> <span id='username'
-							class='mypage' th:text="${session.nickname}"
-							style="color: black;">사용자</span>
-					</a></li>
-					<li class="nav-item"><a href="javascript:;"
-						class="profile-photo nav-link" th:href="@{/account/login}"
-						sec:authorize="!isAuthenticated()">
-							<div class="profile-photo-small">
-								<img src="/images/logo/off.png" alt="Circle Image" class="img-fluid">
-							</div>
-					</a> <a href="javascript:;" class="profile-photo nav-link"
-						th:href="@{/logout}" sec:authorize="isAuthenticated()">
-							<div class="profile-photo-small">
-								<img src="/images/logo/on.png" alt="Circle Image" class="img-fluid">
-							</div>
-					</a></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-->
-	</nav>
+
+  <nav class="navbar navbar-transparent fixed-top navbar-expand-lg">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-translate">
+	  	<a href="/"><img src="/images/logo/logo.png" alt="Circle Image" style="width:10%;"></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="dropdown nav-item">
+            <a class="nav-link profile-photo-small" data-toggle="dropdown" sec:authorize="isAuthenticated()">
+               <img id="circleimg" style="width:40px;height:40px;border-radius: 100%;display: inline-block;vertical-align: middle;
+               object-fit: cover;" alt="Circle Image">
+            </a>
+            <div class="dropdown-menu dropdown-with-icons">
+              <h6 class="dropdown-header">Dropdown header</h6>
+              <a href="javascript:;" class="mypage dropdown-item">💁 내정보</a>
+              <a href="/chat" class="dropdown-item">💬 채팅방</a>
+              <a href="/logout" class="dropdown-item">👋 로그아웃</a>
+            </div>
+            <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/regist}" sec:authorize="!isAuthenticated()">
+              <i class="fa fa-user-plus"></i>
+            </a>
+          </li>
+          <li class="nav-item" style="width:100px;" sec:authorize="isAuthenticated()">
+            <a href="javascript:;" th:href="@{/mypage}">
+              <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
+              <span id='username' th:text="${session.username}" style="display:none;">사용자</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">
+              <div class="profile-photo-small">
+                <img id="offcolor" src="/images/logo/off.png" alt="Circle Image" class="img-fluid">
+              </div>
+            </a>
+            <a href="javascript:;" class="profile-photo nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+              <div class="profile-photo-small">
+                <img id="oncolor" src="/images/logo/on.png" alt="Circle Image" class="img-fluid">
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-->
+  </nav>
 	<div class="section section-signup page-header">
 		<div class="container">
 			<div class="row">

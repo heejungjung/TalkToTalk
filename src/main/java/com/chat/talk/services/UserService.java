@@ -31,7 +31,6 @@ public class UserService {
         Role role = new Role();
         role.setId(1l);
         user.getRoles().add(role);
-        System.out.println("^^^^^^^^^^^^^:"+user.toString());
         return userRepository.save(user);
     }
     
