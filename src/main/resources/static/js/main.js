@@ -76,7 +76,7 @@ function onListofRoom(payload)
 	var rooms = JSON.parse(payload.body);
 	
 	if( rooms.length == 0){
-		alert("현재 개설 된 방이 없습니다." + rooms.length);
+		alert("현재 개설 된 방이 없습니다.😭💔");
 	}
 
      for(var i=0,len = rooms.length; i<len ; i++)
