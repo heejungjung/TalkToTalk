@@ -178,7 +178,6 @@ function onPreviousMessage(payload)
 {
     var messages = JSON.parse(payload.body).messages;
 	noticeArea.textContent = JSON.parse(payload.body).notice;
-	//alert("onPreviousMessage:"+messages);
     for (var i=0, len=messages.length;i<len;i++ )
     {
         showMessage(messages[i]);
@@ -298,7 +297,7 @@ function showMessage(message)
 				            $("#ajax").remove();
 				            var data = JSON.parse(responseData);
 				            if(!data){
-				                alert("존재하지 않는 ID입니다");
+				                alert("존재하지 않는 ID입니다😿");
 				                return false;
 				            }
 							$("#userinfo_nickname").html(message.sender);
@@ -398,7 +397,7 @@ function notice(notice){
         type: 'NOTICE'
     };
     stompClient.send(`${topic}/notice`, {}, JSON.stringify(noticeMessage));
-    alert("공지등록:"+notice);
+    alert("공지 등록 완료📢");
     noticeArea.textContent = notice;
 }
 function createRoom(){
