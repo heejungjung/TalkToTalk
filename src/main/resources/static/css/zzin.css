@@ -167,13 +167,6 @@ body {
 	color: RGB(240,90,161);
   	border-radius: 12px;
 }
-.navbar-collapse{
-	float:right;
-	padding:0;
-	margin:0;
-	margin-right:5%;
-	font-size: 1.5em;
-}
 #greeting{
 	color:white;
 	float:right;
@@ -896,13 +889,6 @@ button.accent {
 .switch {
   margin-right: 20px;
 }
-
-#navbar-full .navbar {
-  border-radius: 0 !important;
-  margin-bottom: 15px;
-  z-index: 2;
-}
-
 .space {
   height: 130px;
   display: block;
@@ -1010,14 +996,6 @@ button.accent {
   text-align: left;
 }
 
-.navbar-default .logo-container .brand {
-  color: #999999;
-}
-
-.navbar-transparent .logo-container .brand {
-  color: #FFFFFF;
-}
-
 .logo-container .brand-material {
   font-size: 18px;
   margin-top: 15px;
@@ -1028,11 +1006,6 @@ button.accent {
 .logo-container .logo img {
   width: 100%;
 }
-
-.navbar-small .logo-container .brand {
-  color: #333333;
-}
-
 .fixed-section {
   top: 90px;
   max-height: 71vh;
@@ -1215,18 +1188,6 @@ button.accent {
   -webkit-transition: 1.5s ease-in-out;
 }
 
-.navbar-default.navbar-small .logo-container .brand {
-  color: #333333;
-}
-
-.navbar-transparent.navbar-small .logo-container .brand {
-  color: #FFFFFF;
-}
-
-.navbar-default.navbar-small .logo-container .brand {
-  color: #333333;
-}
-
 .sharing-area {
   margin-top: 80px;
 }
@@ -1241,10 +1202,6 @@ button.accent {
   position: relative;
   top: 2px;
   margin-right: 5px;
-}
-
-#navbar {
-  margin-bottom: -20px;
 }
 
 .sharing-area .btn-twitter {
@@ -1284,15 +1241,6 @@ button.accent {
 .section-notifications {
   padding: 0;
 }
-
-.section-navbars {
-  padding-top: 0;
-}
-
-#navbar .navbar {
-  border-radius: 0;
-}
-
 .section-tabs {
   background: #EEEEEE;
 }
