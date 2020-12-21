@@ -82,10 +82,10 @@
 									</a>
 								</div>
 							</div>
+							<p class="description text-center">Welcome ✋</p>
 							<div th:if="${param.error}" class="alert alert-danger" role="alert">
 								Please Check Your Id and Password Again</div>
 							<div th:if="${param.logout}">You've been logged out.</div>
-							<p class="description text-center">Or Be Classical</p>
 							<div class="card-body">
 								<div class="input-group">
 									<div class="input-group-prepend">
@@ -103,7 +103,7 @@
 									</div>
 									<input id="inputPassword" name="password" type="password" class="form-control" placeholder="Password" autocomplete="" required>
 								</div>
-							</div>
+							</div><br>
 							<div class="footer text-center">
 								<button class="btn btn-primary btn-link btn-wd btn-lg" type="submit">Sign In</button>
 							</div>
@@ -119,23 +119,16 @@
 		<div class="container">
 			<nav class="float-left">
 				<ul>
-					<li><a href="https://www.creative-tim.com/"> Creative Tim
-					</a></li>
-					<li><a href="https://www.creative-tim.com/presentation">
-							About Us </a></li>
-					<li><a href="https://www.creative-tim.com/blog"> Blog </a></li>
-					<li><a href="https://www.creative-tim.com/license">
-							Licenses </a></li>
+					<li><a href="/"> Talk To Talk </a></li>
+					<li><a href="https://github.com/heejungjung/TalkToTalk"> About Us </a></li>
+					<li><a href="https://github.com/heejungjung/TalkToTalk"> Github </a></li>
 				</ul>
 			</nav>
 			<div class="copyright float-right">
 				&copy;
-				<script>
-					document.write(new Date().getFullYear())
-				</script>
+				<script> document.write(new Date().getFullYear()) </script>
 				, made with <i class="material-icons">favorite</i> by <a
-					href="https://www.creative-tim.com/" target="_blank">Creative
-					Tim</a> for a better web.
+					href="https://github.com/heejungjung/TalkToTalk" target="_blank">Talk To Talk</a> for a better chat.
 			</div>
 		</div>
 	</footer>
