@@ -27,5 +27,6 @@ public class DBRoom {
 	int people;
 	int peoplemax;
 	String notice;
+    char type;
 	
 }

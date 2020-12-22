@@ -31,6 +31,7 @@ public class RoomListService {
            chatRoom.setRoomid(r.getTitle());
            chatRoom.setNowpp(r.getPeople());
            chatRoom.setMaxpp(r.getPeoplemax());
+           chatRoom.setType(r.getType());
            result.add(chatRoom);
        }
         return result;
@@ -41,6 +42,7 @@ public class RoomListService {
     	room.setTitle(chatRoom.getRoomid());
     	room.setPeople(0);
     	room.setPeoplemax(chatRoom.getMaxpp());
+    	room.setType(chatRoom.getType());
         return roomListRepository.save(room);
     }
 	
@@ -54,6 +56,7 @@ public class RoomListService {
             chatRoom.setRoomid(r.getTitle());
             chatRoom.setNowpp(r.getPeople());
             chatRoom.setMaxpp(r.getPeoplemax());
+            chatRoom.setType(r.getType());
     		result.add(chatRoom);
     	}
         return result;

@@ -35,7 +35,7 @@
               <i class="fa fa-user-plus"></i>
             </a>
           </li>
-          <li class="nav-item" style="width:100px;" sec:authorize="isAuthenticated()">
+          <li class="nav-item" style="margin-left:10px;margin-right:10px;" sec:authorize="isAuthenticated()">
             <a href="javascript:;" th:href="@{/mypage}">
               <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
               <span id='username' th:text="${session.username}" style="display:none;">사용자</span>

@@ -1,37 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
 body {
-	font-size:10px;
+  font-size:20px;
+  font-family: 'Cute Font', cursive;
 	}
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
-#offButton{
-	background-image: url('/images/logo/on.png');
-	background-size:80%;
-	background-repeat: no-repeat;
-	background-position: 0px -17px;
-	width:90%;
-	margin:0;
-	padding:0;
-	vertical-align: middle;
-	background-color: transparent !important;
-    border-color: transparent;
-    border: none;
-    color: #FFFFFF;
-}
-
 #nickname_thymeleaf{
 	color:white;
-	font-size:25px;
 	margin:0;
 	padding:0;
 	vertical-align: middle;
 }
 .hi{
 	color:white;
-	font-size:20px;
 	margin:0;
 	padding:0;
 	vertical-align: middle;
@@ -173,36 +157,6 @@ body {
 	margin-top:1.4%;
 	text-align: center;
 }
-a:HOVER {
-   text-decoration: none;
-   color: #ffe6ff;
-}
-.sign {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 50%;
-  background-image: radial-gradient(
-    ellipse 50% 35% at 50% 50%,
-    #6b1839,
-    transparent
-  );
-  transform: translate(-50%, -50%);
-  letter-spacing: 2;
-  left: 50%;
-  top: 50%;
-  font-family: "LAB디지털";
-  text-transform: uppercase;
-  font-size: 13em;
-  color: #ffe6ff;
-  text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
-    -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
-    0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
-  animation: shine 2s forwards, flicker 3s infinite;
-}
-
 /* popup */
 .form-field {
   display: flex;
@@ -214,7 +168,6 @@ a:HOVER {
   display: flex;
   justify-content:center;
   align-items:flex-start;
-  font-size: 1.2rem;
   font-weight: bold;
   margin: 0;
   padding: 18px 12px 0 ;
@@ -239,7 +192,6 @@ a:HOVER {
   border-bottom: 1px solid #999;
   color: #333;
   display: block;
-  font-size: 1.2rem;
   margin-top: 50px;
   padding: 0 12px 10px 12px;
   width: 100%;
@@ -427,7 +379,6 @@ a:HOVER {
 .form-control {
     width: 100%;
     min-height: 38px;
-    font-size: 15px;
 }
 
 .preview {
@@ -449,11 +400,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
-h1 {
-    font-size: 1.7em;
-}
-
 a {
     color: #c8c8c8;
 }
@@ -461,7 +407,6 @@ a {
 button {
     box-shadow: none;
     border: 1px solid transparent;
-    font-size: 14px;
     outline: none;
     line-height: 100%;
     white-space: nowrap;
@@ -586,7 +531,6 @@ button.accent {
 
 #chat-page .event-message p {
     color: #777;
-    font-size: 14px;
     word-wrap: break-word;
 }
 
@@ -597,7 +541,6 @@ button.accent {
   width: 300px;
   margin: 40px;
   margin-bottom: 0;
-  font-size: 13px;
   overflow: auto;
 }
 .chat-message-group .chat-thumb{
@@ -615,7 +558,6 @@ button.accent {
   float: left;
   padding: 10px;
   background: #ecf1f8;
-  font-size: 13px;
   border-radius: 5px;
   margin-bottom: 3px;
   word-break:normal;
@@ -625,7 +567,6 @@ button.accent {
   display: block;
   width: 100%;
   text-align: left;
-  font-size: 11px;
 }
 .chat-thumb img{
   	width: 100%;
@@ -737,19 +678,16 @@ button.accent {
 
 .room-page-bar-no {
 	width: 15%;
-	font-size: 1.5em;
 	text-align: center;
 }
 
 .room-page-bar-title {
 	width: 65%;
-	font-size: 1.5em;
 	text-align: center;
 }
 
 .room-page-bar-people {
 	width: 30%;
-	font-size: 1.5em;
 	text-align: center;
 }
 
@@ -764,14 +702,12 @@ button.accent {
 #list_num_css {
 	height:100%;
 	width: 11%;
-	font-size: 1.5em;
 	text-align: center;
 }
 
 #list_text_css {
 	margin-left: 15%;
 	margin-right: 5%;
-	font-size: 1.5em;
 	text-align: center;
 }
 
@@ -815,10 +751,6 @@ button.accent {
     .connecting {
         top: 60px;
     }
-
-    .chat-header h2 {
-        font-size: 1.1em;
-    }
 }
 
 
@@ -861,7 +793,6 @@ button.accent {
   color: #c0c1c2;
   display: block;
   font-weight: 400;
-  font-size: 13px;
   line-height: 15px;
   left: 0;
   margin-left: 20px;
@@ -985,7 +916,6 @@ button.accent {
 }
 
 .logo-container .brand {
-  font-size: 16px;
   line-height: 18px;
   float: left;
   margin-left: 10px;
@@ -997,7 +927,6 @@ button.accent {
 }
 
 .logo-container .brand-material {
-  font-size: 18px;
   margin-top: 15px;
   height: 25px;
   width: auto;
@@ -1018,7 +947,6 @@ button.accent {
 }
 
 .fixed-section li a {
-  font-size: 14px;
   padding: 2px;
   display: block;
   color: #666666;
@@ -1198,7 +1126,6 @@ button.accent {
 }
 
 .sharing-area .btn i {
-  font-size: 18px;
   position: relative;
   top: 2px;
   margin-right: 5px;

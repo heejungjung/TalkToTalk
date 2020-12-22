@@ -140,6 +140,11 @@
 #TopBtn:hover {
   background-color: RGB(193,142,141); /* Add a dark-grey background on hover */
 }
+
+input[type=radio]:checked + label>img {
+	background: linear-gradient(45deg,purple,RGB(27,48,79));
+	border-radius:50%;
+}
 </style>
 </head>
 
@@ -160,15 +165,15 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <h6 class="dropdown-header">💛Talk To Talk💜</h6>
-              <a href="javascript:;" class="mypage dropdown-item">💁 내정보</a>
-              <a href="/chat" class="dropdown-item">💬 채팅방</a>
-              <a href="/logout" class="dropdown-item">👋 로그아웃</a>
+              <a href="javascript:;" class="mypage dropdown-item">💁 mypage</a>
+              <a href="/chat" class="dropdown-item">💬 chat</a>
+              <a href="/logout" class="dropdown-item">👋 logout</a>
             </div>
             <a href="javascript:;" class="profile-photo nav-link" th:href="@{/account/regist}" sec:authorize="!isAuthenticated()">
               <i class="fa fa-user-plus"></i>
             </a>
           </li>
-          <li class="nav-item" sec:authorize="isAuthenticated()">
+          <li class="nav-item" style="margin-left:10px;margin-right:10px;" sec:authorize="isAuthenticated()">
             <a href="javascript:;" th:href="@{/mypage}">
               <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
               <span id='username' th:text="${session.username}" style="display:none;">사용자</span>
@@ -195,8 +200,8 @@
     <div class="container">
        <div class="col-md-8 ml-auto mr-auto">
          <div class="brand">
-<br><br><br><br><br><br><br><br><br>
-           <a href="/chat" style="color:white;"><h3>💜💛💚💙💗Make Friends here!💗💙💚💛💜</h3></a>
+<br><br><br><br><br><br>
+           <a href="/chat" style="color:white;"><h2>💙💛💗Make Friends here!💗💛💙</h2></a>
          </div>
        </div>
     </div>
@@ -211,7 +216,7 @@
         <div class="wrapper">
             <div class="section section-testimonial">
                 <div class="container">
-                    <h1 class="text-center" style="font-size:5em;">What people think 🙄💭</h1>
+                    <h1 class="text-center" style="font-size:4em;">What people think 🙄💭</h1>
                     <div id="carousel-example-generic" class="carousel fade" data-ride="carousel">
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner" role="listbox">
@@ -221,8 +226,8 @@
                                     <img th:src="${file.fileurl}+${file.filename}" style="width:100%;height:100%;border-radius: 100%;display: inline-block;vertical-align: middle;object-fit: cover;">
                                 </div>
                                 <div class="carousel-testimonial-caption">
-                                    <p th:text="${file.nickname}">Jay Z, Producer</p><br>
-                                    <h3 th:text="${file.message}">"I absolutely love your app! It's truly amazing and looks awesome!"</h3>
+                                    <p th:text="${file.nickname}">Jay Z, Producer</p>
+                                    ❝ <span style="font-size:2em;" th:text="${file.message}">"It's truly amazing and looks awesome!"</span> ❞
                                 </div>
                             </div>
    							</th:block>
@@ -291,11 +296,6 @@
             <h3>Inputs</h3>
           </div>
           <div class="row">
-            <div class="col-lg-3 col-sm-4">
-              <div class="form-group has-default">
-                <input type="text" class="form-control" placeholder="Regular">
-              </div>
-            </div>
             <div class="col-lg-3 col-sm-4">
               <div class="form-group">
                 <label for="exampleInput1" class="bmd-label-floating">With Floating Label</label>
@@ -552,60 +552,6 @@
         </div>
       </div>
     </div>
-    <!--        notifications -->
-    <div class="section cd-section section-notifications" id="notifications">
-      <div class="container">
-        <div class="title">
-          <h3>Notifications</h3>
-        </div>
-      </div>
-      <div class="alert alert-info">
-        <div class="container">
-          <div class="alert-icon">
-            <i class="material-icons">info_outline</i>
-          </div>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true"><i class="material-icons">clear</i></span>
-          </button>
-          <b>Info alert:</b> You&apos;ve got some friends nearby, stop looking at your phone and find them...
-        </div>
-      </div>
-      <div class="alert alert-success">
-        <div class="container">
-          <div class="alert-icon">
-            <i class="material-icons">check</i>
-          </div>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true"><i class="material-icons">clear</i></span>
-          </button>
-          <b>Success Alert:</b> Yuhuuu! You&apos;ve got your $11.99 album from The Weeknd
-        </div>
-      </div>
-      <div class="alert alert-warning">
-        <div class="container">
-          <div class="alert-icon">
-            <i class="material-icons">warning</i>
-          </div>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true"><i class="material-icons">clear</i></span>
-          </button>
-          <b>Warning Alert:</b> Hey, it looks like you still have the &quot;copyright &#xA9; 2015&quot; in your footer. Please update it!
-        </div>
-      </div>
-      <div class="alert alert-danger">
-        <div class="container">
-          <div class="alert-icon">
-            <i class="material-icons">error_outline</i>
-          </div>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true"><i class="material-icons">clear</i></span>
-          </button>
-          <b>Error Alert:</b> Damn man! You screwed up the server this time. You should find a good excuse for your Boss...
-        </div>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <!--        end notifications -->
     <div class="section">
       <div class="container tim-container">
         <!--     	        typography -->
@@ -696,11 +642,119 @@
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					</div>
 				</div>
+				<div class="col-lg-4 col-md-6 mx-auto">
+					<div class="card card-login">
+						<form th:action="@{/account/regist}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form form-horizontal">
+							<div class="card-header card-header-primary text-center">
+								<h4 class="card-title">Registration</h4>
+							</div>
+							<div class="card-body" style="height:600px;overflow-y:auto">
+								<div class="input-group">
+									<img id="pview" style="display:block; margin:auto; width:100px; height:100px;
+									object-fit: cover;" class="rounded-circle img-fluid"/>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">camera_alt</i>
+										</span>
+									</div>
+									<input type="file" class="form-control" name="files" id="imgInput"/>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">face</i>
+										</span>
+									</div>
+									<input type="text" id="username" name="username" class="form-control" placeholder="Id" required style="ime-mode:disabled">
+									<div style="white-space: nowrap; display: inline;">
+										<input id="idCheckOk" class="idCheckOk" type="hidden" value="false">
+										<input type="button" class="myButton_id btn btn-warning btn-round btn-sm" value="Check 🕵">
+									</div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">lock_outline</i>
+										</span>
+									</div>
+									<input id="inputPassword" name="password" type="password"
+										class="form-control" placeholder="Password" autocomplete="" required>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">favorite</i>
+										</span>
+									</div>
+									<input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" />
+									<div style="white-space: nowrap; display: inline;">
+										<input id="nnCheckOk" class="nnCheckOk" type="hidden"value="false">
+										<input type="button" class="myButton_nn btn btn-warning btn-round btn-sm" value="Check 🕵">
+									</div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">wc</i>
+										</span>
+									</div>
+									<div style="display: flex;justify-content: space-around; width:70%;">
+									    <input type="radio" name="sex" id="sexF" value="F" style="position: absolute;left: -9999px;"/>
+										<label for="sexF">
+										  <img src="/images/logo/woman.png" alt="I'm a girl" width="50px"/>
+										</label>
+										<input type="radio" name="sex" id="sexM" value="M" style="position: absolute;left: -9999px;"/>
+										<label for="sexM">
+										  <img src="/images/logo/man.png" alt="I'm a boy" width="50px"/>
+										</label>
+									</div>
+								</div>
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">location_on</i>
+										</span>
+									</div>
+									<input type="text" class="form-control" id="address" name="address" placeholder="Address">
+									<input type="button" onclick="sample5_execDaumPostcode()" class="btn btn-success btn-round btn-sm"
+									value="Search 🌏"> <br>
+									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">today</i>
+										</span>
+									</div>
+									<input type='date' id='birthday' name='birthday' style="text-align:center;width:80%;" value="yyyy-mm-dd">
+								</div>
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">mail</i>
+										</span>
+									</div>
+									<input type="email" class="form-control" name="email" id="email" placeholder="Email">
+								</div>
+							</div>
+							<div class="footer text-center">
+								<input type="submit" id="submit" class="btn btn-primary btn-round btn-sm" value="Register In 👏"/>
+								<a href="/"><input type="button" class="btn btn-primary btn-round btn-sm" value="Back 👈"></a>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
     <div class="col-md-12 text-center">
-      <a href="examples/login-page.html" class="btn btn-link btn-primary btn-lg" target="_blank">View Login Page</a>
+      <a href="account/login" class="btn btn-link btn-primary btn-lg">View Login Page</a>
+      <a href="account/regist" class="btn btn-link btn-primary btn-lg">View Regist Page</a>
     </div>
     
     <div class="section section-download" id="downloadSection">

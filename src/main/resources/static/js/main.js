@@ -106,46 +106,82 @@ function onListofRoom(payload)
         var roomText = document.createTextNode(rooms[i].nowpp+"/"+rooms[i].maxpp);
         peopleElement.appendChild(roomText);
 		peopleElement.setAttribute("style","width:30px; margin:0; margin-left: 20%; padding:0;");
+
+        var typeElement = document.createElement('label');
+        typeElement.setAttribute("style","margin-right: 5%;");
+        var roomText = document.createTextNode(rooms[i].type=='v'?'📺':'💬');
+        typeElement.appendChild(roomText);
 		
 		var div1 = document.createElement('div');
 		var div2 = document.createElement('div');
 		var div3 = document.createElement('div');
+		var div4 = document.createElement('div');
         div1.classList.add('room-page-bar-no');
         div2.classList.add('room-page-bar-title');
         div3.classList.add('room-page-bar-people');
+        div4.classList.add('room-page-bar-type');
         div1.setAttribute("style","background:none;");
         div2.setAttribute("style","background:none;");
         div3.setAttribute("style","background:none;");
+        div4.setAttribute("style","background:none;");
         div1.appendChild(num_textElement);
         div2.appendChild(textElement);
 
-		if(rooms[i].nowpp<rooms[i].maxpp){
+		
 	        var buttonElement = document.createElement('input');
 	        buttonElement.setAttribute("type","image");
 			buttonElement.setAttribute("src","/images/logo/chat.png");
 			buttonElement.setAttribute("style","width:30px; margin:0; padding:0");
-	        buttonElement.setAttribute("value",rooms[i].roomid);
+	        buttonElement.setAttribute("id",rooms[i].roomid);
+	        buttonElement.setAttribute("value",rooms[i].nowpp<rooms[i].maxpp);
+	        buttonElement.setAttribute("name",rooms[i].type);
 
 			buttonElement.onclick=function join(event){
 				if (event.type == 'click') {
-					    var roomNameValue = event.target.value; //그 줄의 방제
-						if(roomNameValue)
-					    {
+					alert(event.target.value);
+					if(event.target.value=="true"){
+						var roomNameValue = event.target.id; //그 줄의 방제
+						if(event.target.name=='c'){
 					        roomPage.classList.add('hidden');
 					        chatPage.classList.remove('hidden');
 					        enterRoom(roomNameValue);
-					    }
-					    event.preventDefault();
+						}else{
+							alert(username);
+							var chatpath = "https://192.168.10.146:3000/?room="+roomNameValue +"&name="+username;
+
+						    var form = document.createElement("form");
+						    form.setAttribute("method", "post");
+						    form.setAttribute("action", chatpath);
+						
+						    var hiddenField1 = document.createElement("input");
+						    hiddenField1.setAttribute("type", "hidden");
+						    hiddenField1.setAttribute("name", "room");
+						    hiddenField1.setAttribute("value", roomNameValue);
+						    form.appendChild(hiddenField1);
+						    var hiddenField2 = document.createElement("input");
+						    hiddenField2.setAttribute("type", "hidden");
+						    hiddenField2.setAttribute("name", "username");
+						    hiddenField2.setAttribute("value", username);
+						    form.appendChild(hiddenField2);
+						
+						    document.body.appendChild(form);
+						    form.submit();
+						}
+					}else{
+						alert("방이 가득 찼습니다.😭💔");
+					}
+					event.preventDefault();
 				}
 			};
         	div2.appendChild(buttonElement);
-		}
 
         div3.appendChild(peopleElement);
+        div4.appendChild(typeElement);
 		
         formElement.appendChild(div1);
         formElement.appendChild(div2);
         formElement.appendChild(div3);
+        formElement.appendChild(div4);
 
         roomElement.appendChild(formElement);
 
@@ -401,13 +437,15 @@ function notice(notice){
     noticeArea.textContent = notice;
 }
 function createRoom(){
-    var createRoomNameValue = createRoomName.value.trim(); 
+    var createRoomNameValue = createRoomName.value.trim();
+    var createRoomTypeValue = createRoomType.value.trim();
 	var maxpp = $('#maxpp').val();
 
     if(createRoomNameValue){
         var chatRoom = {
 			roomid: createRoomNameValue,
-			maxpp: maxpp 
+			type: createRoomTypeValue,
+			maxpp: maxpp
         };
         stompClient.send("/chatapp/chat/rooms", {}, JSON.stringify(chatRoom));
 	}

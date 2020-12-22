@@ -23,7 +23,6 @@ input[type=radio]:checked + label>img {
 </head>
 
 <body class="index-page sidebar-collapse" style="background: linear-gradient(60deg, RGB(62,51,86), RGB(106,76,104),RGB(48,83,113), RGB(72,56,93), RGB(18,28,53));">
-
   <nav class="navbar navbar-transparent fixed-top navbar-expand-lg">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -48,7 +47,7 @@ input[type=radio]:checked + label>img {
               <i class="fa fa-user-plus"></i>
             </a>
           </li>
-          <li class="nav-item" style="width:100px;" sec:authorize="isAuthenticated()">
+          <li class="nav-item" style="margin-left:10px;margin-right:10px;" sec:authorize="isAuthenticated()">
             <a href="javascript:;" th:href="@{/mypage}">
               <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
               <span id='username' th:text="${session.username}" style="display:none;">사용자</span>

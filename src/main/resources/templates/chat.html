@@ -52,8 +52,6 @@
 </head>
 
 <body style="background: linear-gradient(55deg, RGB(107,115,178) 0%, RGB(160,177,221) 51%, RGB(242,132,227) 85%);">
-    <iframe src="https://localhost:3000/" width="1600" height="800" frameborder="0"></iframe>
-
   <nav class="navbar navbar-transparent fixed-top navbar-expand-lg">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -78,7 +76,7 @@
               <i class="fa fa-user-plus"></i>
             </a>
           </li>
-          <li class="nav-item" style="width:100px;" sec:authorize="isAuthenticated()">
+          <li class="nav-item" style="margin-left:10px;margin-right:10px;" sec:authorize="isAuthenticated()">
             <a href="javascript:;" th:href="@{/mypage}">
               <span id='nickname' class='mypage' th:text="${session.nickname}" style="color:black;">사용자</span>
               <span id='username' th:text="${session.username}" style="display:none;">사용자</span>
@@ -112,6 +110,7 @@
 						<div class="room-page-bar-no">방번호</div>
 						<div class="room-page-bar-title">방제목</div>
 						<div class="room-page-bar-people">현재인원/최대인원</div>
+						<div class="room-page-bar-type">방종류</div>
 					</div>
 					<ul id="listRoom" class="list-group">
 
@@ -151,13 +150,20 @@
 										</select>
 									</div>
 							</div>
+						</div>
+						<div class="col-sm">
+							<div class="form-field">
+								<div><b>타&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp입:</b>
+									<input class="popup-button-input" id="createRoomType" type="text" placeholder="방제를 입력하세요" />
+								</div>
+							</div>
 						</div><br>
 						<div class="popup-button">
 							<form id="createRoomForm" name="createRoomForm">
 								<div class="form-group">
 									<div class="input-group clearfix">
 										<button type="submit" class="popup-button-bt" id="createRoom">방 개설</button> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-										<a href="/" onclick="javascript:window.close()"><button class="popup-button-bt" type="submit">나가기</button></a>
+										<button class="popup-button-bt" type="submit">나가기</button>
 									</div>
 								</div>
 							</form>
