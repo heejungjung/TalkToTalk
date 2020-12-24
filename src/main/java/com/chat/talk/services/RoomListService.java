@@ -31,7 +31,7 @@ public class RoomListService {
            chatRoom.setRoomid(r.getTitle());
            chatRoom.setNowpp(r.getPeople());
            chatRoom.setMaxpp(r.getPeoplemax());
-           chatRoom.setType(r.getType());
+           chatRoom.setRoomtype(r.getType());
            result.add(chatRoom);
        }
         return result;
@@ -42,7 +42,7 @@ public class RoomListService {
     	room.setTitle(chatRoom.getRoomid());
     	room.setPeople(0);
     	room.setPeoplemax(chatRoom.getMaxpp());
-    	room.setType(chatRoom.getType());
+    	room.setType(chatRoom.getRoomtype());
         return roomListRepository.save(room);
     }
 	
@@ -56,7 +56,7 @@ public class RoomListService {
             chatRoom.setRoomid(r.getTitle());
             chatRoom.setNowpp(r.getPeople());
             chatRoom.setMaxpp(r.getPeoplemax());
-            chatRoom.setType(r.getType());
+            chatRoom.getRoomtype();
     		result.add(chatRoom);
     	}
         return result;
@@ -79,12 +79,17 @@ public class RoomListService {
     }
 
     public void decrement(DBRoom room) {
+    	System.out.println("decrement1:"+room.getPeople());
+    	//고쳐야함
 		room.setPeople(room.getPeople() - 1);
     	int people = room.getPeople();
+    	System.out.println("decrement2:"+people);
     	if(people==0) {
+        	System.out.println("decrement3:"+people);
     		roomListRepository.delete(room);
     	}
     	else {
+        	System.out.println("decrement4:"+people);
     		roomListRepository.save(room);
     	}
     }

@@ -31,5 +31,4 @@ public class Files {
    String fileurl;
    String message;
    String nickname;
-
 }

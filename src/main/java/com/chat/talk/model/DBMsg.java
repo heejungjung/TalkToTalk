@@ -23,9 +23,9 @@ public class DBMsg {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long mno;
 	
-	private String msgContent;
-	private String regdt;
-	private String username;
+	private String msgtype;
+	private String content;
+	private String senderid;
 	private String sex;
-	private String birthday;
+	private String time;
 }

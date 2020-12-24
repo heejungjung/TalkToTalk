@@ -16,14 +16,8 @@ public class FilesService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public void save(Files files,String username) {
-		Files f = new Files();
-		f.setUsername(username);
-		f.setFilename(files.getFilename());
-		f.setRawname(files.getRawname());
-		f.setFileurl(files.getFileurl());
-		
-		filesRepository.save(f);
+	public void save(Files files) {
+		filesRepository.save(files);
 	}
 	
 	public String profile(String sender) {

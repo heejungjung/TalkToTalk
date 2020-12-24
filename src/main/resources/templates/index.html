@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">  <!-- CSS Files -->
 <link href="/css/material-kit.css?v=2.0.7" rel="stylesheet" />
-<link href="/css/zzin.css" rel="stylesheet" />
 <style>
 .landing-page .carousel-inner > .item > img,
 .landing-page .carousel-inner > .item > a > img {
@@ -210,7 +209,6 @@ input[type=radio]:checked + label>img {
   <div class="main main-raised">
     <div class="section section-basic">
     
-    
 	<!-- What people think -->
     <div class="landing-page">
         <div class="wrapper">
@@ -237,7 +235,223 @@ input[type=radio]:checked + label>img {
             </div>
         </div>
     </div>
-	<!-- What people think -->
+	<!-- end What people think -->
+	
+	<!-- tabs -->
+    <div class="section">
+      <div class="container">
+        <div class="col-md">
+          <h3><small>Tabs with Icons on Card</small></h3>
+          <div class="card card-nav-tabs">
+            <div class="card-header card-header-primary">
+              <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+              <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                  <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#profile" data-toggle="tab">
+                        <i class="material-icons">face</i>
+                        Profile
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#messages" data-toggle="tab">
+                        <i class="material-icons">chat</i>
+                        Messages
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#settings" data-toggle="tab">
+                        <i class="material-icons">build</i>
+                        Settings
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="card-body ">
+              <div class="tab-content text-center">
+                <div class="tab-pane active" id="profile">
+                  <p> I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. </p>
+                </div>
+                <div class="tab-pane" id="messages">
+                  <p> I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
+                </div>
+                <div class="tab-pane" id="settings">
+                  <p>I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. So when you get something that has the name Kanye West on it, it&#x2019;s supposed to be pushing the furthest possibilities. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Tabs with icons on Card -->
+        </div>
+      </div>
+    </div>
+	<!-- end tabs -->
+    
+	<!-- sign in,registration -->
+    <div class="section section-signup page-header" style="background:linear-gradient(to bottom,white,RGB(83,112,137),RGB(72,56,93),RGB(18,28,53));">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6 mx-auto">
+					<div class="card card-login">
+						<form th:action="@{/loginProcess}" method="post" class="form">
+							<div class="card-header card-header-primary text-center">
+								<h4 class="card-title">Please Sign In</h4>
+								<div class="social-line">
+									<a href="javascript:;" class="btn btn-just-icon btn-link">
+										<i class="fa fa-facebook-square"></i>
+									</a> <a href="javascript:;" class="btn btn-just-icon btn-link">
+										<i class="fa fa-twitter"></i>
+									</a> <a href="javascript:;" class="btn btn-just-icon btn-link">
+										<i class="fa fa-google-plus"></i>
+									</a>
+								</div>
+							</div>
+							<p class="description text-center">Welcome ✋</p>
+							<div th:if="${param.error}" class="alert alert-danger" role="alert">
+								Please Check Your Id and Password Again</div>
+							<div th:if="${param.logout}">You've been logged out.</div>
+							<div class="card-body">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i
+											class="material-icons">face</i>
+										</span>
+									</div>
+									<input type="text" id="username" name="username" class="form-control" placeholder="Id" required>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i
+											class="material-icons">lock_outline</i>
+										</span>
+									</div>
+									<input id="inputPassword" name="password" type="password" class="form-control" placeholder="Password" autocomplete="" required>
+								</div>
+							</div><br>
+							<div class="footer text-center">
+								<button class="btn btn-primary btn-link btn-wd btn-lg" type="submit">Sign In</button>
+							</div>
+						</form>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mx-auto">
+					<div class="card card-login">
+						<form th:action="@{/account/regist}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form form-horizontal">
+							<div class="card-header card-header-primary text-center">
+								<h4 class="card-title">Registration</h4>
+							</div>
+							<div class="card-body" style="height:600px;overflow-y:auto">
+								<div class="input-group">
+									<img id="pview" style="display:block; margin:auto; width:100px; height:100px;
+									object-fit: cover;" class="rounded-circle img-fluid"/>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">camera_alt</i>
+										</span>
+									</div>
+									<input type="file" class="form-control" name="files" id="imgInput"/>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">face</i>
+										</span>
+									</div>
+									<input type="text" id="username" name="username" class="form-control" placeholder="Id" required style="ime-mode:disabled">
+									<div style="white-space: nowrap; display: inline;">
+										<input id="idCheckOk" class="idCheckOk" type="hidden" value="false">
+										<input type="button" class="myButton_id btn btn-warning btn-round btn-sm" value="Check 🕵">
+									</div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">lock_outline</i>
+										</span>
+									</div>
+									<input id="inputPassword" name="password" type="password"
+										class="form-control" placeholder="Password" autocomplete="" required>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">favorite</i>
+										</span>
+									</div>
+									<input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" />
+									<div style="white-space: nowrap; display: inline;">
+										<input id="nnCheckOk" class="nnCheckOk" type="hidden"value="false">
+										<input type="button" class="myButton_nn btn btn-warning btn-round btn-sm" value="Check 🕵">
+									</div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">wc</i>
+										</span>
+									</div>
+									<div style="display: flex;justify-content: space-around; width:70%;">
+									    <input type="radio" name="sex" id="sexF" value="F" style="position: absolute;left: -9999px;"/>
+										<label for="sexF">
+										  <img src="/images/logo/woman.png" alt="I'm a girl" width="50px"/>
+										</label>
+										<input type="radio" name="sex" id="sexM" value="M" style="position: absolute;left: -9999px;"/>
+										<label for="sexM">
+										  <img src="/images/logo/man.png" alt="I'm a boy" width="50px"/>
+										</label>
+									</div>
+								</div>
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">location_on</i>
+										</span>
+									</div>
+									<input type="text" class="form-control" id="address" name="address" placeholder="Address">
+									<input type="button" onclick="sample5_execDaumPostcode()" class="btn btn-success btn-round btn-sm"
+									value="Search 🌏"> <br>
+									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">today</i>
+										</span>
+									</div>
+									<input type='date' id='birthday' name='birthday' style="text-align:center;width:80%;" value="yyyy-mm-dd">
+								</div>
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="material-icons">mail</i>
+										</span>
+									</div>
+									<input type="email" class="form-control" name="email" id="email" placeholder="Email">
+								</div>
+							</div>
+							<div class="footer text-center">
+								<input type="submit" id="submit" class="btn btn-primary btn-round btn-sm" value="Register In 👏"/>
+								<a href="/"><input type="button" class="btn btn-primary btn-round btn-sm" value="Back 👈"></a>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="col-md-12 text-center">
+      <a href="account/login" class="btn btn-link btn-primary btn-lg">View Login Page</a>
+      <a href="account/regist" class="btn btn-link btn-primary btn-lg">View Regist Page</a>
+    </div>
 	
       <div class="container">
         <div class="title">
@@ -296,11 +510,10 @@ input[type=radio]:checked + label>img {
             <h3>Inputs</h3>
           </div>
           <div class="row">
-            <div class="col-lg-3 col-sm-4">
+            <div class="col-lg-8 col-sm-7">
               <div class="form-group">
                 <label for="exampleInput1" class="bmd-label-floating">With Floating Label</label>
                 <input type="email" class="form-control" id="exampleInput1">
-                <span class="bmd-help">We'll never share your email with anyone else.</span>
               </div>
             </div>
             <div class="col-lg-3 col-sm-4">
@@ -501,261 +714,6 @@ input[type=radio]:checked + label>img {
         </div>
       </div>
     </div>
-    <div class="section section-navbars cd-section" id="navigation">
-    <div class="section section-tabs">
-      <div class="container">
-        <div class="col-md">
-          <h3><small>Tabs with Icons on Card</small></h3>
-          <div class="card card-nav-tabs">
-            <div class="card-header card-header-primary">
-              <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
-              <div class="nav-tabs-navigation">
-                <div class="nav-tabs-wrapper">
-                  <ul class="nav nav-tabs" data-tabs="tabs">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#profile" data-toggle="tab">
-                        <i class="material-icons">face</i>
-                        Profile
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#messages" data-toggle="tab">
-                        <i class="material-icons">chat</i>
-                        Messages
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#settings" data-toggle="tab">
-                        <i class="material-icons">build</i>
-                        Settings
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="card-body ">
-              <div class="tab-content text-center">
-                <div class="tab-pane active" id="profile">
-                  <p> I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. </p>
-                </div>
-                <div class="tab-pane" id="messages">
-                  <p> I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
-                </div>
-                <div class="tab-pane" id="settings">
-                  <p>I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. So when you get something that has the name Kanye West on it, it&#x2019;s supposed to be pushing the furthest possibilities. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Tabs with icons on Card -->
-        </div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="container tim-container">
-        <!--     	        typography -->
-        <div id="typography" class="cd-section">
-          <div class="title">
-            <h2>Typography</h2>
-          </div>
-          <div class="row">
-            <div class="tim-typo">
-              <h1 class="title"><span class="tim-note">Header 1 Title</span>The Life of Material Kit </h1>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Primary Text</span>
-              <p class="text-primary">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Info Text</span>
-              <p class="text-info">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Success Text</span>
-              <p class="text-success">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Warning Text</span>
-              <p class="text-warning">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-              </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Danger Text</span>
-              <p class="text-danger">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-          </div>
-        </div>
-        <!--                 end typography -->
-      </div>
-    </div>
-    
-    <div class="section section-signup page-header" style="background:linear-gradient(to bottom,white,RGB(83,112,137),RGB(72,56,93),RGB(18,28,53));">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-6 mx-auto">
-					<div class="card card-login">
-						<form th:action="@{/loginProcess}" method="post" class="form">
-							<div class="card-header card-header-primary text-center">
-								<h4 class="card-title">Please Sign In</h4>
-								<div class="social-line">
-									<a href="javascript:;" class="btn btn-just-icon btn-link">
-										<i class="fa fa-facebook-square"></i>
-									</a> <a href="javascript:;" class="btn btn-just-icon btn-link">
-										<i class="fa fa-twitter"></i>
-									</a> <a href="javascript:;" class="btn btn-just-icon btn-link">
-										<i class="fa fa-google-plus"></i>
-									</a>
-								</div>
-							</div>
-							<p class="description text-center">Welcome ✋</p>
-							<div th:if="${param.error}" class="alert alert-danger" role="alert">
-								Please Check Your Id and Password Again</div>
-							<div th:if="${param.logout}">You've been logged out.</div>
-							<div class="card-body">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"> <i
-											class="material-icons">face</i>
-										</span>
-									</div>
-									<input type="text" id="username" name="username" class="form-control" placeholder="Id" required>
-								</div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"> <i
-											class="material-icons">lock_outline</i>
-										</span>
-									</div>
-									<input id="inputPassword" name="password" type="password" class="form-control" placeholder="Password" autocomplete="" required>
-								</div>
-							</div><br>
-							<div class="footer text-center">
-								<button class="btn btn-primary btn-link btn-wd btn-lg" type="submit">Sign In</button>
-							</div>
-						</form>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 mx-auto">
-					<div class="card card-login">
-						<form th:action="@{/account/regist}" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="form form-horizontal">
-							<div class="card-header card-header-primary text-center">
-								<h4 class="card-title">Registration</h4>
-							</div>
-							<div class="card-body" style="height:600px;overflow-y:auto">
-								<div class="input-group">
-									<img id="pview" style="display:block; margin:auto; width:100px; height:100px;
-									object-fit: cover;" class="rounded-circle img-fluid"/>
-								</div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">camera_alt</i>
-										</span>
-									</div>
-									<input type="file" class="form-control" name="files" id="imgInput"/>
-								</div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">face</i>
-										</span>
-									</div>
-									<input type="text" id="username" name="username" class="form-control" placeholder="Id" required style="ime-mode:disabled">
-									<div style="white-space: nowrap; display: inline;">
-										<input id="idCheckOk" class="idCheckOk" type="hidden" value="false">
-										<input type="button" class="myButton_id btn btn-warning btn-round btn-sm" value="Check 🕵">
-									</div>
-								</div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">lock_outline</i>
-										</span>
-									</div>
-									<input id="inputPassword" name="password" type="password"
-										class="form-control" placeholder="Password" autocomplete="" required>
-								</div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">favorite</i>
-										</span>
-									</div>
-									<input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nickname" />
-									<div style="white-space: nowrap; display: inline;">
-										<input id="nnCheckOk" class="nnCheckOk" type="hidden"value="false">
-										<input type="button" class="myButton_nn btn btn-warning btn-round btn-sm" value="Check 🕵">
-									</div>
-								</div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">wc</i>
-										</span>
-									</div>
-									<div style="display: flex;justify-content: space-around; width:70%;">
-									    <input type="radio" name="sex" id="sexF" value="F" style="position: absolute;left: -9999px;"/>
-										<label for="sexF">
-										  <img src="/images/logo/woman.png" alt="I'm a girl" width="50px"/>
-										</label>
-										<input type="radio" name="sex" id="sexM" value="M" style="position: absolute;left: -9999px;"/>
-										<label for="sexM">
-										  <img src="/images/logo/man.png" alt="I'm a boy" width="50px"/>
-										</label>
-									</div>
-								</div>
-
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">location_on</i>
-										</span>
-									</div>
-									<input type="text" class="form-control" id="address" name="address" placeholder="Address">
-									<input type="button" onclick="sample5_execDaumPostcode()" class="btn btn-success btn-round btn-sm"
-									value="Search 🌏"> <br>
-									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
-								</div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">today</i>
-										</span>
-									</div>
-									<input type='date' id='birthday' name='birthday' style="text-align:center;width:80%;" value="yyyy-mm-dd">
-								</div>
-
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="material-icons">mail</i>
-										</span>
-									</div>
-									<input type="email" class="form-control" name="email" id="email" placeholder="Email">
-								</div>
-							</div>
-							<div class="footer text-center">
-								<input type="submit" id="submit" class="btn btn-primary btn-round btn-sm" value="Register In 👏"/>
-								<a href="/"><input type="button" class="btn btn-primary btn-round btn-sm" value="Back 👈"></a>
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    <div class="col-md-12 text-center">
-      <a href="account/login" class="btn btn-link btn-primary btn-lg">View Login Page</a>
-      <a href="account/regist" class="btn btn-link btn-primary btn-lg">View Regist Page</a>
-    </div>
     
     <div class="section section-download" id="downloadSection">
       <div class="container">
@@ -777,19 +735,19 @@ input[type=radio]:checked + label>img {
           <div class="row justify-content-center">
             <h3>Thank you for supporting us!</h3>
           </div>
-          <a id="twitter" class="btn btn-raised btn-twitter" href="https://twitter.com/CreativeTim" rel="nofollow">
+          <a id="twitter" class="btn btn-raised btn-twitter" href="https://twitter.com" rel="nofollow">
             <i class="fa fa-twitter"></i>
             Tweet
           </a>
-          <a id="facebook" class="btn btn-raised btn-facebook" href="https://www.facebook.com/CreativeTim" rel="nofollow">
+          <a id="facebook" class="btn btn-raised btn-facebook" href="https://www.facebook.com" rel="nofollow">
             <i class="fa fa-facebook-square"></i>
             Facebook
           </a>
-          <a id="instagram" class="btn btn-raised btn-instagram" href="https://www.instagram.com/CreativeTimOfficial" rel="nofollow">
+          <a id="instagram" class="btn btn-raised btn-instagram" href="https://www.instagram.com" rel="nofollow">
             <i class="fa fa-instagram"></i>
             Instagram
           </a>
-          <a id="github" href="https://github.com/creativetimofficial/material-kit" target="_blank" class="btn btn-raised btn-github" rel="nofollow">
+          <a id="github" href="https://github.com/" target="_blank" class="btn btn-raised btn-github" rel="nofollow">
             <i class="fa fa-github"></i>
             Star
           </a>
@@ -829,7 +787,6 @@ input[type=radio]:checked + label>img {
 			</div>
 		</div>
 	</footer>
-  </div>
 </body>
 <!-- what people think -->
 <script src="/js/jquery-1.10.2.js" type="text/javascript"></script>

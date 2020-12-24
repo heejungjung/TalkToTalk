@@ -50,7 +50,7 @@ public class MainController {
     private User user;
     
     @Autowired
-	private Files files;
+	private Files file;
 
 	@GetMapping("/")
 	public String index(Model model) {
@@ -65,8 +65,8 @@ public class MainController {
 	public Map<String, Object> homegetinfo(HttpServletRequest request, HttpServletResponse response,Model model,
 			@RequestParam("username") String username) {
 		Map<String, Object> userInfo = new HashMap<String, Object>();
-		files = filesRepository.findByUsername(userRepository.findByUsername(username).getUsername());
-		userInfo.put("pic", files.getFileurl()+files.getFilename());
+		file = filesRepository.findByUsername(username);
+		userInfo.put("pic", file.getFileurl()+file.getFilename());
 		List<Files> files = filesRepository.findAll();
 	    Collections.shuffle(files);
 		model.addAttribute("files", files);
@@ -118,8 +118,8 @@ public class MainController {
 		user = new User();
 		user = userRepository.findByUsername(username);
 
-		files = new Files();
-		files = filesRepository.findByUsername(username);
+		file = new Files();
+		file = filesRepository.findByUsername(username);
 		
 		DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Calendar today = Calendar.getInstance();
@@ -128,13 +128,13 @@ public class MainController {
 		long l_today = today.getTimeInMillis()/(24*60*60*1000);
 		long l_d_day = d_day.getTimeInMillis()/(24*60*60*1000);
 		
-		request.getSession().setAttribute("pic", files.getFileurl()+files.getFilename());
+		request.getSession().setAttribute("pic", file.getFileurl()+file.getFilename());
 		request.getSession().setAttribute("id", username);
 		request.getSession().setAttribute("nickname", nickname);
 		request.getSession().setAttribute("sex", user.getSex());
 		request.getSession().setAttribute("birthday", user.getBirthday());
 		request.getSession().setAttribute("email", user.getEmail());
-		request.getSession().setAttribute("bio", files.getMessage());
+		request.getSession().setAttribute("bio", file.getMessage());
 		request.getSession().setAttribute("city", user.getCity());
 		request.getSession().setAttribute("days", l_today-l_d_day);
 		
@@ -149,12 +149,12 @@ public class MainController {
 	@RequestMapping(value="/mypagegetpic", method=RequestMethod.POST)
 	public Map<String, Object> mypagegetpic(HttpServletRequest request, HttpServletResponse response,Model model,
 			@RequestParam("username") String username) {
-		files = new Files();
-		files = filesRepository.findByUsername(username);
+		file = new Files();
+		file = filesRepository.findByUsername(username);
 		Map<String, Object> userInfo = new HashMap<String, Object>();
 		
-		userInfo.put("pic", files.getFileurl()+files.getFilename());
-		userInfo.put("bio", files.getMessage());
+		userInfo.put("pic", file.getFileurl()+file.getFilename());
+		userInfo.put("bio", file.getMessage());
 		
 		return userInfo;
 	}
@@ -167,16 +167,16 @@ public class MainController {
 		user = new User();
 		user = userRepository.findByUsername(username);
 
-		files = new Files();
-		files = filesRepository.findByUsername(username);
+		file = new Files();
+		file = filesRepository.findByUsername(username);
 		
 		if(user != null){
 	        personJson = "{\"id\":\""+username
 	                    +"\",\"sex\":\""+user.getSex()
 	                    +"\",\"birthday\":\""+user.getBirthday()
 	                    +"\",\"city\":\""+user.getCity()
-	                    +"\",\"picture\":\""+files.getFileurl()+files.getFilename()
-	                    +"\",\"bio\":\""+files.getMessage()+"\"}";
+	                    +"\",\"picture\":\""+file.getFileurl()+file.getFilename()
+	                    +"\",\"bio\":\""+file.getMessage()+"\"}";
 	    }
 	    else{
 	        personJson = "null";
@@ -193,9 +193,9 @@ public class MainController {
 	@GetMapping("msgchange")
     public String msgchange(String message,String username) {
     	filesRepository.updateMessage(message,username);
-    	files = filesRepository.findByUsername(username);
+    	file = filesRepository.findByUsername(username);
         
-        return files.getMessage();
+        return file.getMessage();
     }
 
 	@RequestMapping(value = "/imgchange", method = RequestMethod.POST, consumes = {"multipart/form-data"})

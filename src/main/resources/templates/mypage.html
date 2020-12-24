@@ -28,7 +28,7 @@
 				<table>
 					<tr>
 						<td>
-							<b>지역</b>
+							<b>지역 region</b>
 						</td>
 						<td>
 			                <span id='city' th:text="${session.city}"></span>
@@ -37,15 +37,15 @@
 					</tr>
 					<tr>
 						<td>
-							<b>성별</b>
+							<b>성별 gender</b>
 						</td>
 						<td>
-							<span id='sex' th:text="${session.sex=='M' ? '남자':'여자'}">사용자</span>
+							<span id='sex' th:text="${session.sex=='M' ? '♂':'♀'}">사용자</span>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<b>생년월일</b>
+							<b>생년월일 birthday</b>
 						</td>
 						<td>
 							<span id='birthday' th:text="${session.birthday}">사용자</span>
@@ -53,7 +53,7 @@
 					</tr>
 					<tr>
 						<td>
-							<b>이메일</b>
+							<b>이메일 email</b>
 						</td>
 						<td>
 							<span id='email' th:text="${session.email}">사용자</span>
@@ -62,14 +62,15 @@
 				</table>
 				<div style="text-align:center;">
 					<h1><span id='username' th:text="${session.id}"></span>님 💖 Talk_To_Talk</h1>
-					<p>우리가 함께한지 <span style="font-size: 3em; font-weight: bold;" th:text="${session.days}"></span>일째🙈</h2>
+					<p>우리가 함께한지 we've been together for 
+					<span style="font-size: 3em; font-weight: bold;" th:text="${session.days}"></span>일째 days🙈</h2>
 				</div>
 			</div>
 		</div>
 		<!-- Footer -->
 		<footer id="footer">
-			<a href="/"><h1><strong>T</strong>alk <strong>T</strong>o <strong>T</strong>alk</h1></a>
-			<p> 사진을 클릭하면 프로필 사진을 업데이트 하실 수 있습니다!🙈</p><br>
+			<a href="/"><h1><strong>T</strong>alk <strong>T</strong>o <strong>T</strong>alk(🏠)</h1></a>
+			<p> 사진을 클릭하면 프로필 사진을 업데이트 하실 수 있습니다!🙈click your pic to update</p><br>
 		</footer>
 	</body>
 	

@@ -47,18 +47,6 @@ public class User {
     private Boolean enabled;
     private String address;
     private String city;
-
-//	public User(User user) {
-//		this.id = user.getId();
-//		this.username = user.getUsername();
-//		this.password = user.getPassword();
-//		this.nickname = user.getNickname();
-//		this.sex = user.getSex();
-//		this.birthday = user.getBirthday();
-//		this.email = user.getEmail();
-//		this.regdt = user.getRegdt();
-//		this.enabled = user.getEnabled();
-//	}
     
     @ManyToMany
     @JoinTable(

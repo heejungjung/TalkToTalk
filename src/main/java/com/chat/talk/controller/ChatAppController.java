@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chat.talk.model.ChatRoom;
 import com.chat.talk.model.Message;
+import com.chat.talk.services.DBMsgService;
 import com.chat.talk.services.FilesService;
 import com.chat.talk.services.RoomListService;
 import com.chat.talk.services.UserService;
@@ -33,6 +34,9 @@ public class ChatAppController
 
     @Autowired
     private RoomListService roomListService;
+
+    @Autowired
+    private DBMsgService dbMsgService;
 
     @Autowired
     private FilesService filesService;
@@ -69,23 +73,27 @@ public class ChatAppController
     
     @MessageMapping("/chat/{roomId}/sendMessage")
     public void sendMessage(@DestinationVariable String roomId, @Payload Message chatMessage) {
-    	System.out.println("111");
+    	System.out.println("111"+chatMessage.toString());
     	addmessage(roomId,chatMessage);
+    	chatMessage.setRoomid(roomId);
     	chatMessage.setPic(filesService.profile(chatMessage.getSenderid()));
     	chatMessage.setSex(userService.sex(chatMessage.getSenderid()));
     	chatMessage.setTime(now());
         messagingTemplate.convertAndSend("/room/"+roomId, chatMessage);
+        dbMsgService.dbmsg(chatMessage);
     }
     
     @MessageMapping("/chat/{roomId}/addUser")
     public void addUser(@DestinationVariable String roomId, @Payload Message chatMessage,SimpMessageHeaderAccessor headerAccessor) {
-    	System.out.println("2222");
+    	System.out.println("2222"+chatMessage.toString());
+    	chatMessage.setMessageType(Message.MessageType.JOIN);
 
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         headerAccessor.getSessionAttributes().put("roomId", roomId);
         addmessage(roomId,chatMessage);
         messagingTemplate.convertAndSend("/room/"+roomId, chatMessage);
         roomListService.Join(chatMessage.getRoomid());
+        dbMsgService.dbmsgenter(chatMessage);
     }
 
     @SubscribeMapping("/chat/rooms")
@@ -132,14 +140,15 @@ public class ChatAppController
     @MessageMapping("/chat/{roomId}/leaveuser")
     public void leaveRoom(@DestinationVariable String roomId, @Payload Message chatMessage,SimpMessageHeaderAccessor headerAccessor)
     {
-    	System.out.println("555:"+roomId);
+    	System.out.println("555:"+chatMessage.toString());
         
         Message leaveMessage = new Message();
-        leaveMessage.setType(Message.MessageType.LEAVE);
+        leaveMessage.setMessageType(Message.MessageType.LEAVE);
         leaveMessage.setSender(chatMessage.getSender());
         addmessage(roomId,chatMessage);
         roomListService.Leave(chatMessage.getRoomid());
         messagingTemplate.convertAndSend("/room/"+roomId, leaveMessage);
+        dbMsgService.dbmsgleave(chatMessage);
     }
 
     private void addmessage(String roomid, Message message)
@@ -184,10 +193,11 @@ public class ChatAppController
     @MessageMapping("/chat/{roomId}/notice")
     public void notice(@DestinationVariable String roomId, @Payload Message chatMessage,SimpMessageHeaderAccessor headerAccessor)
     {
+    	System.out.println("8888"+chatMessage.toString());
     	String roomid = chatMessage.getRoomid();
-    	System.out.println("8888");
         addmessage(roomid,chatMessage);
         roomListService.Notice(chatMessage.getRoomid(),chatMessage.getContent());
         messagingTemplate.convertAndSend("/room/"+roomid, chatMessage);
+        dbMsgService.dbmsgnotice(chatMessage);
     }
 }

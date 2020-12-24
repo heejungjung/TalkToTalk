@@ -7,7 +7,7 @@ public class ChatRoom
     String roomid;
     int nowpp;
     int maxpp;
-    char type;
+    char roomtype;
     List<Message> messages;
     
 	public String getRoomid() {
@@ -28,11 +28,11 @@ public class ChatRoom
 	public void setMaxpp(int maxpp) {
 		this.maxpp = maxpp;
 	}
-	public char getType() {
-		return type;
+	public char getRoomtype() {
+		return roomtype;
 	}
-	public void setType(char type) {
-		this.type = type;
+	public void setRoomtype(char roomtype) {
+		this.roomtype = roomtype;
 	}
 	public List<Message> getMessages() {
 		return messages;
@@ -42,7 +42,7 @@ public class ChatRoom
 	}
 	@Override
 	public String toString() {
-		return "ChatRoom [roomid=" + roomid + ", nowpp=" + nowpp + ", maxpp=" + maxpp + ", type=" + type + ", messages="
+		return "ChatRoom [roomid=" + roomid + ", nowpp=" + nowpp + ", maxpp=" + maxpp + ", roomtype=" + roomtype + ", messages="
 				+ messages + "]";
 	}
     

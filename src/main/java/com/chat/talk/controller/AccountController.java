@@ -63,7 +63,6 @@ public class AccountController {
     @PostMapping("/regist")
     public String regist(User user, @RequestPart MultipartFile files) throws Exception{
     	String adr = user.getAddress();
-    	System.out.println(adr);
     	user.setCity(adr.substring(0, adr.indexOf(" ")));
         userService.save(user);
         String username = user.getUsername();
@@ -110,7 +109,7 @@ public class AccountController {
 		}
 		file.setUsername(username);
 		file.setNickname(user.getNickname());
-		filesService.save(file,username);
+		filesService.save(file);
 		final String BODY = String.join(
                 System.getProperty("line.separator"),
                 "<div style='text-align:center;'>",

@@ -20,10 +20,10 @@ public class Message {
 	public void setRoomid(String roomid) {
 		this.roomid = roomid;
 	}
-	public MessageType getType() {
+	public MessageType getMessageType() {
 		return messageType;
 	}
-	public void setType(MessageType messageType) {
+	public void setMessageType(MessageType messageType) {
 		this.messageType = messageType;
 	}
 	public String getContent() {

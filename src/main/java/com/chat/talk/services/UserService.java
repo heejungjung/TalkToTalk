@@ -43,7 +43,6 @@ public class UserService {
     }
     
     public String nnCheck(String nickname) {
-    	System.out.println("serviceeeeeeeeeeeeee:"+nickname);
         if (userRepository.findByNickname(nickname) == null) {
             return "YES";
         } else {

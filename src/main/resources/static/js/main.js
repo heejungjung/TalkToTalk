@@ -11,6 +11,7 @@ var roomName = document.querySelector('#roomName');
 var roommkPage = document.querySelector('#roommk-page');
 var createRoomForm = document.querySelector('#createRoomForm');
 var createRoomName = document.querySelector('#createRoomName');
+var createRoomType = document.querySelector('#createRoomType');
 
 //Chat Page Variable
 var chatPage = document.querySelector('#chat-page');
@@ -62,132 +63,78 @@ function listRoom()
     currentSubscription = stompClient.subscribe(`/chatapp/chat/rooms`, onListofRoom);
 }
 
-//search 함수
-function searchlistRoom()
-{
-    currentSubscription = stompClient.subscribe(`/chat/search`, onListofRoom); //
-}
-
 // Result form subscribe function of listRoom is processed here
 function onListofRoom(payload)
 {
 	document.getElementById('listRoom').innerText = "";
-	
 	var rooms = JSON.parse(payload.body);
 	
-	if( rooms.length == 0){
+	if(rooms.length == 0){
 		alert("현재 개설 된 방이 없습니다.😭💔");
-	}
-
-     for(var i=0,len = rooms.length; i<len ; i++)
-     {
-        var roomElement = document.createElement('li');
-        roomElement.classList.add('list-group-item');
-        roomElement.setAttribute("id", i);
-
-        var formElement = document.createElement('form');
-        formElement.setAttribute("id", "joinroom");
-        formElement.setAttribute("name", "joinroom");
-        formElement.setAttribute("style", "display: flex;align-items: center;");
-
-		/*방번호 나오도록*/
-        var num_textElement = document.createElement('label');
-        num_textElement.setAttribute("id","list_num_css");
-        var num_roomText = document.createTextNode(i+1);
-        num_textElement.appendChild(num_roomText);
-
-        var textElement = document.createElement('label');
-        textElement.setAttribute("style","margin-right: 5%;");
-        var roomText = document.createTextNode(rooms[i].roomid);
-        textElement.appendChild(roomText);
-
-        var peopleElement = document.createElement('label');
-        peopleElement.setAttribute("style","margin-right: 50px");
-        var roomText = document.createTextNode(rooms[i].nowpp+"/"+rooms[i].maxpp);
-        peopleElement.appendChild(roomText);
-		peopleElement.setAttribute("style","width:30px; margin:0; margin-left: 20%; padding:0;");
-
-        var typeElement = document.createElement('label');
-        typeElement.setAttribute("style","margin-right: 5%;");
-        var roomText = document.createTextNode(rooms[i].type=='v'?'📺':'💬');
-        typeElement.appendChild(roomText);
-		
-		var div1 = document.createElement('div');
-		var div2 = document.createElement('div');
-		var div3 = document.createElement('div');
-		var div4 = document.createElement('div');
-        div1.classList.add('room-page-bar-no');
-        div2.classList.add('room-page-bar-title');
-        div3.classList.add('room-page-bar-people');
-        div4.classList.add('room-page-bar-type');
-        div1.setAttribute("style","background:none;");
-        div2.setAttribute("style","background:none;");
-        div3.setAttribute("style","background:none;");
-        div4.setAttribute("style","background:none;");
-        div1.appendChild(num_textElement);
-        div2.appendChild(textElement);
-
-		
-	        var buttonElement = document.createElement('input');
-	        buttonElement.setAttribute("type","image");
-			buttonElement.setAttribute("src","/images/logo/chat.png");
-			buttonElement.setAttribute("style","width:30px; margin:0; padding:0");
-	        buttonElement.setAttribute("id",rooms[i].roomid);
-	        buttonElement.setAttribute("value",rooms[i].nowpp<rooms[i].maxpp);
-	        buttonElement.setAttribute("name",rooms[i].type);
-
-			buttonElement.onclick=function join(event){
-				if (event.type == 'click') {
-					alert(event.target.value);
-					if(event.target.value=="true"){
+	}else{
+		for(var i=0,len = rooms.length; i<len ; i++){
+	        var roomElement = document.createElement('li');
+	        roomElement.classList.add('list-group-item');
+	        roomElement.setAttribute("id", i);
+	
+	        var formElement = document.createElement('form');
+	        formElement.setAttribute("id", "joinroom");
+	        formElement.setAttribute("name", "joinroom");
+	        formElement.setAttribute("style", "display: flex;align-items: center;");
+	
+			/*방번호 나오도록*/
+	        var num_textElement = document.createElement('label');
+	        num_textElement.setAttribute("id","list_num_css");
+	        var num_roomText = document.createTextNode(i+1);
+	        num_textElement.appendChild(num_roomText);
+	
+	        var textElement = document.createElement('label');
+	        textElement.classList.add('float-right');
+	        //textElement.setAttribute("style","margin-right: 5%;");
+	        var roomText = document.createTextNode(rooms[i].roomid);
+	        textElement.appendChild(roomText);
+	
+	        var peopleElement = document.createElement('label');
+	        peopleElement.setAttribute("style","margin-right: 50px");
+	        var roomText = document.createTextNode(rooms[i].nowpp+"/"+rooms[i].maxpp);
+	        peopleElement.appendChild(roomText);
+	        peopleElement.classList.add('float-right');
+			peopleElement.setAttribute("style","margin-left:20%;");
+	
+	        var typeElement = document.createElement('input');
+	        typeElement.setAttribute("type","button");
+	        typeElement.classList.add('float-right');
+	        typeElement.setAttribute("id",rooms[i].roomid);
+	        typeElement.setAttribute("name",rooms[i].nowpp<rooms[i].maxpp);
+	        typeElement.setAttribute("value",rooms[i].roomtype=='v'?'📺':'💬');
+	        typeElement.setAttribute("style","background:none;border: none;");
+			typeElement.onclick=function join(event){
+					event.preventDefault();
+					if (event.type == 'click'&event.target.name=="true"){
 						var roomNameValue = event.target.id; //그 줄의 방제
-						if(event.target.name=='c'){
+						if(event.target.value=='💬'){
 					        roomPage.classList.add('hidden');
 					        chatPage.classList.remove('hidden');
 					        enterRoom(roomNameValue);
 						}else{
-							alert(username);
-							var chatpath = "https://192.168.10.146:3000/?room="+roomNameValue +"&name="+username;
-
-						    var form = document.createElement("form");
-						    form.setAttribute("method", "post");
-						    form.setAttribute("action", chatpath);
-						
-						    var hiddenField1 = document.createElement("input");
-						    hiddenField1.setAttribute("type", "hidden");
-						    hiddenField1.setAttribute("name", "room");
-						    hiddenField1.setAttribute("value", roomNameValue);
-						    form.appendChild(hiddenField1);
-						    var hiddenField2 = document.createElement("input");
-						    hiddenField2.setAttribute("type", "hidden");
-						    hiddenField2.setAttribute("name", "username");
-						    hiddenField2.setAttribute("value", username);
-						    form.appendChild(hiddenField2);
-						
-						    document.body.appendChild(form);
-						    form.submit();
+							location.href="https://192.168.10.146:3000/?a="+roomNameValue+"&b="+nickname;
 						}
 					}else{
 						alert("방이 가득 찼습니다.😭💔");
 					}
-					event.preventDefault();
-				}
 			};
-        	div2.appendChild(buttonElement);
-
-        div3.appendChild(peopleElement);
-        div4.appendChild(typeElement);
-		
-        formElement.appendChild(div1);
-        formElement.appendChild(div2);
-        formElement.appendChild(div3);
-        formElement.appendChild(div4);
-
-        roomElement.appendChild(formElement);
-
-        listOfRoom.appendChild(roomElement);
-        listOfRoom.scrollTop = listOfRoom.scrollHeight;
-     }
+			
+	        formElement.appendChild(num_textElement);
+	        formElement.appendChild(textElement);
+	        formElement.appendChild(peopleElement);
+	        formElement.appendChild(typeElement);
+	
+	        roomElement.appendChild(formElement);
+	
+	        listOfRoom.appendChild(roomElement);
+	        listOfRoom.scrollTop = listOfRoom.scrollHeight;
+		}
+	}
 }
 		
 function enterRoom(newRoomId) {
@@ -206,18 +153,19 @@ function enterRoom(newRoomId) {
 	
 	stompClient.send(`${topic}/addUser`,
 		{},
-		JSON.stringify({sender: nickname, type: 'JOIN', roomid: roomId})
+		JSON.stringify({sender: nickname, messageType: 'JOIN', roomid: roomId})
 	);
 }
 
 function onPreviousMessage(payload)
 {
+	/*
     var messages = JSON.parse(payload.body).messages;
 	noticeArea.textContent = JSON.parse(payload.body).notice;
     for (var i=0, len=messages.length;i<len;i++ )
     {
         showMessage(messages[i]);
-    }
+    }*/
 }
 
 function sendMessage(event) {
@@ -258,7 +206,7 @@ function sendMessage(event) {
       senderid: username,
       sender: nickname,
       content: messageInput.value,
-      type: 'CHAT'
+      messageType: 'CHAT'
     };
     stompClient.send(`${topic}/sendMessage`, {}, JSON.stringify(chatMessage));
   }
@@ -267,7 +215,7 @@ function sendMessage(event) {
 }
 
 function onMessageReceived(payload) {
-	if(JSON.parse(payload.body).type=="NOTICE"){
+	if(JSON.parse(payload.body).messageType=="NOTICE"){
     	noticeArea.textContent = JSON.parse(payload.body).content;
 	}
 	
@@ -278,7 +226,7 @@ function showMessage(message)
 {
     var messageElement = document.createElement('li');
 
-    if(message.type === 'JOIN') {
+    if(message.messageType === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + '님이 입장하셨습니다.';
 
@@ -287,7 +235,7 @@ function showMessage(message)
 	    textElement.appendChild(messageText);
 
     	messageElement.appendChild(textElement);
-    } else if (message.type === 'LEAVE') {
+    } else if (message.messageType === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + '님이 퇴장하셨습니다.';
 
@@ -297,7 +245,7 @@ function showMessage(message)
 
     	messageElement.appendChild(textElement);
     }
-	else if(message.type === 'NOTICE'){
+	else if(message.messageType === 'NOTICE'){
         messageElement.classList.add('event-message');
         message.content = message.sender + '님이 공지를 남겼습니다.';
 
@@ -376,7 +324,7 @@ function showMessage(message)
         div_msg.appendChild(usernameElement);
         messageElement.appendChild(div_msg);
 		
-		if(message.type === 'EMOJI'){
+		if(message.messageType === 'EMOJI'){
 		    var emojiElement = document.createElement('img');
 			emojiElement.setAttribute('src',message.content);
 			emojiElement.setAttribute('style','width:80px;');
@@ -410,7 +358,7 @@ function leave(){
 	
     var chatRoom = {
       sender: nickname,
-      type: 'LEAVE',
+      roomtype: 'LEAVE',
       roomid: currentRoom
     };
 
@@ -419,6 +367,7 @@ function leave(){
 		JSON.stringify(chatRoom)); 
 	currentRoom = null;
     listRoom();
+	document.getElementById('searchbtn').click(); 
 
     while (messageArea.firstChild) {
         messageArea.removeChild(messageArea.firstChild);
@@ -430,21 +379,25 @@ function notice(notice){
 		roomid: currentRoom,
         sender: nickname,
         content: notice,
-        type: 'NOTICE'
+        messageType: 'NOTICE'
     };
     stompClient.send(`${topic}/notice`, {}, JSON.stringify(noticeMessage));
     alert("공지 등록 완료📢");
     noticeArea.textContent = notice;
 }
+
 function createRoom(){
     var createRoomNameValue = createRoomName.value.trim();
-    var createRoomTypeValue = createRoomType.value.trim();
 	var maxpp = $('#maxpp').val();
-
+	if(createRoomType.checked){
+    	var createRoomTypeValue = 'v';
+	}else{
+    	var createRoomTypeValue = 'c';
+	}
     if(createRoomNameValue){
         var chatRoom = {
 			roomid: createRoomNameValue,
-			type: createRoomTypeValue,
+			roomtype: createRoomTypeValue,
 			maxpp: maxpp
         };
         stompClient.send("/chatapp/chat/rooms", {}, JSON.stringify(chatRoom));
@@ -465,6 +418,9 @@ document.getElementById('profileoutButton').addEventListener('click', function p
 	chatPage.classList.remove('hidden');
 	infoPage.classList.add('hidden');
 });
+document.getElementById('refrestbtn').addEventListener('click', function refresh(){
+	document.getElementById('searchbtn').click(); 
+});
 
 //Emoji
 document.getElementById('EmojiButton').addEventListener('click', function a(){
@@ -475,16 +431,16 @@ document.getElementById('EmojiButton').addEventListener('click', function a(){
 		EmojiBox.classList.add('hidden');
 	}
 });
-$(document).on('click', '.modal_close', function(event){
+$(document).on('click', '.modal_close', function(){
 		EmojiBox.classList.add('hidden');
 });
-$(document).on('click', '.Emoji', function(event){
+$(document).on('click', '.Emoji', function(){
 	var emoji = $(this).attr('value');
     var chatMessage = {
-      senderid: username,
-      sender: nickname,
-      content: "/images/emoji/"+emoji+".png",
-      type: 'EMOJI'
+		senderid: username,
+		sender: nickname,
+		content: "/images/emoji/"+emoji+".png",
+		messageType: "EMOJI"
     };
     stompClient.send(`${topic}/sendMessage`, {}, JSON.stringify(chatMessage));
 });

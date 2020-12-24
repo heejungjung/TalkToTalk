@@ -42,7 +42,7 @@ public class WebSocketEventListener {
             logger.info("User Disconnected: " + username);
 
             Message chatMessage = new Message();
-            chatMessage.setType(Message.MessageType.LEAVE);
+            chatMessage.setMessageType(Message.MessageType.LEAVE);
             chatMessage.setSender(username);
             roomListService.Leave(roomId);
 
