@@ -12,6 +12,7 @@ var roommkPage = document.querySelector('#roommk-page');
 var createRoomForm = document.querySelector('#createRoomForm');
 var createRoomName = document.querySelector('#createRoomName');
 var createRoomType = document.querySelector('#createRoomType');
+var createRoomHash = document.querySelector('#createRoomhash');
 
 //Chat Page Variable
 var chatPage = document.querySelector('#chat-page');
@@ -398,7 +399,8 @@ function createRoom(){
         var chatRoom = {
 			roomid: createRoomNameValue,
 			roomtype: createRoomTypeValue,
-			maxpp: maxpp
+			maxpp: maxpp,
+			hash: createRoomHash.value.trim()
         };
         stompClient.send("/chatapp/chat/rooms", {}, JSON.stringify(chatRoom));
 	}

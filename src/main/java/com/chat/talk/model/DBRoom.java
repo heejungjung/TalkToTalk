@@ -28,5 +28,46 @@ public class DBRoom {
 	int peoplemax;
 	String notice;
     char type;
+	public Long getLno() {
+		return lno;
+	}
+	public void setLno(Long lno) {
+		this.lno = lno;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public int getPeople() {
+		return people;
+	}
+	public void setPeople(int people) {
+		this.people = people;
+	}
+	public int getPeoplemax() {
+		return peoplemax;
+	}
+	public void setPeoplemax(int peoplemax) {
+		this.peoplemax = peoplemax;
+	}
+	public String getNotice() {
+		return notice;
+	}
+	public void setNotice(String notice) {
+		this.notice = notice;
+	}
+	public char getType() {
+		return type;
+	}
+	public void setType(char type) {
+		this.type = type;
+	}
 	
+	@Override
+	public String toString() {
+		return "DBRoom [lno=" + lno + ", title=" + title + ", people=" + people + ", peoplemax=" + peoplemax
+				+ ", notice=" + notice + ", type=" + type + "]";
+	}
 }

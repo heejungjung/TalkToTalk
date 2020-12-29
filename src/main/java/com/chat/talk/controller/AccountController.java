@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.chat.talk.model.Files;
 import com.chat.talk.model.Mailer;
-import com.chat.talk.services.SMTPAuthenticator;
 import com.chat.talk.model.User;
 import com.chat.talk.services.FilesService;
 import com.chat.talk.services.UserService;

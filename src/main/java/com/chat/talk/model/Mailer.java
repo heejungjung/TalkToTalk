@@ -1,6 +1,7 @@
 package com.chat.talk.model;
 
 import java.util.Properties;
+
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -8,7 +9,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.chat.talk.services.SMTPAuthenticator;
+import com.chat.talk.controller.SMTPAuthenticator;
 
 public class Mailer {
 	public void sendMail(String to, String subject, String content, SMTPAuthenticator smtp) {

@@ -23,6 +23,7 @@ import com.chat.talk.model.ChatRoom;
 import com.chat.talk.model.Message;
 import com.chat.talk.services.DBMsgService;
 import com.chat.talk.services.FilesService;
+import com.chat.talk.services.HashtagService;
 import com.chat.talk.services.RoomListService;
 import com.chat.talk.services.UserService;
 
@@ -34,6 +35,9 @@ public class ChatAppController
 
     @Autowired
     private RoomListService roomListService;
+
+    @Autowired
+    private HashtagService hashtagService;
 
     @Autowired
     private DBMsgService dbMsgService;
@@ -132,6 +136,7 @@ public class ChatAppController
             chatRoom.setNowpp(0);
             rooms.add(chatRoom);
             roomListService.addroom(chatRoom);
+            hashtagService.addhash(chatRoom);
         }
         
         messagingTemplate.convertAndSend("/room/list", rooms);

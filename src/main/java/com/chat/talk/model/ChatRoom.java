@@ -9,6 +9,7 @@ public class ChatRoom
     int maxpp;
     char roomtype;
     List<Message> messages;
+    String hash;
     
 	public String getRoomid() {
 		return roomid;
@@ -40,10 +41,17 @@ public class ChatRoom
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
+	public String getHash() {
+		return hash;
+	}
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
+    
 	@Override
 	public String toString() {
-		return "ChatRoom [roomid=" + roomid + ", nowpp=" + nowpp + ", maxpp=" + maxpp + ", roomtype=" + roomtype + ", messages="
-				+ messages + "]";
+		return "ChatRoom [roomid=" + roomid + ", nowpp=" + nowpp + ", maxpp=" + maxpp + ", roomtype=" + roomtype
+				+ ", messages=" + messages + ", hash=" + hash + "]";
 	}
     
 }

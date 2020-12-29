@@ -1,7 +1,6 @@
 package com.chat.talk.services;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ public class DBMsgService {
     	dbmsg.setSex(message.getSex());
     	dbmsg.setTime(now());
     	dbmsg.setSenderid(userRepository.findByNickname(message.getSender()).getUsername());
-    	System.out.println("22222222222222222222:"+dbmsg.toString());
     	
         return dbMsgRepository.save(dbmsg);
     }
@@ -40,7 +38,6 @@ public class DBMsgService {
     	dbmsg.setSex(message.getSex());
     	dbmsg.setTime(now());
     	dbmsg.setSenderid(userRepository.findByNickname(message.getSender()).getUsername());
-    	System.out.println("22222222222222222222:"+dbmsg.toString());
     	
         return dbMsgRepository.save(dbmsg);
     }
@@ -52,7 +49,6 @@ public class DBMsgService {
     	dbmsg.setSex(message.getSex());
     	dbmsg.setTime(now());
     	dbmsg.setSenderid(userRepository.findByNickname(message.getSender()).getUsername());
-    	System.out.println("22222222222222222222:"+dbmsg.toString());
     	
         return dbMsgRepository.save(dbmsg);
     }
@@ -64,7 +60,6 @@ public class DBMsgService {
     	dbmsg.setSex(message.getSex());
     	dbmsg.setTime(now());
     	dbmsg.setSenderid(userRepository.findByNickname(message.getSender()).getUsername());
-    	System.out.println("22222222222222222222:"+dbmsg.toString());
     	
         return dbMsgRepository.save(dbmsg);
     }

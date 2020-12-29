@@ -490,11 +490,6 @@ body {
     top: 65px;
     width: 100%;
 }
-.chat-header>h1{
-	margin:0;
-	padding:0;
-	border:0;
-}
 .popup-button {
 	width: 100%;
 	display: flex;

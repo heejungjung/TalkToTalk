@@ -94,8 +94,8 @@
 		<input class="hidden" id="hey" value="${user.username}">
 			<div id="room-page">
 				<div class="chat-container">
-					<div class="chat-header">
-						<h1 class="card-title">Room List</h1>
+					<div class="chat-header form-inline text-center">
+						<h1>Room List</h1>
 						<button id="refrestbtn" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
 							<i class="material-icons">refresh</i>
 						</button>
@@ -153,6 +153,13 @@
 						</div>
 						<div class="col-sm">
 							<div class="form-field">
+								<div><b>hashtag:</b>
+									<input class="popup-button-input" id="createRoomhash" type="text" placeholder="#을 기준으로 생성됩니다." />
+								</div>
+							</div>
+						</div>
+						<div class="col-sm">
+							<div class="form-field">
 				              <div class="togglebutton">
 				                <label>
 				                  <input type="checkbox" id="createRoomType">
@@ -192,7 +199,7 @@
 						<div class="form-group">
 							<div class="row">
 					            <div class="col-lg-8 col-sm-4">
-					              <div class="form-group row">
+					              <div class="form-inline form-group row">
 									  <input type="text" id="message" placeholder="/leave -방을 떠나기   /notice -공지 남기기 "
 											autocomplete="off" class="form-control"/>
 					                  <button type="submit" class="btn btn-white btn-raised btn-fab btn-round">
