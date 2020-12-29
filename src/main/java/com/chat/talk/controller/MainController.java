@@ -57,6 +57,10 @@ public class MainController {
 		List<Files> files = filesRepository.findAll();
 	    Collections.shuffle(files);
 		model.addAttribute("files", files);
+
+		List<User> users = userRepository.findAll();
+	    Collections.shuffle(users);
+		model.addAttribute("users", users);
 		return "index";
 	}
 	

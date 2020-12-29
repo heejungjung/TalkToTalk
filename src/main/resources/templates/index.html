@@ -225,7 +225,7 @@ input[type=radio]:checked + label>img {
                                 </div>
                                 <div class="carousel-testimonial-caption">
                                     <p th:text="${file.nickname}">Jay Z, Producer</p>
-                                    ❝ <span style="font-size:2em;" th:text="${file.message}">"It's truly amazing and looks awesome!"</span> ❞
+                                    	❝ <span style="font-size:2em;" th:text="${file.message}">"It's truly amazing and looks awesome!"</span> ❞
                                 </div>
                             </div>
    							</th:block>
@@ -236,7 +236,15 @@ input[type=radio]:checked + label>img {
         </div>
     </div>
 	<!-- end What people think -->
-	
+  	<th:block th:each="user:${users}">
+		<div class="item">
+			<div class="carousel-testimonial-caption">
+				<p th:text="${user.nickname}">Jay Z, Producer</p>
+				<span style="font-size:2em;" th:text="${user.sex}=='F'?'여자':'남자'">"It's truly amazing and looks awesome!"</span>
+			</div>
+		</div>
+	</th:block>
+
 	<!-- tabs -->
     <div class="section">
       <div class="container">
