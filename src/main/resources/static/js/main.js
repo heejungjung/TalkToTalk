@@ -32,6 +32,7 @@ var roomId = null;
 var topic = null;
 var currentRoom = null;
 
+
 $(document).ready(function(){connect();});
 
 function connect() {
