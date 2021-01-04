@@ -41,6 +41,14 @@
     border-bottom: 20px solid transparent;
     border-right: 20px solid #5a99ee;
 }
+h1 {
+	margin: 0;
+	display: inline-block;
+}
+button {
+  float: right;
+  vertical-align: middle;
+}
 </style>
 </head>
 
@@ -94,7 +102,7 @@
 		<input class="hidden" id="hey" value="${user.username}">
 			<div id="room-page">
 				<div class="chat-container">
-					<div class="chat-header form-inline text-center">
+					<div class="chat-header text-center">
 						<h1>Room List</h1>
 						<button id="refrestbtn" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
 							<i class="material-icons">refresh</i>
@@ -113,8 +121,8 @@
 
 					</ul>
 	                <form action="/chat/search" id="searchForm" class="form-inline ml-auto col-md-12" method="get">
-	                  <div class="form-group">
-	                    <input type="text" id="search" name="search" class="form-control" placeholder="Search" autocomplete="off">
+	                  <div class="form-group" style="width:93%;">
+	                    <input type="text" id="search" name="search" class="form-control" style="width:98%;" placeholder="Search" autocomplete="off">
 	                  </div>
 	                  <button id="searchbtn" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
 	                    <i class="material-icons">search</i>
@@ -124,61 +132,49 @@
 			</div>
 			<div id="roommk-page" class="hidden">
 				<div class="chat-container">
-					<div class="chat-header">
-						<h1 style="text-align:center;">채팅방 개설
-	                  <button id="roommkoutButton" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
-	                    <i class="material-icons">clear</i>
-	                  </button></h1>
-					</div><br><br><br>
-					<div>
-						<div class="col-sm">
-							<div class="form-field">
-								<div><b>방&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp제:</b>
-									<input class="popup-button-input" id="createRoomName" type="text" placeholder="방제를 입력하세요" />
+					<div class="chat-header text-center">
+						<h1>채팅방 개설</h1>
+						<button id="roommkoutButton" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
+							<i class="material-icons">clear</i>
+						</button>
+					</div><br><br>
+					<br><br><br>
+					<div class="form-field form-group">
+						<h3>방&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp제:</h3>
+						<input class="form-control col-4" id="createRoomName" type="text" placeholder="방제를 입력하세요" />
+					</div><br><br>
+					<div class="form-field form-group">
+						<h3>최대인원:</h3>
+							<select class="form-control col-4" id="maxpp" name="maxpp">
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4" selected="selected">4</option>
+								<option value="6">6</option>
+								<option value="10">10</option>
+							</select>
+					</div><br><br>
+					<div class="form-field">
+						<h3>해쉬태그:</h3>
+						<input class="form-control col-4" id="createRoomhash" type="text" placeholder="#을 기준으로 생성됩니다." />
+					</div><br><br>
+					<div class="form-field">
+		              <div class="togglebutton">
+		                <label>
+		                  <input type="checkbox" id="createRoomType">
+		                  <span class="toggle"></span>
+		                  Video Call
+		                </label>
+		              </div>
+					</div><br>
+					<div class="popup-button">
+						<form id="createRoomForm" name="createRoomForm">
+							<div class="form-group">
+								<div class="input-group clearfix">
+									<button type="submit" class="btn btn-primary btn-round" id="createRoom">방 개설</button> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+									<button class="btn btn-warning btn-round" type="submit">나가기</button>
 								</div>
 							</div>
-						</div>
-						<div class="col-sm">
-							<div class="form-field">
-									<div><b>최대인원:</b>
-										<select class="popup-button-input" id="maxpp" name="maxpp">
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4" selected="selected">4</option>
-											<option value="6">6</option>
-											<option value="10">10</option>
-										</select>
-									</div>
-							</div>
-						</div>
-						<div class="col-sm">
-							<div class="form-field">
-								<div><b>hashtag:</b>
-									<input class="popup-button-input" id="createRoomhash" type="text" placeholder="#을 기준으로 생성됩니다." />
-								</div>
-							</div>
-						</div>
-						<div class="col-sm">
-							<div class="form-field">
-				              <div class="togglebutton">
-				                <label>
-				                  <input type="checkbox" id="createRoomType">
-				                  <span class="toggle"></span>
-				                  Video Call
-				                </label>
-				              </div>
-							</div>
-						</div><br>
-						<div class="popup-button">
-							<form id="createRoomForm" name="createRoomForm">
-								<div class="form-group">
-									<div class="input-group clearfix">
-										<button type="submit" class="popup-button-bt" id="createRoom">방 개설</button> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-										<button class="popup-button-bt" type="submit">나가기</button>
-									</div>
-								</div>
-							</form>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -195,100 +191,95 @@
 					<ul id="messageArea">
 
 					</ul>
-					<form id="messageForm" name="messageForm" nameForm="messageForm">
-						<div class="form-group">
-							<div class="row">
-					            <div class="col-lg-8 col-sm-4">
-					              <div class="form-inline form-group row">
-									  <input type="text" id="message" placeholder="/leave -방을 떠나기   /notice -공지 남기기 "
-											autocomplete="off" class="form-control"/>
-					                  <button type="submit" class="btn btn-white btn-raised btn-fab btn-round">
-					                    <i class="material-icons">send</i>
-					                  </button>
-					                  <button id="EmojiButton" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
-					                    <i class="material-icons">insert_emoticon</i>
-					                  </button>
-					               </div>
-								</div>
-							</div>
-							<div id="EmojiBox" class="hidden">
-								<div type="button" class="modal_close" for="open-pop"></div>
-								<h2> 이모티콘 </h2>
-								<button class="Emoji" value="ahaha" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/ahaha.png" style="width:50%;"></button>
-								<button class="Emoji" value="cheers" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/cheers.png" style="width:50%;"></button>
-								<button class="Emoji" value="crying" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/crying.png" style="width:50%;"></button>
-								<button class="Emoji" value="curious" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/curious.png" style="width:50%;"></button>
-								<button class="Emoji" value="cute" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/cute.png" style="width:50%;"></button>
-								<button class="Emoji" value="dance" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/dance.png" style="width:50%;"></button>
-								<button class="Emoji" value="despair" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/despair.png" style="width:50%;"></button>
-								<button class="Emoji" value="fart" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/fart.png" style="width:50%;"></button>
-								<button class="Emoji" value="full" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/full.png" style="width:50%;"></button>
-								<button class="Emoji" value="glance" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/glance.png" style="width:50%;"></button>
-								<button class="Emoji" value="gross" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/gross.png" style="width:50%;"></button>
-								<button class="Emoji" value="guard" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/guard.png" style="width:50%;"></button>
-								<button class="Emoji" value="knockdown" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/knockdown.png" style="width:50%;"></button>
-								<button class="Emoji" value="lookingforward" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/lookingforward.png" style="width:50%;"></button>
-								<button class="Emoji" value="love" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/love.png" style="width:50%;"></button>
-								<button class="Emoji" value="mad" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/mad.png" style="width:50%;"></button>
-								<button class="Emoji" value="mask" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/mask.png" style="width:50%;"></button>
-								<button class="Emoji" value="mermaid" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/mermaid.png" style="width:50%;"></button>
-								<button class="Emoji" value="normal" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/normal.png" style="width:50%;"></button>
-								<button class="Emoji" value="omg" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/omg.png" style="width:50%;"></button>
-								<button class="Emoji" value="shining" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/shining.png" style="width:50%;"></button>
-								<button class="Emoji" value="sleeping" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/sleeping.png" style="width:50%;"></button>
-								<button class="Emoji" value="smile" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/smile.png" style="width:50%;"></button>
-								<button class="Emoji" value="sneak" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/sneak.png" style="width:50%;"></button>
-								<button class="Emoji" value="sullen" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/sullen.png" style="width:50%;"></button>
-								<button class="Emoji" value="swag" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/swag.png" style="width:50%;"></button>
-								<button class="Emoji" value="thumb" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/thumb.png" style="width:50%;"></button>
-								<button class="Emoji" value="touchhorn" style="padding:0;margin:0;height:20%;background:white;"><img src="/images/emoji/touchhorn.png" style="width:50%;"></button>
-								<button class="Emoji" value="vomit" style="padding:0;margin:0;height:20%;background:white;background:white;"><img src="/images/emoji/vomit.png" style="width:50%;"></button>
-							</div>
+					<div id="EmojiBox" class="hidden" style="overflow: hidden;">
+					<ul class="items" style="overflow: hidden;">
+						<li class="dragitem"><button class="Emoji" value="ahaha"><img src="/images/emoji/ahaha.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="cheers"><img src="/images/emoji/cheers.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="crying"><img src="/images/emoji/crying.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="curious"><img src="/images/emoji/curious.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="cute"><img src="/images/emoji/cute.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="dance"><img src="/images/emoji/dance.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="despair"><img src="/images/emoji/despair.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="fart"><img src="/images/emoji/fart.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="full"><img src="/images/emoji/full.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="glance"><img src="/images/emoji/glance.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="gross"><img src="/images/emoji/gross.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="guard"><img src="/images/emoji/guard.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="knockdown"><img src="/images/emoji/knockdown.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="lookingforward"><img src="/images/emoji/lookingforward.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="love"><img src="/images/emoji/love.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="mad"><img src="/images/emoji/mad.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="mask"><img src="/images/emoji/mask.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="mermaid"><img src="/images/emoji/mermaid.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="normal"><img src="/images/emoji/normal.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="omg"><img src="/images/emoji/omg.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="shining"><img src="/images/emoji/shining.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="sleeping"><img src="/images/emoji/sleeping.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="smile"><img src="/images/emoji/smile.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="sneak"><img src="/images/emoji/sneak.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="sullen"><img src="/images/emoji/sullen.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="swag"><img src="/images/emoji/swag.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="thumb"><img src="/images/emoji/thumb.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="touchhorn"><img src="/images/emoji/touchhorn.png"></button></li>
+						<li class="dragitem"><button class="Emoji" value="vomit"><img src="/images/emoji/vomit.png"></button></li>
+					</ul>
+					</div>
+					<form id="messageForm" name="messageForm" class="form-inline ml-auto col-md-12" nameForm="messageForm">
+						<div class="form-group" style="width:100%;">
+			             	<div class="form-group" style="width:87%;">
+							  <input type="text" id="message" placeholder="/leave -방을 떠나기   /notice -공지 남기기 " style="width:99%;" autocomplete="off" class="form-control"/>
+			            	</div>
+			                  <button type="submit" class="btn btn-white btn-raised btn-fab btn-round">
+			                    <i class="material-icons">send</i>
+			                  </button>
+			                  <button id="EmojiButton" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
+			                    <i class="material-icons">insert_emoticon</i>
+			                  </button>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div id="info-page" class="hidden">
 				<div class="chat-container text-center" style="display:flex;flex-direction:column;align-content:space-around;">
-						<div class="chat-header">
-							<h1>I'm <span id="userinfo_nickname" style="font-weight:bold;">error</span> 😉.
-							<button id="profileoutButton" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
-								<i class="material-icons">reply</i>
-							</button></h1>
+					<div class="chat-header">
+						<h1>I'm <span id="userinfo_nickname" style="font-weight:bold;">error</span> 😉.
+						<button id="profileoutButton" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
+							<i class="material-icons">reply</i>
+						</button></h1>
+					</div>
+			        <div class="profile-content"><br>
+				        <div style="overflow:hidden;display:flex;align-items:center;
+						justify-content:center;width:100%;height:300px;">
+							<img width="300px" class="userinfo_pic" id="userinfo_pic"
+							style="border: 1px solid #ddd;border-radius: 4px;padding: 5px;border-radius:10px 30px 50px 80px;" src=>
+						</div><br>
+			            <div class="bio-message">
+			            	<h2>👄<span id="userinfo_bio">bio</span>👄</h2>
+			            </div><br><br>
+			            <div class="row">
+			                <div class="col-xs-4">
+			                    <div style="color: #777;">
+			                        <h2>🌈 gender 🌈</h2>
+									<h3 id="userinfo_sex">gender</h3>
+			                	</div>
+			                </div>
+			                <div class="col-xs-4">
+			                    <div style="color: #777;">
+			                        <h2>🏠 city 🏠</h2>
+									<h3 id="userinfo_city">city</h3>
+			                	</div>
+			                </div>
+			                <div class="col-xs-4">
+			                    <div style="color: #777;">
+			                        <h2>🍰 birthday 🍰</h2>
+									<h3 id="userinfo_birthday">birthday</h3>
+			                	</div>
+			            	</div>
 						</div>
-				        <div class="profile-content"><br>
-					        <div style="overflow:hidden;display:flex;align-items:center;
-							justify-content:center;width:100%;height:300px;">
-								<img width="300px" class="userinfo_pic" id="userinfo_pic"
-								style="border: 1px solid #ddd;border-radius: 4px;padding: 5px;border-radius:10px 30px 50px 80px;" src=>
-							</div><br>
-				            <div class="bio-message">
-				            	<h2>👄<span id="userinfo_bio">bio</span>👄</h2>
-				            </div><br><br>
-				            <div class="row">
-				                <div class="col-xs-4">
-				                    <div style="color: #777;">
-				                        <h2>🌈 gender 🌈</h2>
-										<h3 id="userinfo_sex">gender</h3>
-				                	</div>
-				                </div>
-				                <div class="col-xs-4">
-				                    <div style="color: #777;">
-				                        <h2>🏠 city 🏠</h2>
-										<h3 id="userinfo_city">city</h3>
-				                	</div>
-				                </div>
-				                <div class="col-xs-4">
-				                    <div style="color: #777;">
-				                        <h2>🍰 birthday 🍰</h2>
-										<h3 id="userinfo_birthday">birthday</h3>
-				                	</div>
-				            	</div>
-							</div>
-				    	</div>
+			    	</div>
+				</div>
 			</div>
-	</div>
-	
+
 	<script src="http://code.jquery.com/jquery-3.3.1.min.js"
 		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 		crossorigin="anonymous"></script>
@@ -333,6 +324,46 @@
 			    }
 			})
 		});
+	 
+	 var startTouchX = null; 
+	 var startTouchY = null; 
+	 var moveTouchX = null; 
+	 var moveTouchY = null; 
+	 var startPositionX = null; 
+	 var startPositionY = null; 
+
+	 //이모지 스크롤
+	  const slider = document.querySelector('.items');
+	  let isMouseDown = false;
+	  let startX, scrollLeft;
+
+	  slider.addEventListener('mousedown', (e) => {
+	    isMouseDown = true;
+	    slider.classList.add('active');
+
+	    startX = e.pageX - slider.offsetLeft;
+	    scrollLeft = slider.scrollLeft;
+	  });
+	  
+	  slider.addEventListener('mouseleave', () => {
+	    isMouseDown = false;
+	    slider.classList.remove('active');
+	  });
+	  
+	  slider.addEventListener('mouseup', () => {
+	    isMouseDown = false;
+	    slider.classList.remove('active');
+	  });
+
+	  slider.addEventListener('mousemove', (e) => {
+	    if (!isMouseDown) return;
+
+	    e.preventDefault();
+	    const x = e.pageX - slider.offsetLeft;
+	    const walk = (x - startX) * 1;
+	    slider.scrollLeft = scrollLeft - walk;
+	  });
+
 	</script>
 </body>
 </html>

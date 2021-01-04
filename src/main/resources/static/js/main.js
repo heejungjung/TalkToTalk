@@ -427,15 +427,12 @@ document.getElementById('refrestbtn').addEventListener('click', function refresh
 
 //Emoji
 document.getElementById('EmojiButton').addEventListener('click', function a(){
-	var EmojiBox = document.querySelector('#EmojiBox');
+	var EmojiBox = document.getElementById('EmojiBox');
 	if(EmojiBox.classList.contains('hidden')){
 		EmojiBox.classList.remove('hidden');
 	} else{
 		EmojiBox.classList.add('hidden');
 	}
-});
-$(document).on('click', '.modal_close', function(){
-		EmojiBox.classList.add('hidden');
 });
 $(document).on('click', '.Emoji', function(){
 	var emoji = $(this).attr('value');
