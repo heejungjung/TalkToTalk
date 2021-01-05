@@ -119,7 +119,22 @@ function onListofRoom(payload)
 					        chatPage.classList.remove('hidden');
 					        enterRoom(roomNameValue);
 						}else{
-							location.href="https://192.168.10.146:3000/?a="+roomNameValue+"&b="+nickname;
+					        $.ajax({
+					            type: "GET",
+					            url: "/ipget",
+					            data: {
+					    	    	hi: "hi"
+					            },
+					            success: function (responseData) {
+						            var data = JSON.parse(responseData);
+					            	alert(data);
+									//location.href="https://192.168.10.146:3000/?a="+roomNameValue+"&b="+nickname;
+									location.href="https://"+data.ip+":3000/?a="+roomNameValue+"&b="+nickname;
+					            },
+					    		error : function(err) {
+					    			alert("실패");
+					    		}
+					        })
 						}
 					}else{
 						alert("방이 가득 찼습니다.😭💔");

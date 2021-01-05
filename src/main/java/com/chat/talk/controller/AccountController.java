@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,9 @@ public class AccountController {
     @Autowired
     private FilesService filesService;
 
+    @Value("${dir}")
+    private String dir;
+    
     @GetMapping("/login")
     public String login() {
         return "account/login";
@@ -72,7 +76,7 @@ public class AccountController {
 		if(sourceFileName != null && !sourceFileName.equals("")) {
 			File destinationFile;
 			String destinationFileName;
-			String fileUrl = "D:\\eclipse-workspace\\ttt\\src\\main\\resources\\static\\images\\"+username+"\\";
+			String fileUrl = dir+username+"\\";
 
 			destinationFileName = profiledate() + "_" + sourceFileName;
 			destinationFile = new File(fileUrl + destinationFileName);

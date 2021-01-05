@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,12 @@ public class MainController {
     
     @Autowired
 	private Files file;
+
+    @Value("${dir}")
+    private String dir;
+
+    @Value("${ip}")
+    private String ip;
 
 	@GetMapping("/")
 	public String index(Model model) {
@@ -213,7 +220,7 @@ public class MainController {
 		if(sourceFileName != null && !sourceFileName.equals("")) {
 			File destinationFile;
 			String destinationFileName;
-			String fileUrl = "D:\\eclipse-workspace\\ttt\\src\\main\\resources\\static\\images\\"+username+"\\";
+			String fileUrl = dir+username+"\\";
 
 			destinationFileName = profiledate() + "_" + sourceFileName;
 	    	filesRepository.updateFilename(destinationFileName,username);
@@ -237,4 +244,16 @@ public class MainController {
 		return str.replace("-","");
 	}
 
+	@GetMapping("/ipget")
+	public void ipget(HttpServletRequest request, HttpServletResponse response,Model model,
+			@RequestParam("hi") String hi) {
+		System.out.println("hey"+hi);
+	    String personJson = "{\"ip\":\""+ip+"\"}";
+	    try {
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().print(personJson);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
