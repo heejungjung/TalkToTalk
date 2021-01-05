@@ -220,7 +220,7 @@ public class MainController {
 		if(sourceFileName != null && !sourceFileName.equals("")) {
 			File destinationFile;
 			String destinationFileName;
-			String fileUrl = dir+username+"\\";
+			String fileUrl = dir+username+"/";
 
 			destinationFileName = profiledate() + "_" + sourceFileName;
 	    	filesRepository.updateFilename(destinationFileName,username);

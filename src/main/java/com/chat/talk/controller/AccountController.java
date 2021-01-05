@@ -76,7 +76,7 @@ public class AccountController {
 		if(sourceFileName != null && !sourceFileName.equals("")) {
 			File destinationFile;
 			String destinationFileName;
-			String fileUrl = dir+username+"\\";
+			String fileUrl = dir+username+"/";
 
 			destinationFileName = profiledate() + "_" + sourceFileName;
 			destinationFile = new File(fileUrl + destinationFileName);
