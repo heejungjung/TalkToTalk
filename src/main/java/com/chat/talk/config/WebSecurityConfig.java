@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
            		.loginProcessingUrl("/loginProcess")
                 .usernameParameter("username")
                 .passwordParameter("password")
-//					.defaultSuccessUrl("/")  
+//				.defaultSuccessUrl("/")  
                 .successHandler(authSuccessHandler)
                 .permitAll()
                 .and()
