@@ -79,6 +79,8 @@ dir=
 ## 🔖 Information 🔖
 
 💁 Name – Heejeong Jeong(Amy Jeong)
+
+
 🏳‍🌈 [@Instagram](https://www.instagram.com/j.amy_jeong/) 🏳‍🌈
 
 🏳‍🌈 [gh-page](https://heejungjung.github.io/Heejungjung/) 🏳‍🌈
