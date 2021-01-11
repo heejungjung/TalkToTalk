@@ -59,7 +59,7 @@ dir=
 > Chat room
 
 ![userpage](https://user-images.githubusercontent.com/28649385/104158435-b5314300-5430-11eb-995e-a6a6d83872d0.JPG)
-> You can see user page by clicking on profile pics in a chat room.
+> You can see the user's page by clicking on a profile pic in a chat room.
 
 
 ## ✍ Settings ✍
