@@ -1,0 +1,278 @@
+body {
+  font-size:20px;
+	}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.items {
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  transform: scale(0.98);
+  will-change: transform;
+  position: relative;
+  background: rgba(255,255,255,0.1);
+  font-size: 0;
+  perspective: 500px;
+  
+  white-space:nowrap;
+  height:100%;
+  margin:0;
+  padding:0;
+}
+
+.items.active {
+  background: rgba(255,255,255,0.3);
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  transform: scale(1);
+}
+
+.dragitem {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  display:inline-block;
+  margin-right:10px;
+}
+#EmojiBox{
+	overflow-x: hidden;
+	position: absolute;
+	bottom: 5%;
+	left: 3%;
+	width:95%;
+	height:10%;
+	padding:0;
+	margin:0;
+}
+#EmojiBox button{
+	padding:0;
+	margin:0;
+	margin-right:10px;
+	background:white;
+	width:40px;
+	height:40px;
+	border:0;
+	white-space:nowrap;
+	overflow:auto;
+}
+#EmojiBox button img{
+	width:100%;
+}
+/* popup */
+.form-field {
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  margin-bottom: 5%;
+}
+.clearfix:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+#chat-page {
+    position: relative;
+    height: 100%;
+}
+
+.chat-container {
+   top: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    height: 800px;
+    max-height: 1000px;
+    position: relative;
+}
+
+.list-group {
+    height: 700px;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+#chat-page ul {
+    list-style-type: none;
+    background-color: #FFF;
+    margin: 0;
+    overflow: auto;
+    overflow-y: scroll;
+    padding: 0 0px 0px 0px;
+    height: 630px;
+}
+#room-page ul {
+    list-style-type: none;
+    background-color: #FFF;
+    margin: 0;
+    overflow: auto;
+    overflow-y: scroll;
+    padding: 0 0px 0px 0px;
+    height: 660px;
+}
+
+#chat-page #messageForm {
+    padding: 15px;
+}
+
+#chat-page ul li {
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+}
+
+#chat-page ul li p {
+    margin: 0;
+}
+
+#chat-page .event-message {
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
+
+#chat-page .event-message p {
+    color: #777;
+    word-wrap: break-word;
+}
+
+.chat-message-group .chat-thumb{
+  float: left;
+  height:9px;
+  width: 7%;
+  margin-right: 3%;
+}
+.chat-message-group .chat-messages{
+  float: left;
+  width: 90%;
+  margin-bottom: 20px;
+}
+.chat-message-group .message{
+  float: left;
+  padding: 10px;
+  background: #ecf1f8;
+  border-radius: 5px;
+  margin-bottom: 3px;
+  word-break:normal;
+}
+.chat-messages .from{
+  float: left;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.chat-thumb img{
+  	width: 100%;
+	border-radius: 40px;
+}
+.writer-user .chat-thumb{
+	display:none;
+}
+.writer-user .chat-messages{
+  float: right;
+  width: 100%;
+}
+.writer-user .chat-messages .message{
+  float: right;
+  background: #683db8;
+  color: #FFF;
+}
+.writer-user .chat-messages .from{
+  float: left;
+  display: block;
+  width: 100%;
+  text-align: right;
+}
+
+.chat-header {
+    text-align: center;
+    padding: 15px;
+    border-bottom: 1px solid #ececec;
+}
+
+.connecting {
+    padding-top: 5px;
+    text-align: center;
+    color: #777;
+    position: absolute;
+    top: 65px;
+    width: 100%;
+}
+.popup-button {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+}
+.room-page-bar {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background : RGB(161,176,221);
+}
+
+.room-page-bar-no {
+	width: 15%;
+	text-align: center;
+}
+
+.room-page-bar-title {
+	width: 65%;
+	text-align: center;
+}
+
+.room-page-bar-people {
+	width: 30%;
+	text-align: center;
+}
+
+.noticeArea {
+	border : 1px solid RGB(104,61,184);
+	height: 5%;
+    overflow: auto;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+#list_num_css {
+	height:100%;
+	width: 11%;
+	text-align: center;
+}
+
+@media screen and (max-width: 730px) {
+    .chat-container {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .chat-container {
+        height: calc(100% - 30px);
+    }
+
+    #chat-page ul {
+        height: calc(100% - 120px);
+    }
+    .chat-header {
+        padding: 10px;
+    }
+
+    .connecting {
+        top: 60px;
+    }
+}
