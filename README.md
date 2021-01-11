@@ -89,7 +89,7 @@ dir=
 
 ## 🤗 Contribution 🤗
 
-1. (<https://github.com/yourname/yourproject/fork>) fork.
+1. (<https://github.com/heejungjung/TalkToTalk/fork>) fork.
 2. (`git checkout -b feature/fooBar`) create new branch.
 3. (`git commit -am 'Add some fooBar'`) commit.
 4. (`git push origin feature/fooBar`) push. 
