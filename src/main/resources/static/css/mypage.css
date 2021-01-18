@@ -1,7 +1,7 @@
 @charset "UTF-8"; 
 
 a, b, body, center, div, em, footer, form, h1, h2, h3, h4, h5, h6,
-	header, html, i, img, p, small, span, table, td, th, tr {
+	header, html, i, img, p, span, table, td, th, tr {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -531,11 +531,6 @@ table th {
 .button.icon:before, button.icon:before, input[type=button].icon:before,
 	input[type=reset].icon:before, input[type=submit].icon:before {
 	margin-right: .5em
-}
-
-.button.small, button.small, input[type=button].small, input[type=reset].small,
-	input[type=submit].small {
-	font-size: .8em
 }
 
 .button:disabled, button:disabled, input[type=button]:disabled, input[type=reset]:disabled,
