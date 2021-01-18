@@ -24,6 +24,7 @@ import lombok.ToString;
 @Table(name="role")
 @NoArgsConstructor
 @AllArgsConstructor
+//권한
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

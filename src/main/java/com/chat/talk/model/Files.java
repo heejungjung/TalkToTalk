@@ -20,6 +20,7 @@ import lombok.ToString;
 @ToString
 @Table(name = "profile")
 @Component
+//프로필사진 및 상태메시지
 public class Files {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

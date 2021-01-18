@@ -1,11 +1,10 @@
-//User Name Page Variable
+//User Name Variable
 var username = document.getElementById('username').innerText;
 var nickname = document.getElementById('nickname').innerText;
 
 //Chat Room Page Variable
 var roomPage = document.querySelector('#room-page');
 var listOfRoom = document.querySelector('#listRoom');
-var roomName = document.querySelector('#roomName');
 
 //Chat RoomMk Page Variable
 var roommkPage = document.querySelector('#roommk-page');
@@ -22,8 +21,6 @@ var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 var roomIdDisplay = document.querySelector('#room-id-display');
 var noticeArea = document.querySelector('#noticeArea');
-
-//Chat Page Variable
 var infoPage = document.querySelector('#info-page');
 
 var stompClient = null;
@@ -32,40 +29,38 @@ var roomId = null;
 var topic = null;
 var currentRoom = null;
 
-
 $(document).ready(function(){connect();});
 
+//연결
 function connect() {
     if(nickname) {
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
-
         stompClient.connect({}, onConnected, onError);
     }
 }
 
-//아래 두개를 위에 콜백 함수
+//연결됨
 function onConnected() {
   listRoom();
   connectingElement.classList.add('hidden');
 }
-
+//연결 오류
 function onError(error) {
     connectingElement.textContent = '연결에 실패했습니다! 다시 시도해주십시오. :)';
     connectingElement.style.color = 'red';
 }
 
-//Function Called from On COnnected Function
+//연결되면 리스트 부르기
 function listRoom()
 {
     if (currentSubscription) {
         currentSubscription.unsubscribe();
-		//그 방의 사람수도 -1
     }
     currentSubscription = stompClient.subscribe(`/chatapp/chat/rooms`, onListofRoom);
 }
 
-// Result form subscribe function of listRoom is processed here
+//방 리스트
 function onListofRoom(payload)
 {
 	document.getElementById('listRoom').innerText = "";
@@ -84,18 +79,19 @@ function onListofRoom(payload)
 	        formElement.setAttribute("name", "joinroom");
 	        formElement.setAttribute("style", "display: flex;align-items: center;");
 	
-			/*방번호 나오도록*/
+			//방 번호
 	        var num_textElement = document.createElement('label');
 	        num_textElement.setAttribute("id","list_num_css");
 	        var num_roomText = document.createTextNode(i+1);
 	        num_textElement.appendChild(num_roomText);
 	
+			//방 이름
 	        var textElement = document.createElement('label');
 	        textElement.classList.add('float-right');
-	        //textElement.setAttribute("style","margin-right: 5%;");
 	        var roomText = document.createTextNode(rooms[i].roomid);
 	        textElement.appendChild(roomText);
 	
+			//방 인원
 	        var peopleElement = document.createElement('label');
 	        peopleElement.setAttribute("style","margin-right: 50px");
 	        var roomText = document.createTextNode(rooms[i].nowpp+"/"+rooms[i].maxpp);
@@ -103,6 +99,7 @@ function onListofRoom(payload)
 	        peopleElement.classList.add('float-right');
 			peopleElement.setAttribute("style","margin-left:20%;");
 	
+			//방 타입에 따라 입장 버튼 모양
 	        var typeElement = document.createElement('input');
 	        typeElement.setAttribute("type","button");
 	        typeElement.classList.add('float-right');
@@ -127,7 +124,6 @@ function onListofRoom(payload)
 					            },
 					            success: function (responseData) {
 						            var data = JSON.parse(responseData);
-					            	alert(data);
 									//location.href="https://192.168.10.146:3000/?a="+roomNameValue+"&b="+nickname;
 									location.href="https://"+data.ip+":3000/?a="+roomNameValue+"&b="+nickname;
 					            },
@@ -153,7 +149,8 @@ function onListofRoom(payload)
 		}
 	}
 }
-		
+
+//방 입장
 function enterRoom(newRoomId) {
 	var roomId = newRoomId;
 	Cookies.set("roomId", roomId);
@@ -174,6 +171,7 @@ function enterRoom(newRoomId) {
 	);
 }
 
+//이전 메시지 수신
 function onPreviousMessage(payload)
 {
 	/*
@@ -185,11 +183,12 @@ function onPreviousMessage(payload)
     }*/
 }
 
+//메시지 전송
 function sendMessage(event) {
   var messageContent = messageInput.value.trim();
 
+  //입장 메시지 일 때
   if (messageContent.startsWith('/join ')) {
-		//꽉 찬 방 못 들어가게 어떻게 하지?????????????
 		leave();
 		
 		setTimeout("", 3000); //3초
@@ -207,16 +206,19 @@ function sendMessage(event) {
 			messageArea.removeChild(messageArea.firstChild);
 	    }
   }
+  //퇴장 메시지 일 때
   else if(messageContent.startsWith('/leave'))
   {
 	leave();
   }
 
+  //공지 메시지 일 때
   else if (messageContent.startsWith('/notice ')){
     var trimStr = messageInput.value.substring(8);
 	notice(trimStr);
   }
 
+  //일반 메시지 일 때
   else if (messageContent && stompClient) {
     
     var chatMessage = {
@@ -231,6 +233,7 @@ function sendMessage(event) {
   	event.preventDefault();
 }
 
+//메시지 받았을 때
 function onMessageReceived(payload) {
 	if(JSON.parse(payload.body).messageType=="NOTICE"){
     	noticeArea.textContent = JSON.parse(payload.body).content;
@@ -239,10 +242,13 @@ function onMessageReceived(payload) {
 	var message = JSON.parse(payload.body);
 	showMessage(message);
 }
+
+//받은 메시지 띄우기
 function showMessage(message)
 {
     var messageElement = document.createElement('li');
 
+	//입장 메시지
     if(message.messageType === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + '님이 입장하셨습니다.';
@@ -252,6 +258,7 @@ function showMessage(message)
 	    textElement.appendChild(messageText);
 
     	messageElement.appendChild(textElement);
+	//퇴장 메시지
     } else if (message.messageType === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + '님이 퇴장하셨습니다.';
@@ -262,6 +269,7 @@ function showMessage(message)
 
     	messageElement.appendChild(textElement);
     }
+	//공지 메시지
 	else if(message.messageType === 'NOTICE'){
         messageElement.classList.add('event-message');
         message.content = message.sender + '님이 공지를 남겼습니다.';
@@ -271,23 +279,27 @@ function showMessage(message)
 	    textElement.appendChild(messageText);
 
         messageElement.appendChild(textElement); 
+	//일반 메시지
 	} else {
+		//내가 보낸 메시지라면,
 		if(message.sender === nickname){
         	messageElement.classList.add('chat-message-group');
         	messageElement.classList.add('writer-user');
+		//내가 아닌 다른 사람이 보낸 메시지라면,
 		} else{
 			messageElement.classList.add('chat-message-group');
 		}
         var div_avatar = document.createElement('div');
         	div_avatar.classList.add('chat-thumb');
 
+		//메시지 보낸 유저의 프로필 사진
         var figure = document.createElement('figure');
         	figure.classList.add('image');
         	figure.classList.add('is-32x32');
         var image = document.createElement('img');
 			image.setAttribute('src',message.pic);
 			image.setAttribute('value',message.sender);
-			image.addEventListener('click', function() {
+			image.addEventListener('click', function() { //메시지 보낸 사람 프로필 사진 클릭하면 유저 정보 페이지 띄움
 			        $.ajax({
 			            type: "GET",
 			            url: "/infopaging",
@@ -324,6 +336,7 @@ function showMessage(message)
 			        })
 			});
 
+		//성별에 따라 테두리 색상 설정(남-블루,여-핑크)
 		var color = null;
 		if (message.sex=='M'){color='RGB(138,153,212)';}
 		else{color="RGB(229,127,229)";}
@@ -332,6 +345,7 @@ function showMessage(message)
         div_avatar.appendChild(figure);
         messageElement.appendChild(div_avatar);
 
+		//채팅 메시지
         var div_msg = document.createElement('div');
         	div_msg.classList.add('chat-messages');
         var usernameElement = document.createElement('span');
@@ -341,6 +355,7 @@ function showMessage(message)
         div_msg.appendChild(usernameElement);
         messageElement.appendChild(div_msg);
 		
+		//보낸 메시지가 이모티콘이라면,
 		if(message.messageType === 'EMOJI'){
 		    var emojiElement = document.createElement('img');
 			emojiElement.setAttribute('src',message.content);
@@ -364,11 +379,13 @@ function showMessage(message)
     messageArea.scrollTop = messageArea.scrollHeight;
 }
 
-function popup(){
+//방 만들기 창 띄우기
+function roommk(){
     roomPage.classList.add('hidden');
     roommkPage.classList.remove('hidden');
 }
 
+//방 나가기
 function leave(){
     chatPage.classList.add('hidden');
     roomPage.classList.remove('hidden');
@@ -391,6 +408,7 @@ function leave(){
     }
 }
 
+//공지 띄우기
 function notice(notice){
     var noticeMessage = {
 		roomid: currentRoom,
@@ -403,6 +421,7 @@ function notice(notice){
     noticeArea.textContent = notice;
 }
 
+//방 만들기
 function createRoom(){
     var createRoomNameValue = createRoomName.value.trim();
 	var maxpp = $('#maxpp').val();
@@ -426,7 +445,7 @@ function createRoom(){
 
 messageForm.addEventListener('submit', sendMessage, true);
 createRoomForm.addEventListener("submit", createRoom, true);
-document.getElementById('createRoomButton').addEventListener('click', popup);
+document.getElementById('createRoomButton').addEventListener('click', roommk);
 document.getElementById('chatoutButton').addEventListener('click', leave);
 document.getElementById('roommkoutButton').addEventListener('click', function roommkout(){
 	roomPage.classList.remove('hidden');
@@ -440,7 +459,7 @@ document.getElementById('refrestbtn').addEventListener('click', function refresh
 	document.getElementById('searchbtn').click(); 
 });
 
-//Emoji
+//이모티콘
 document.getElementById('EmojiButton').addEventListener('click', function a(){
 	var EmojiBox = document.getElementById('EmojiBox');
 	if(EmojiBox.classList.contains('hidden')){

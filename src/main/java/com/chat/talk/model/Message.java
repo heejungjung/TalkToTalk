@@ -1,5 +1,6 @@
 package com.chat.talk.model;
 
+//채팅메시지
 public class Message {
     public enum MessageType {
         CHAT, JOIN, LEAVE, NOTICE, EMOJI

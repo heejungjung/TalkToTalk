@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -53,12 +52,15 @@ public class MainController {
     @Autowired
 	private Files file;
 
+    //환경변수
     @Value("${dir}")
     private String dir;
 
+    //환경변수
     @Value("${ip}")
     private String ip;
 
+    //메인홈
 	@GetMapping("/")
 	public String index(Model model) {
 		List<Files> files = filesRepository.findAll();
@@ -71,6 +73,7 @@ public class MainController {
 		return "index";
 	}
 	
+	//홈 navbar 유저 프로필 사진 가져오기 위함
 	@ResponseBody
 	@RequestMapping(value="/homegetinfo", method=RequestMethod.POST)
 	public Map<String, Object> homegetinfo(HttpServletRequest request, HttpServletResponse response,Model model,
@@ -83,31 +86,15 @@ public class MainController {
 		model.addAttribute("files", files);
 		return userInfo;
 	}
-	
-	@GetMapping("/test3")
-	public String test3() {
-		return "test3";
-	}
-	
-	@GetMapping("/cam")
-	public String cam() {
-		return "cam";
-	}
 
+	//로그인 과정
 	@GetMapping("/logging")
-	public String index(HttpServletRequest request, HttpServletResponse response,Model model,
-			@RequestParam("username") String username) {
+	public String index(HttpServletRequest request, HttpServletResponse response,Model model,@RequestParam("username") String username) {
 		user = new User();
 		user = userRepository.findByUsername(username);
 		request.getSession().setAttribute("nickname", user.getNickname());
 		request.getSession().setAttribute("username", user.getUsername());
 
-    	//HttpSession session = request.getSession();
-    	//request의 getSession() 메서드는 서버에 생성된 세션이 있다면 세션을 반환하고, 없다면 새 세션을 생성하여 반환한다. (인수 default가 true)
-    	//파라미터로 false를 전달하면, 이미 생성된 세션이 있을 때 그 세션을 반환하고, 없으면 null을 반환한다.
-    	//session.setAttribute("loginUser", new User(user1)); //세션의 속성 값은 객체 형태만
-    	//웹 브라우저를 닫지 않는 한 같은 창에서 열려진 페이지는 모두 같은 session 객체를 공유
-    	//setAttribute() 메소드를 사용해서 세션의 속성을 지정하게 되면 계속 상태를 유지
 		List<Files> files = filesRepository.findAll();
 	    Collections.shuffle(files);
 		model.addAttribute("files", files);
@@ -115,14 +102,16 @@ public class MainController {
 		return "index";
 	}
 	
+	//채팅페이지
 	@RequestMapping("/chat")
 	public void chat() {
 	}
+	
+    @RequestMapping("/mypage")
+	public void mypage() {
+	}
 
-    @RequestMapping("/roompopup")
-    public void roompopup() {
-    }
-
+	//마이페이지 정보 가져오기
 	@GetMapping("/mypaging")
 	public String mypaging(HttpServletRequest request, HttpServletResponse response,Model model,
 			@RequestParam("username") String username,@RequestParam("nickname") String nickname) throws ParseException {
@@ -151,11 +140,8 @@ public class MainController {
 		
 		return "/mypage";
 	}
-	
-    @RequestMapping("/mypage")
-	public void mypage() {
-	}
 
+	//마이페이지 프로필 사진 가져오기
 	@ResponseBody
 	@RequestMapping(value="/mypagegetpic", method=RequestMethod.POST)
 	public Map<String, Object> mypagegetpic(HttpServletRequest request, HttpServletResponse response,Model model,
@@ -170,6 +156,7 @@ public class MainController {
 		return userInfo;
 	}
 
+	//유저페이지 정보 가져오기
 	@GetMapping("/infopaging")
 	public void infopaging(HttpServletRequest request, HttpServletResponse response,Model model,
 			@RequestParam("username") String username) {
@@ -200,6 +187,7 @@ public class MainController {
 	    }
 	}
 	
+	//상태메시지 변경
 	@ResponseBody
 	@GetMapping("msgchange")
     public String msgchange(String message,String username) {
@@ -209,6 +197,7 @@ public class MainController {
         return file.getMessage();
     }
 
+	//프로필사진 변경
 	@RequestMapping(value = "/imgchange", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     public String imgchange(@RequestPart MultipartFile file, HttpServletRequest request) throws Exception{
 		String username = (String) request.getSession(true).getAttribute("username");
@@ -244,10 +233,10 @@ public class MainController {
 		return str.replace("-","");
 	}
 
+	//로컬 프로젝트 실행을 위한 ip
 	@GetMapping("/ipget")
 	public void ipget(HttpServletRequest request, HttpServletResponse response,Model model,
 			@RequestParam("hi") String hi) {
-		System.out.println("hey"+hi);
 	    String personJson = "{\"ip\":\""+ip+"\"}";
 	    try {
 	        response.setCharacterEncoding("UTF-8");

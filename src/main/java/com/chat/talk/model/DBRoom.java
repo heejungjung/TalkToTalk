@@ -17,6 +17,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="dbroom")
+//DB채팅방
 public class DBRoom {
 	
 	@Id

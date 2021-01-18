@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.chat.talk.model.Files;
 import com.chat.talk.model.Role;
 import com.chat.talk.model.User;
 import com.chat.talk.repository.UserRepository;
@@ -24,6 +23,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
     
+    //유저 정보 저장
     public User save(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -33,7 +33,8 @@ public class UserService {
         user.getRoles().add(role);
         return userRepository.save(user);
     }
-    
+
+    //아이디 중복 체크
     public String idCheck(String userId) {
         if (userRepository.findByUsername(userId) == null) {
             return "YES";
@@ -41,7 +42,8 @@ public class UserService {
             return "NO";
         }
     }
-    
+
+    //닉네임 중복 체크
     public String nnCheck(String nickname) {
         if (userRepository.findByNickname(nickname) == null) {
             return "YES";
@@ -49,7 +51,8 @@ public class UserService {
             return "NO";
         }
     }
-	
+
+    //유저 성별 체크
 	public String sex(String sender) {
 		User user = userRepository.findByUsername(sender);
 		return user.getSex();

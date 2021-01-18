@@ -11,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 
 import com.chat.talk.controller.SMTPAuthenticator;
 
+//이메일 전송 세팅
 public class Mailer {
 	public void sendMail(String to, String subject, String content, SMTPAuthenticator smtp) {
 		// SMTP 서버 정보 저장

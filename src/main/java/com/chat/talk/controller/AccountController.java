@@ -35,6 +35,7 @@ public class AccountController {
     @Autowired
     private FilesService filesService;
 
+    //환경변수 사용
     @Value("${dir}")
     private String dir;
     
@@ -43,6 +44,7 @@ public class AccountController {
         return "account/login";
     }
     
+    //중복 로그인 시
     @GetMapping("/duplicated")
     public String duplicated() {
         return "account/duplicated";
@@ -63,6 +65,7 @@ public class AccountController {
         return "account/regist";
     }
 
+    //회원가입 후 DB에 저장
     @PostMapping("/regist")
     public String regist(User user, @RequestPart MultipartFile files) throws Exception{
     	String adr = user.getAddress();
@@ -90,21 +93,19 @@ public class AccountController {
 			file.setFilename(destinationFileName);
 			file.setRawname(sourceFileName);
 			file.setFileurl("/images/"+username+"/");
-		}else {
+		}else { //프로필 사진 미등록시 남여 성별에 따라 기본 캐릭터 이미지로 설정
 			file.setFileurl("/images/");
 			if(user.getSex().equals("M")) {
 				String[] pic = {"boy1.png", "boy2.png", "boy3.png"};
 				double randomValue = Math.random();
 		        int ran = (int)(randomValue * pic.length);
 				String fname = pic[ran];
-				System.out.println(ran);
 				
 				file.setFilename(fname);
 			}else {
 				String[] pic = {"girl1.png", "girl2.png", "girl3.png"};
 				double randomValue = Math.random();
 		        int ran = (int)(randomValue * pic.length);
-				System.out.println(ran);
 				String fname = pic[ran];
 				
 				file.setFilename(fname);
@@ -113,6 +114,8 @@ public class AccountController {
 		file.setUsername(username);
 		file.setNickname(user.getNickname());
 		filesService.save(file);
+		
+		//회원가입 시 등록된 이메일로 회원가입 축하 메일 전송
 		final String BODY = String.join(
                 System.getProperty("line.separator"),
                 "<div style='text-align:center;'>",
@@ -129,6 +132,7 @@ public class AccountController {
         return "redirect:/";
     }
 
+    //사진 저장을 위한 날짜 설정
 	private String profiledate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -136,6 +140,7 @@ public class AccountController {
 		return str.replace("-","");
 	}
 
+	//회원가입 시 아이디 중복 체크
 	@ResponseBody
 	@GetMapping("idCheck")
     public String id_check(String id) {
@@ -143,6 +148,7 @@ public class AccountController {
         return str;
     }
 
+	//회원가입 시 닉네임 중복 체크
 	@ResponseBody
 	@GetMapping("nnCheck")
     public String nn_check(String nickname) {

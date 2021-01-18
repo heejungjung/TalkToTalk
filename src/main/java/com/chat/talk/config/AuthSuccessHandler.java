@@ -14,7 +14,6 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     
@@ -24,18 +23,17 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 		RequestCache requestCache = new HttpSessionRequestCache();
 		SavedRequest savedRequest = requestCache.getRequest(request, response);		
 
-		// 있을 경우 URI 등 정보를 가져와서 사용
+		//있을 경우 URI 등 정보를 가져와서 사용
 		if (savedRequest != null) {
 			String uri = savedRequest.getRedirectUrl();
 			
-			// 세션에 저장된 객체를 다 사용한 뒤에는 지워줘서 메모리 누수 방지
+			//세션에 저장된 객체를 다 사용한 뒤에는 지워줘서 메모리 누수 방지
 			requestCache.removeRequest(request, response);
-
 			System.out.println(uri);
 		}
 		request.setAttribute("username", authentication.getName());
 
-		// 세션 Attribute 확인
+		//세션 Attribute 확인
 		Enumeration<String> list = request.getSession().getAttributeNames();
 		while (list.hasMoreElements()) {
 			System.out.println(list.nextElement());

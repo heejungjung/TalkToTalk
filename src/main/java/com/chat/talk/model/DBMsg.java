@@ -17,6 +17,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "dbmsg")
+//DB채팅메시지
 public class DBMsg {
 
 	@Id

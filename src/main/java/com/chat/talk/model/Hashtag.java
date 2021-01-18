@@ -18,6 +18,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "hashtag")
+//채팅방 hashtag
 public class Hashtag
 {
 	@Id

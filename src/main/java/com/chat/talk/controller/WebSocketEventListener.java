@@ -24,11 +24,13 @@ public class WebSocketEventListener {
 	@Autowired
 	private SimpMessageSendingOperations messagingTemplate;
 
+	//web socket connected
 	@EventListener
 	public void handleWebSocketConnectListener(SessionConnectedEvent event) {
 		logger.info("Received a new web socket connection");
 	}
 
+	//web socket disconnected
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());

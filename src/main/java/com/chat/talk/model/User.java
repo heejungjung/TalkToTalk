@@ -31,6 +31,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "username")
 @Table(name="user")
+//유저정보
 public class User {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,6 +20,7 @@ public class DBMsgService {
 	@Autowired
 	UserRepository userRepository;
 
+	//일반채팅메시지
     public DBMsg dbmsg(Message message) {
     	DBMsg dbmsg = new DBMsg();
     	dbmsg.setMsgtype("chat");
@@ -31,6 +32,7 @@ public class DBMsgService {
         return dbMsgRepository.save(dbmsg);
     }
 
+	//유저퇴장메시지
     public DBMsg dbmsgleave(Message message) {
     	DBMsg dbmsg = new DBMsg();
     	dbmsg.setMsgtype("leave");
@@ -42,6 +44,7 @@ public class DBMsgService {
         return dbMsgRepository.save(dbmsg);
     }
 
+	//유저입장메시지
     public DBMsg dbmsgenter(Message message) {
     	DBMsg dbmsg = new DBMsg();
     	dbmsg.setMsgtype("join");
@@ -53,6 +56,7 @@ public class DBMsgService {
         return dbMsgRepository.save(dbmsg);
     }
 
+	//공지등록메시지
     public DBMsg dbmsgnotice(Message message) {
     	DBMsg dbmsg = new DBMsg();
     	dbmsg.setMsgtype("notice");

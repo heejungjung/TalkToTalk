@@ -51,6 +51,7 @@ public class ChatAppController
     List<ChatRoom> rooms;
     List<ChatRoom> searchRooms;
     
+    //메시지 저장을 위한 현재 시간 함수
     public String now() {
     	Calendar calendar = Calendar.getInstance();
     	java.util.Date date = calendar.getTime();
@@ -59,12 +60,13 @@ public class ChatAppController
     	return time;
     }
     
+    //DB에서 채팅방 리스트를 불러오기 위함
     @Autowired
     public void ChatController()
     {
         rooms = roomListService.List_All();
     }
-    
+    //채팅방 제목으로 search 기능
     @GetMapping("/chat/search")
     public String search(@RequestParam(value = "search") String search, Model model) {
 
@@ -75,9 +77,9 @@ public class ChatAppController
        return "redirect:";
     }
     
+    //특정방에 메시지 보내기
     @MessageMapping("/chat/{roomId}/sendMessage")
     public void sendMessage(@DestinationVariable String roomId, @Payload Message chatMessage) {
-    	System.out.println("111"+chatMessage.toString());
     	addmessage(roomId,chatMessage);
     	chatMessage.setRoomid(roomId);
     	chatMessage.setPic(filesService.profile(chatMessage.getSenderid()));
@@ -86,10 +88,10 @@ public class ChatAppController
         messagingTemplate.convertAndSend("/room/"+roomId, chatMessage);
         dbMsgService.dbmsg(chatMessage);
     }
-    
+
+    //특정방에 유저 입장
     @MessageMapping("/chat/{roomId}/addUser")
     public void addUser(@DestinationVariable String roomId, @Payload Message chatMessage,SimpMessageHeaderAccessor headerAccessor) {
-    	System.out.println("2222"+chatMessage.toString());
     	chatMessage.setMessageType(Message.MessageType.JOIN);
 
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
@@ -100,6 +102,7 @@ public class ChatAppController
         dbMsgService.dbmsgenter(chatMessage);
     }
 
+    //채팅방 리스트
     @SubscribeMapping("/chat/rooms")
     public List<ChatRoom> listOfRoom()
     {
@@ -113,10 +116,10 @@ public class ChatAppController
         return result;
     }
 
+    //채팅방 만들기
     @MessageMapping("/chat/rooms")
     public void addRoom(@Payload ChatRoom chatRoom)
     {
-    	System.out.println("4444");
     	String roomId = chatRoom.getRoomid();
         int flag=0;
         //flag : 같은 방인지 판단
@@ -142,11 +145,10 @@ public class ChatAppController
         messagingTemplate.convertAndSend("/room/list", rooms);
     }
 
+    //특정방에 유저 퇴장
     @MessageMapping("/chat/{roomId}/leaveuser")
     public void leaveRoom(@DestinationVariable String roomId, @Payload Message chatMessage,SimpMessageHeaderAccessor headerAccessor)
     {
-    	System.out.println("555:"+chatMessage.toString());
-        
         Message leaveMessage = new Message();
         leaveMessage.setMessageType(Message.MessageType.LEAVE);
         leaveMessage.setSender(chatMessage.getSender());
@@ -156,9 +158,9 @@ public class ChatAppController
         dbMsgService.dbmsgleave(chatMessage);
     }
 
+    //메시지 저장
     private void addmessage(String roomid, Message message)
     {
-    	System.out.println("666");
     	for(ChatRoom room: rooms)
         {
             if(room.getRoomid().equals(roomid))
@@ -169,10 +171,10 @@ public class ChatAppController
         }
     }
 
+    //이전 메시지 받기
     @SubscribeMapping("chat/{roomId}/getPrevious")
     public Map<String, Object> getPreviousMessages(@DestinationVariable String roomId)
     {
-    	System.out.println("7777");
     	//이전 MESSAGE DB에서 받아올 부분
         List<Message> messages = new ArrayList<Message>();
         String notice = null;
@@ -195,10 +197,10 @@ public class ChatAppController
         return map;
     }
 
+    //특정방에 공지 남기기
     @MessageMapping("/chat/{roomId}/notice")
     public void notice(@DestinationVariable String roomId, @Payload Message chatMessage,SimpMessageHeaderAccessor headerAccessor)
     {
-    	System.out.println("8888"+chatMessage.toString());
     	String roomid = chatMessage.getRoomid();
         addmessage(roomid,chatMessage);
         roomListService.Notice(chatMessage.getRoomid(),chatMessage.getContent());

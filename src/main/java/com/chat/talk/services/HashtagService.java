@@ -19,6 +19,7 @@ public class HashtagService {
 	@Autowired
 	HashtagRepository hashtagRepository;
 
+	//해쉬태그 저장
     public void addhash(ChatRoom chatRoom) {
     	String hashtag = chatRoom.getHash();
     	String roomid = chatRoom.getRoomid();

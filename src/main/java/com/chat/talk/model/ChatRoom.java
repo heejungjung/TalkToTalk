@@ -2,6 +2,7 @@ package com.chat.talk.model;
 
 import java.util.List;
 
+//채팅방
 public class ChatRoom
 {
     String roomid;
