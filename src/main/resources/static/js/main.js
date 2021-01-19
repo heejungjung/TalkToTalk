@@ -124,8 +124,8 @@ function onListofRoom(payload)
 					            },
 					            success: function (responseData) {
 						            var data = JSON.parse(responseData);
-									//location.href="https://192.168.10.146:3000/?a="+roomNameValue+"&b="+nickname;
-									location.href="https://"+data.ip+":3000/?a="+roomNameValue+"&b="+nickname;
+									//location.href="https://"+data.ip+":3000/?a="+roomNameValue+"&b="+nickname;
+									location.href="https://talktotalk-video.herokuapp.com/?a="+roomNameValue+"&b="+nickname;
 					            },
 					    		error : function(err) {
 					    			alert("실패");
