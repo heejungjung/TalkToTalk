@@ -59,7 +59,7 @@ public class RoomListService {
             chatRoom.setRoomid(r.getTitle());
             chatRoom.setNowpp(r.getPeople());
             chatRoom.setMaxpp(r.getPeoplemax());
-            chatRoom.getRoomtype();
+            chatRoom.setRoomtype(r.getType());
     		result.add(chatRoom);
     	}
         return result;

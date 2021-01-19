@@ -224,18 +224,18 @@ body {
 }
 
 .room-page-bar-no {
-	width: 15%;
-	text-align: center;
+	width: 10%;
+	text-align: right;
 }
 
 .room-page-bar-title {
-	width: 65%;
+	width: 70%;
 	text-align: center;
 }
 
 .room-page-bar-people {
-	width: 30%;
-	text-align: center;
+	width: 20%;
+	text-align: left;
 }
 
 .noticeArea {

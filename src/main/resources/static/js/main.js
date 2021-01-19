@@ -77,36 +77,29 @@ function onListofRoom(payload)
 	        var formElement = document.createElement('form');
 	        formElement.setAttribute("id", "joinroom");
 	        formElement.setAttribute("name", "joinroom");
-	        formElement.setAttribute("style", "display: flex;align-items: center;");
+	        formElement.setAttribute("style", "display: flex;align-items: center;margin: 0;");
 	
 			//방 번호
 	        var num_textElement = document.createElement('label');
 	        num_textElement.setAttribute("id","list_num_css");
+	        num_textElement.setAttribute("style", "width: 13%;text-align: center;");
 	        var num_roomText = document.createTextNode(i+1);
 	        num_textElement.appendChild(num_roomText);
 	
 			//방 이름
 	        var textElement = document.createElement('label');
 	        textElement.classList.add('float-right');
+	        textElement.setAttribute("style", "width: 60%;text-align: center;");
 	        var roomText = document.createTextNode(rooms[i].roomid);
 	        textElement.appendChild(roomText);
-	
-			//방 인원
-	        var peopleElement = document.createElement('label');
-	        peopleElement.setAttribute("style","margin-right: 50px");
-	        var roomText = document.createTextNode(rooms[i].nowpp+"/"+rooms[i].maxpp);
-	        peopleElement.appendChild(roomText);
-	        peopleElement.classList.add('float-right');
-			peopleElement.setAttribute("style","margin-left:20%;");
 	
 			//방 타입에 따라 입장 버튼 모양
 	        var typeElement = document.createElement('input');
 	        typeElement.setAttribute("type","button");
-	        typeElement.classList.add('float-right');
 	        typeElement.setAttribute("id",rooms[i].roomid);
 	        typeElement.setAttribute("name",rooms[i].nowpp<rooms[i].maxpp);
 	        typeElement.setAttribute("value",rooms[i].roomtype=='v'?'📺':'💬');
-	        typeElement.setAttribute("style","background:none;border: none;");
+	        typeElement.setAttribute("style","background:none;border: none;width: 10%;text-align: right;");
 			typeElement.onclick=function join(event){
 					event.preventDefault();
 					if (event.type == 'click'&event.target.name=="true"){
@@ -136,11 +129,16 @@ function onListofRoom(payload)
 						alert("방이 가득 찼습니다.😭💔");
 					}
 			};
+	
+			//방 인원
+	        var peopleElement = document.createElement('label');
+	        var roomText = document.createTextNode("("+rooms[i].nowpp+"/"+rooms[i].maxpp+")");
+	        peopleElement.appendChild(roomText);
 			
 	        formElement.appendChild(num_textElement);
 	        formElement.appendChild(textElement);
-	        formElement.appendChild(peopleElement);
 	        formElement.appendChild(typeElement);
+	        formElement.appendChild(peopleElement);
 	
 	        roomElement.appendChild(formElement);
 	
