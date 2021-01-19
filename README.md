@@ -5,7 +5,7 @@
 [![Downloads Stats][npm-downloads]][npm-url]
 
 😉 [Come visit Talk To Talk!](http://ttt.yi.or.kr/ "TALK_TO_TALK") 😉 (Linux Server)
-+ [Heroku Demo](https://ttt.herokuapp.com/)(English Only)
++ [Heroku Demo]https://talktotalk.herokuapp.com/)(English Only)
 
 [![main](https://user-images.githubusercontent.com/28649385/103612526-fb396300-4f67-11eb-95ed-4308105a7896.JPG)](http://ttt.yi.or.kr/)
 
