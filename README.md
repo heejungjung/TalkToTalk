@@ -1,9 +1,6 @@
 # 💛 TalkToTalk 💜
 > Spring boot websocket chat site
 
-[![NPM Version][npm-image]][npm-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
 😉 [Come visit Talk To Talk!](http://ttt.yi.or.kr/ "TALK_TO_TALK") 😉 (Linux Server)
 + [Heroku Demo](https://talktotalk.herokuapp.com/) (English Only)
 
@@ -85,19 +82,3 @@ dir=
 
 🏳‍🌈 [gh-page](https://heejungjung.github.io/Heejungjung/) 🏳‍🌈
 
-
-
-## 🤗 Contribution 🤗
-
-1. (<https://github.com/heejungjung/TalkToTalk/fork>) fork.
-2. (`git checkout -b feature/fooBar`) create new branch.
-3. (`git commit -am 'Add some fooBar'`) commit.
-4. (`git push origin feature/fooBar`) push. 
-5. pull request.
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
