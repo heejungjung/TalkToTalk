@@ -29,14 +29,15 @@ public class UserService {
         user.setPassword(encodedPassword);
         user.setEnabled(true);
         Role role = new Role();
-        role.setId(1l);
+        role.setId(2l);
         user.getRoles().add(role);
         return userRepository.save(user);
     }
 
     //아이디 중복 체크
     public String idCheck(String userId) {
-        if (userRepository.findByUsername(userId) == null) {
+        User user = userRepository.findByUsername(userId);
+        if (user == null) {
             return "YES";
         } else {
             return "NO";
@@ -45,7 +46,8 @@ public class UserService {
 
     //닉네임 중복 체크
     public String nnCheck(String nickname) {
-        if (userRepository.findByNickname(nickname) == null) {
+        User user = userRepository.findByNickname(nickname);
+        if (user == null) {
             return "YES";
         } else {
             return "NO";

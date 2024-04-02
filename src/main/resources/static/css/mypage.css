@@ -9,7 +9,7 @@ a, b, body, center, div, em, footer, form, h1, h2, h3, h4, h5, h6,
 	vertical-align: baseline;
 	line-height: 1;
 	font-size: 20px;
-	font-family: 'Cute Font', cursive
+	font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 footer, header {
@@ -439,7 +439,7 @@ input[type=email], input[type=password], input[type=text] {
 .icon:before {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	font-family: FontAwesome;
+	font-family: Roboto, Helvetica, Arial, sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	text-transform: none !important

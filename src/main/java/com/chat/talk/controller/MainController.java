@@ -76,8 +76,7 @@ public class MainController {
 	//홈 navbar 유저 프로필 사진 가져오기 위함
 	@ResponseBody
 	@RequestMapping(value="/homegetinfo", method=RequestMethod.POST)
-	public Map<String, Object> homegetinfo(HttpServletRequest request, HttpServletResponse response,Model model,
-			@RequestParam("username") String username) {
+	public Map<String, Object> homegetinfo(HttpServletRequest request, HttpServletResponse response,Model model, @RequestParam("username") String username) {
 		Map<String, Object> userInfo = new HashMap<String, Object>();
 		file = filesRepository.findByUsername(username);
 		userInfo.put("pic", file.getFileurl()+file.getFilename());
@@ -113,8 +112,7 @@ public class MainController {
 
 	//마이페이지 정보 가져오기
 	@GetMapping("/mypaging")
-	public String mypaging(HttpServletRequest request, HttpServletResponse response,Model model,
-			@RequestParam("username") String username,@RequestParam("nickname") String nickname) throws ParseException {
+	public String mypaging(HttpServletRequest request, HttpServletResponse response,Model model, @RequestParam("username") String username,@RequestParam("nickname") String nickname) throws ParseException {
 		user = new User();
 		user = userRepository.findByUsername(username);
 
@@ -124,7 +122,7 @@ public class MainController {
 		DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Calendar today = Calendar.getInstance();
 		Calendar d_day = Calendar.getInstance();
-		d_day.setTime(dateFormat.parse(user.getRegdt()));
+		d_day.setTime(dateFormat.parse(user.getRegdt().toString()));
 		long l_today = today.getTimeInMillis()/(24*60*60*1000);
 		long l_d_day = d_day.getTimeInMillis()/(24*60*60*1000);
 		
@@ -132,7 +130,7 @@ public class MainController {
 		request.getSession().setAttribute("id", username);
 		request.getSession().setAttribute("nickname", nickname);
 		request.getSession().setAttribute("sex", user.getSex());
-		request.getSession().setAttribute("birthday", user.getBirthday());
+		request.getSession().setAttribute("birthday", dateFormat.format(user.getBirthday()));
 		request.getSession().setAttribute("email", user.getEmail());
 		request.getSession().setAttribute("bio", file.getMessage());
 		request.getSession().setAttribute("city", user.getCity());
@@ -144,8 +142,7 @@ public class MainController {
 	//마이페이지 프로필 사진 가져오기
 	@ResponseBody
 	@RequestMapping(value="/mypagegetpic", method=RequestMethod.POST)
-	public Map<String, Object> mypagegetpic(HttpServletRequest request, HttpServletResponse response,Model model,
-			@RequestParam("username") String username) {
+	public Map<String, Object> mypagegetpic(HttpServletRequest request, HttpServletResponse response,Model model, @RequestParam("username") String username) {
 		file = new Files();
 		file = filesRepository.findByUsername(username);
 		Map<String, Object> userInfo = new HashMap<String, Object>();

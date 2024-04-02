@@ -25,7 +25,6 @@ public class Files {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long fno;
-
 	String username;
 	String filename;
 	String rawname;

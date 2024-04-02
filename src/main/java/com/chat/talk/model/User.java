@@ -3,6 +3,9 @@ package com.chat.talk.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Date;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +33,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = "username")
-@Table(name="user")
+@Table(name="userr")
 //유저정보
 public class User {
     @Id
@@ -42,9 +45,10 @@ public class User {
     private String password;
     private String nickname;
     private String sex;
-    private String birthday;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
     private String email;
-    private String regdt;
+    private Date regdt = new Date(); // 현재 시간으로 초기화
     private Boolean enabled;
     private String address;
     private String city;
@@ -96,11 +100,11 @@ public class User {
 		this.sex = sex;
 	}
 
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 
@@ -112,11 +116,11 @@ public class User {
 		this.email = email;
 	}
 
-	public String getRegdt() {
+	public Date getRegdt() {
 		return regdt;
 	}
 
-	public void setRegdt(String regdt) {
+	public void setRegdt(Date regdt) {
 		this.regdt = regdt;
 	}
 
