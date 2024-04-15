@@ -81,7 +81,7 @@ public class AccountController {
 			String destinationFileName;
 			String fileUrl = dir+username+"/";
 
-			destinationFileName = profiledate() + "_" + sourceFileName;
+			destinationFileName = profiledate()+".jpg";
 			destinationFile = new File(fileUrl + destinationFileName);
 
 			destinationFile.getParentFile().mkdirs();
