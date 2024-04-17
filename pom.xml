@@ -17,6 +17,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<start-class>com.chat.talk.TalkApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -167,6 +168,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>com.chat.talk.TalkApplication</mainClass> <!-- 메인 클래스 지정 -->
+					<layout>JAR</layout>
 				</configuration>
 				<executions>
 					<execution>
