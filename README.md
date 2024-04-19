@@ -9,29 +9,6 @@
 
 ---
 
-
-## ❔ How To Install ❔
-
-1. git clone the file
-```git
-git clone https://github.com/heejungjung/TalkToTalk.git
-```
-2. maven import
-3. change the setting the personal things,DB below.
-
-```properties
-# DataBase Settings
-spring.datasource.url=
-spring.datasource.username=
-spring.datasource.password=
-
-#personal
-ip=
-dir=
-```
-
-
-
 ## ✨ Screenshots ✨
 
 #### 1.Main
@@ -60,9 +37,6 @@ dir=
 
 
 ## ✍ Settings ✍
-
-![db](https://user-images.githubusercontent.com/28649385/103612468-d93fe080-4f67-11eb-8190-8343a06167ac.JPG)
-> DB ERD
 
 ![settings](https://user-images.githubusercontent.com/28649385/104164739-b74ccf00-543b-11eb-8e1c-6cdd50ded04a.JPG)
 > Spring Boot, Spring Security, Websocket, JPA, MySQL, Thymeleaf etc
