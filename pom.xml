@@ -41,7 +41,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -84,25 +83,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
 		</dependency>
-
 		<!-- 시큐리티 추가 -->
 		<!--
 		https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5 -->
@@ -111,8 +106,7 @@
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
 
-		<!--
-		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -154,11 +148,18 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.4.25.Final</version>
 		</dependency>
-
+		<!-- Spring Cloud AWS -->
 		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-aws</artifactId>
+			<version>2.2.6.RELEASE</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.downgoon/marvin -->
+		<dependency>
+			<groupId>com.github.downgoon</groupId>
+			<artifactId>MarvinPlugins</artifactId>
+			<version>1.5.5</version>
+		  </dependency>
 	</dependencies>
 
 	<build>
@@ -188,7 +189,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -196,7 +197,7 @@
 					<archive> 
 						<manifest> 
 							<addClasspath>true</addClasspath>
-							<mainClass>com.example.demo.DemoApplication</mainClass> 
+							<mainClass>com.chat.talk.TalkApplication</mainClass> 
 						</manifest> 
 					</archive> 
 				</configuration>
