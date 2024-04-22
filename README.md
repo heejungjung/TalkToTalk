@@ -1,10 +1,9 @@
 # 💛 TalkToTalk 💜
 > Spring boot websocket chat site
 
-😉 [Come visit Talk To Talk!](http://ttt.yi.or.kr/ "TALK_TO_TALK") 😉 (Linux Server)
-+ [Heroku Demo](https://talktotalk.herokuapp.com/) (English Only)
+😉 [Come visit Talk To Talk!](https://render-host-r3za.onrender.com/) 😉 (based in Singapore)
 
-[![main](https://user-images.githubusercontent.com/28649385/103612526-fb396300-4f67-11eb-95ed-4308105a7896.JPG)](http://ttt.yi.or.kr/)
+[![main](https://user-images.githubusercontent.com/28649385/103612526-fb396300-4f67-11eb-95ed-4308105a7896.JPG)](https://render-host-r3za.onrender.com/)
 
 
 ---
