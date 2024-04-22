@@ -215,14 +215,14 @@ input[type=radio]:checked+label>img {
                     <div id="carousel-example-generic" class="carousel fade" data-ride="carousel">
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner" role="listbox">
-                        	<th:block th:each="file:${files}">
+                        	<th:block th:each="Profiles:${Profiles}">
                             <div class="item">
                                 <div class="mask">
-                                    <img th:src="${file.fileurl}+${file.filename}" style="width:100%;height:100%;border-radius: 100%;display: inline-block;vertical-align: middle;object-fit: cover;">
+                                    <img th:src="${Profiles.fileurl}" style="width:100%;height:100%;border-radius: 100%;display: inline-block;vertical-align: middle;object-fit: cover;">
                                 </div>
                                 <div class="carousel-testimonial-caption">
-                                    <p th:text="${file.nickname}">Jay Z, Producer</p>
-                                    	❝ <span style="font-size:2em;" th:text="${file.message}">"It's truly amazing and looks awesome!"</span> ❞
+                                    <p th:text="${Profiles.nickname}">Jay Z, Producer</p>
+                                    	❝ <span style="font-size:2em;" th:text="${Profiles.message}">"It's truly amazing and looks awesome!"</span> ❞
                                 </div>
                             </div>
    							</th:block>
@@ -358,7 +358,7 @@ input[type=radio]:checked+label>img {
 											<i class="material-icons">location_on</i>
 										</span>
 									</div>
-									<input type="text" class="form-control" id="address" name="address" placeholder="Address">
+									<input type="text" class="form-control" id="city" name="city" placeholder="city">
 									<input type="button" onclick="sample5_execDaumPostcode()" class="btn btn-success btn-round btn-sm"
 									value="Search 🌏"> <br>
 									<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>

@@ -10,7 +10,7 @@ var listOfRoom = document.querySelector('#listRoom');
 var roommkPage = document.querySelector('#roommk-page');
 var createRoomForm = document.querySelector('#createRoomForm');
 var createRoomName = document.querySelector('#createRoomName');
-var createRoomType = document.querySelector('#createRoomType');
+// var createRoomType = document.querySelector('#createRoomType');
 var createRoomHash = document.querySelector('#createRoomhash');
 
 //Chat Page Variable
@@ -67,7 +67,7 @@ function onListofRoom(payload)
 	var rooms = JSON.parse(payload.body);
 	
 	if(rooms.length == 0){
-		alert("현재 개설 된 방이 없습니다.😭💔");
+		alert("No rooms available😭💔");
 	}else{
 		for(var i=0,len = rooms.length; i<len ; i++){
 	        var roomElement = document.createElement('li');
@@ -423,11 +423,12 @@ function notice(notice){
 function createRoom(){
     var createRoomNameValue = createRoomName.value.trim();
 	var maxpp = $('#maxpp').val();
-	if(createRoomType.checked){
-    	var createRoomTypeValue = 'v';
-	}else{
-    	var createRoomTypeValue = 'c';
-	}
+	// if(createRoomType.checked){
+    // 	var createRoomTypeValue = 'v';
+	// }else{
+    // 	var createRoomTypeValue = 'c';
+	// }
+	var createRoomTypeValue = 'c'
     if(createRoomNameValue){
         var chatRoom = {
 			roomid: createRoomNameValue,

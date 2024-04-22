@@ -23,13 +23,13 @@
 			</header>
 		</div>
 		<div style="margin: auto;width: 50%;padding: 10px;width: 50%;">
-			<strong><span id='bio' th:text="${session.bio}">사용자</span></strong>
-			<button id="msgchange" style="width:15%" class="btp">수정하기</button>
+			<strong>"<span id='bio' th:text="${session.bio}">user</span>"</strong>&nbsp
+			<button id="msgchange" style="width:15%" class="btp">update</button>
 			<hr>
 			<table>
 				<tr>
 					<td>
-						<b>지역 region</b>
+						<b>region</b>
 					</td>
 					<td>
 						<span id='city' th:text="${session.city}"></span>
@@ -38,7 +38,7 @@
 				</tr>
 				<tr>
 					<td>
-						<b>성별 gender</b>
+						<b>gender</b>
 					</td>
 					<td>
 						<span id='sex' th:text="${session.sex=='M' ? '♂':'♀'}">사용자</span>
@@ -46,20 +46,20 @@
 				</tr>
 				<tr>
 					<td>
-						<b>생년월일 birthday</b>
+						<b>birthday</b>
 					</td>
 					<td>
 						<span id='birthday' th:text="${session.birthday}">사용자</span>
 					</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td>
 						<b>이메일 email</b>
 					</td>
 					<td>
 						<span id='email' th:text="${session.email}">사용자</span>
 					</td>
-				</tr>
+				</tr> -->
 			</table>
 			<div style="text-align:center;">
 				<h1><span id='username' th:text="${session.id}"></span>님 💖 Talk_To_Talk</h1>
@@ -72,7 +72,7 @@
 	<!-- Footer -->
 	<footer id="footer">
 		<a href="/"><h1><strong>T</strong>alk <strong>T</strong>o <strong>T</strong>alk(🏠)</h1></a>
-		<p> 사진을 클릭하면 프로필 사진을 업데이트 하실 수 있습니다!🙈click your pic to update</p><br>
+		<p>🙈click your pic to update</p><br>
 	</footer>
 </body>
 
@@ -90,7 +90,7 @@
 			$("#pic").attr("src",data.pic);
 		},
 		error : function(err) {
-			alert("실패");
+			alert("loading failed");
 		}
 	});
 	$('#pic').click(function (e) {
@@ -102,7 +102,7 @@
 	    document.getElementById('signform').submit();
 	}
 	$('#msgchange').click(function () {
-		var input = prompt('새로운 상태메시지를 입력하세요.');
+		var input = prompt('enter a new status message.');
 	    $.ajax({
 	        type: "GET",
 	        url: "/msgchange",

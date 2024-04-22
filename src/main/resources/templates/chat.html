@@ -126,29 +126,29 @@ button {
 			<div id="roommk-page" class="hidden">
 				<div class="chat-container">
 					<div class="chat-header text-center">
-						<h1>채팅방 개설</h1>
+						<h1>Create a chat room</h1>
 						<button id="roommkoutButton" type="submit" class="btn btn-white btn-raised btn-fab btn-round">
 							<i class="material-icons">clear</i>
 						</button>
 					</div><br><br>
 					<br><br><br>
 					<div class="form-field form-group">
-						<h3>방&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp제:</h3>
-						<input class="form-control col-4" id="createRoomName" type="text" placeholder="방제를 입력하세요" />
+						<h3>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsptitle:</h3>
+						<input class="form-control col-4" id="createRoomName" type="text" />
 					</div><br><br>
 					<div class="form-field form-group">
-						<h3>최대인원:</h3>
+						<h3>capacity:</h3>
 							<select class="form-control col-4" id="maxpp" name="maxpp">
-								<option value="2">2</option>
+								<option value="2" selected="selected">2</option>
 								<option value="3">3</option>
-								<option value="4" selected="selected">4</option>
+								<option value="4">4</option>
 								<option value="6">6</option>
 								<option value="10">10</option>
 							</select>
 					</div><br><br>
 					<div class="form-field">
-						<h3>해시태그:</h3>
-						<input class="form-control col-4" id="createRoomhash" type="text" placeholder="#을 기준으로 생성됩니다." />
+						<h3>hashtags:</h3>
+						<input class="form-control col-4" id="createRoomhash" type="text" placeholder="it's generated using the #" />
 					</div><br><br>
 					<!-- <div class="form-field">
 		              <div class="togglebutton">
@@ -163,8 +163,8 @@ button {
 						<form id="createRoomForm" name="createRoomForm">
 							<div class="form-group">
 								<div class="input-group clearfix">
-									<button type="submit" class="btn btn-primary btn-round" id="createRoom">방 개설</button> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-									<button class="btn btn-warning btn-round" type="submit">나가기</button>
+									<button type="submit" class="btn btn-primary btn-round" id="createRoom">create room</button> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+									<button class="btn btn-warning btn-round" type="submit">cancel</button>
 								</div>
 							</div>
 						</form>
