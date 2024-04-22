@@ -50,7 +50,6 @@ public class User {
     private String email;
     private Date regdt = new Date(); // 현재 시간으로 초기화
     private Boolean enabled;
-    private String address;
     private String city;
     
     @ManyToMany
@@ -132,14 +131,6 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public String getCity() {
 		return city;
 	}
@@ -160,7 +151,7 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", nickname=" + nickname
 				+ ", sex=" + sex + ", birthday=" + birthday + ", email=" + email + ", regdt=" + regdt + ", enabled="
-				+ enabled + ", address=" + address + ", city=" + city + ", roles=" + roles + "]";
+				+ enabled + ", city=" + city + ", roles=" + roles + "]";
 	}
 
 }

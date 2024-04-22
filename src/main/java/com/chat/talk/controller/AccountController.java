@@ -1,6 +1,9 @@
 package com.chat.talk.controller;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,15 +18,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.chat.talk.model.Files;
-import com.chat.talk.model.Mailer;
-import com.chat.talk.model.User;
-import com.chat.talk.services.FilesService;
-import com.chat.talk.services.UserService;
+import org.springframework.util.StringUtils;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
+import java.io.IOException;
+
+import com.chat.talk.model.Profiles;
+import com.chat.talk.model.Mailer;
+import com.chat.talk.model.User;
+import com.chat.talk.services.ProfilesService;
+import com.chat.talk.services.UserService;
+import com.chat.talk.services.S3UploadService;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.ByteArrayOutputStream;
+import marvin.image.MarvinImage;
+import marvinplugins.MarvinPluginCollection;
 
 @Controller
 @RequestMapping("/account")
@@ -33,7 +44,10 @@ public class AccountController {
     private UserService userService;
     
     @Autowired
-    private FilesService filesService;
+    private ProfilesService ProfilesService;
+
+	@Autowired
+	private S3UploadService S3service;
 
     //환경변수 사용
     @Value("${dir}")
@@ -68,31 +82,53 @@ public class AccountController {
     //회원가입 후 DB에 저장
     @PostMapping("/regist")
     public String regist(User user, @RequestPart MultipartFile files) throws Exception{
-    	String adr = user.getAddress();
-    	user.setCity(adr.substring(0, adr.indexOf(" ")));
+    	// String adr = user.getAddress();
+    	// user.setCity(adr.substring(0, adr.indexOf(" ")));
         userService.save(user);
         String username = user.getUsername();
-		Files file = new Files();
+		Profiles file = new Profiles();
 
 		String sourceFileName = files.getOriginalFilename();
+		String extension = StringUtils.getFilenameExtension(sourceFileName);
 		//파일 첨부 여부
 		if(sourceFileName != null && !sourceFileName.equals("")) {
-			File destinationFile;
-			String destinationFileName;
-			String fileUrl = dir+username+"/";
+			// Path path = Paths.get(dir+fileName).toAbsolutePath();
+			// File destinationFile = new File(dir+fileName);
+			// destinationFile.getParentFile().mkdirs();
+			// files.transferTo(path.toFile());
+			// Thumbnails.of(dir + fileName).crop(Positions.CENTER).size(150, 150).toFile(new File(dir,"s_"+fileName));
+			try {
+				// 저장될 파일의 절대 경로 설정
+				String fileName = username+profiledate()+"."+extension;
+				// 파일 저장 & 파일 URL 설정
+				String fileUrl = S3service.saveFile(files,fileName);
 
-			destinationFileName = profiledate()+".jpg";
-			destinationFile = new File(fileUrl + destinationFileName);
+				// 이미지 리사이징 메서드
+				// MultipartFile -> BufferedImage Convert
+				BufferedImage image = ImageIO.read(files.getInputStream());
+				// newWidth : newHeight = originWidth : originHeight
+				int originWidth = image.getWidth();
+				int originHeight = image.getHeight();
+				// origin 이미지가 resizing될 사이즈보다 작을 경우 resizing 작업 안 함
+				if(originWidth > 150 || originHeight > 150){
+					MarvinImage originalImage = new MarvinImage(image);
+					MarvinImage imageMarvin = new MarvinImage(image);
+					MarvinPluginCollection.scale(originalImage, imageMarvin, 150);
 
-			destinationFile.getParentFile().mkdirs();
-			files.transferTo(destinationFile);
-
-			//썸네일
-			Thumbnails.of(fileUrl + destinationFileName).crop(Positions.CENTER).size(150, 150).toFile(new File(fileUrl,"s_"+destinationFileName));
-
-			file.setFilename(destinationFileName);
-			file.setRawname(sourceFileName);
-			file.setFileurl("/images/"+username+"/");
+					BufferedImage imageNoAlpha = imageMarvin.getBufferedImageNoAlpha();
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					ImageIO.write(imageNoAlpha, extension, baos);
+					baos.flush();
+					// 파일 저장 & 파일 URL 설정
+					S3service.saveFile(baos.toByteArray(),"s_"+fileName,extension);
+				}
+				// 파일 정보 설정
+				file.setFilename(fileName);
+				file.setRawname(sourceFileName);
+				file.setFileurl(fileUrl);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}else { //프로필 사진 미등록시 남여 성별에 따라 기본 캐릭터 이미지로 설정
 			file.setFileurl("/images/");
 			if(user.getSex().equals("M")) {
@@ -113,21 +149,21 @@ public class AccountController {
 		}
 		file.setUsername(username);
 		file.setNickname(user.getNickname());
-		filesService.save(file);
+		ProfilesService.save(file);
 		
-		//회원가입 시 등록된 이메일로 회원가입 축하 메일 전송
-		final String BODY = String.join(
-                System.getProperty("line.separator"),
-                "<div style='text-align:center;'>",
-                "<h1><b>",
-                username,
-                "님💜</b> Talk To Talk 가입을 축하드립니다  😍 </h1>",
-                "<p>우리 같이 꽃길🌸💮🌹🌺🌻🌼🌷만 걷자구용 🙉🙈🐾💕</p>",
-                "</div>"
-        		);
-		SMTPAuthenticator smtp = new SMTPAuthenticator();
-		Mailer mailer = new Mailer();
-		mailer.sendMail(user.getEmail(),"💖 Welcome To Talk_To_Talk 💖", BODY, smtp);
+		// //회원가입 시 등록된 이메일로 회원가입 축하 메일 전송
+		// final String BODY = String.join(
+        //         System.getProperty("line.separator"),
+        //         "<div style='text-align:center;'>",
+        //         "<h1><b>",
+        //         username,
+        //         "님💜</b> Talk To Talk 가입을 축하드립니다  😍 </h1>",
+        //         "<p>우리 같이 꽃길🌸💮🌹🌺🌻🌼🌷만 걷자구용 🙉🙈🐾💕</p>",
+        //         "</div>"
+        // 		);
+		// SMTPAuthenticator smtp = new SMTPAuthenticator();
+		// Mailer mailer = new Mailer();
+		// mailer.sendMail(user.getEmail(),"💖 Welcome To Talk_To_Talk 💖",BODY,smtp);
 
         return "redirect:/";
     }

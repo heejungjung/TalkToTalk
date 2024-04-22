@@ -1,6 +1,9 @@
 package com.chat.talk.controller;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,20 +31,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chat.talk.model.Files;
+import com.chat.talk.model.Profiles;
 import com.chat.talk.model.User;
-import com.chat.talk.repository.FilesRepository;
+import com.chat.talk.repository.ProfilesRepository;
 import com.chat.talk.repository.UserRepository;
+import com.chat.talk.services.S3UploadService;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
+import org.springframework.util.StringUtils;
 
 @Controller
 @SessionAttributes("username")
 public class MainController {
 
 	@Autowired
-	private FilesRepository filesRepository;
+	private ProfilesRepository ProfilesRepository;
 	
     @Autowired
     private UserRepository userRepository;
@@ -50,7 +55,10 @@ public class MainController {
     private User user;
     
     @Autowired
-	private Files file;
+	private Profiles file;
+
+	@Autowired
+	private S3UploadService S3service;
 
     //환경변수
     @Value("${dir}")
@@ -63,9 +71,9 @@ public class MainController {
     //메인홈
 	@GetMapping("/")
 	public String index(Model model) {
-		List<Files> files = filesRepository.findAll();
-	    Collections.shuffle(files);
-		model.addAttribute("files", files);
+		List<Profiles> Profiles = ProfilesRepository.findAll();
+	    Collections.shuffle(Profiles);
+		model.addAttribute("Profiles", Profiles);
 
 		List<User> users = userRepository.findAll();
 	    Collections.shuffle(users);
@@ -78,11 +86,11 @@ public class MainController {
 	@RequestMapping(value="/homegetinfo", method=RequestMethod.POST)
 	public Map<String, Object> homegetinfo(HttpServletRequest request, HttpServletResponse response,Model model, @RequestParam("username") String username) {
 		Map<String, Object> userInfo = new HashMap<String, Object>();
-		file = filesRepository.findByUsername(username);
-		userInfo.put("pic", file.getFileurl()+file.getFilename());
-		List<Files> files = filesRepository.findAll();
-	    Collections.shuffle(files);
-		model.addAttribute("files", files);
+		file = ProfilesRepository.findByUsername(username);
+		userInfo.put("pic", file.getFileurl());
+		List<Profiles> Profiles = ProfilesRepository.findAll();
+	    Collections.shuffle(Profiles);
+		model.addAttribute("Profiles", Profiles);
 		return userInfo;
 	}
 
@@ -94,9 +102,9 @@ public class MainController {
 		request.getSession().setAttribute("nickname", user.getNickname());
 		request.getSession().setAttribute("username", user.getUsername());
 
-		List<Files> files = filesRepository.findAll();
-	    Collections.shuffle(files);
-		model.addAttribute("files", files);
+		List<Profiles> Profiles = ProfilesRepository.findAll();
+	    Collections.shuffle(Profiles);
+		model.addAttribute("Profiles", Profiles);
     	
 		return "index";
 	}
@@ -116,8 +124,8 @@ public class MainController {
 		user = new User();
 		user = userRepository.findByUsername(username);
 
-		file = new Files();
-		file = filesRepository.findByUsername(username);
+		file = new Profiles();
+		file = ProfilesRepository.findByUsername(username);
 		
 		DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Calendar today = Calendar.getInstance();
@@ -126,7 +134,7 @@ public class MainController {
 		long l_today = today.getTimeInMillis()/(24*60*60*1000);
 		long l_d_day = d_day.getTimeInMillis()/(24*60*60*1000);
 		
-		request.getSession().setAttribute("pic", file.getFileurl()+file.getFilename());
+		request.getSession().setAttribute("pic", file.getFileurl());
 		request.getSession().setAttribute("id", username);
 		request.getSession().setAttribute("nickname", nickname);
 		request.getSession().setAttribute("sex", user.getSex());
@@ -143,11 +151,11 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping(value="/mypagegetpic", method=RequestMethod.POST)
 	public Map<String, Object> mypagegetpic(HttpServletRequest request, HttpServletResponse response,Model model, @RequestParam("username") String username) {
-		file = new Files();
-		file = filesRepository.findByUsername(username);
+		file = new Profiles();
+		file = ProfilesRepository.findByUsername(username);
 		Map<String, Object> userInfo = new HashMap<String, Object>();
 		
-		userInfo.put("pic", file.getFileurl()+file.getFilename());
+		userInfo.put("pic", file.getFileurl());
 		userInfo.put("bio", file.getMessage());
 		
 		return userInfo;
@@ -162,15 +170,16 @@ public class MainController {
 		user = new User();
 		user = userRepository.findByUsername(username);
 
-		file = new Files();
-		file = filesRepository.findByUsername(username);
+		file = new Profiles();
+		file = ProfilesRepository.findByUsername(username);
+		DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		
 		if(user != null){
 	        personJson = "{\"id\":\""+username
 	                    +"\",\"sex\":\""+user.getSex()
-	                    +"\",\"birthday\":\""+user.getBirthday()
+	                    +"\",\"birthday\":\""+dateFormat.format(user.getBirthday())
 	                    +"\",\"city\":\""+user.getCity()
-	                    +"\",\"picture\":\""+file.getFileurl()+file.getFilename()
+	                    +"\",\"picture\":\""+file.getFileurl()
 	                    +"\",\"bio\":\""+file.getMessage()+"\"}";
 	    }
 	    else{
@@ -188,8 +197,8 @@ public class MainController {
 	@ResponseBody
 	@GetMapping("msgchange")
     public String msgchange(String message,String username) {
-    	filesRepository.updateMessage(message,username);
-    	file = filesRepository.findByUsername(username);
+    	ProfilesRepository.updateMessage(message,username);
+    	file = ProfilesRepository.findByUsername(username);
         
         return file.getMessage();
     }
@@ -199,24 +208,19 @@ public class MainController {
     public String imgchange(@RequestPart MultipartFile file, HttpServletRequest request) throws Exception{
 		String username = (String) request.getSession(true).getAttribute("username");
 		String sourceFileName = file.getOriginalFilename();
-    	filesRepository.updaterawname(sourceFileName,username);
-    	filesRepository.updateFileurl("/images/"+username+"/",username);
-
+		String extension = StringUtils.getFilenameExtension(sourceFileName);
 		//파일 첨부 여부
 		if(sourceFileName != null && !sourceFileName.equals("")) {
-			File destinationFile;
-			String destinationFileName;
-			String fileUrl = dir+username+"/";
-
-			destinationFileName = profiledate() + "_" + sourceFileName;
-	    	filesRepository.updateFilename(destinationFileName,username);
-			destinationFile = new File(fileUrl + destinationFileName);
-
-			destinationFile.getParentFile().mkdirs();
-			file.transferTo(destinationFile);
-
-			//썸네일
-			Thumbnails.of(fileUrl + destinationFileName).crop(Positions.CENTER).size(150, 150).toFile(new File(fileUrl,"s_"+destinationFileName));
+			try {
+				// 저장될 파일의 절대 경로 설정
+				String fileName = username+profiledate()+"."+extension;
+				// 파일 저장 & 파일 URL 설정
+				String fileUrl = S3service.saveFile(file,fileName);
+				ProfilesRepository.updaterawname(sourceFileName,username);
+				ProfilesRepository.updateFileUrl(fileUrl,username);		
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		Thread.sleep(2000);
 		

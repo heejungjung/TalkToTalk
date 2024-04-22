@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import java.sql.Timestamp;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class Hashtag
     String hid;
     String roomname;
     String hashtag;
-    String hdate;
+    Timestamp hdate;
 	public String getHid() {
 		return hid;
 	}
@@ -46,10 +47,10 @@ public class Hashtag
 	public void setHashtag(String hashtag) {
 		this.hashtag = hashtag;
 	}
-	public String getHdate() {
+	public Timestamp getHdate() {
 		return hdate;
 	}
-	public void setHdate(String hdate) {
+	public void setHdate(Timestamp hdate) {
 		this.hdate = hdate;
 	}
 	@Override

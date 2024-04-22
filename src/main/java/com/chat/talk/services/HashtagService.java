@@ -1,9 +1,9 @@
 package com.chat.talk.services;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,18 +23,19 @@ public class HashtagService {
     public void addhash(ChatRoom chatRoom) {
     	String hashtag = chatRoom.getHash();
     	String roomid = chatRoom.getRoomid();
-    	String now = now();
+    	Timestamp now = now();
     	
     	Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
         Matcher m = p.matcher(hashtag);
         String extractHashTag = null;
-        
+        System.err.println("im here");
         while(m.find()) {
             extractHashTag = sepcialCharacter_replace(m.group());
 
             if((extractHashTag != null) || (extractHashTag != "#")) {
                 System.out.println("최종 추출 해시태그 : "+ extractHashTag);
             	Hashtag hash = new Hashtag();
+            	hash.setRoomname(roomid);
             	hash.setRoomname(roomid);
             	hash.setHdate(now);
             	hash.setHashtag(extractHashTag);
@@ -53,11 +54,8 @@ public class HashtagService {
         return str;
     }
     
-    public String now() {
-    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    	Date date = new Date();
-    	String time = format.format(date);
-    	
-    	return time;
+    public Timestamp now() {
+        LocalDateTime now = LocalDateTime.now();
+        return Timestamp.valueOf(now);
     }
 }

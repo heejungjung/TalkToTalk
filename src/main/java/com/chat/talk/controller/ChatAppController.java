@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.chat.talk.model.ChatRoom;
 import com.chat.talk.model.Message;
 import com.chat.talk.services.DBMsgService;
-import com.chat.talk.services.FilesService;
+import com.chat.talk.services.ProfilesService;
 import com.chat.talk.services.HashtagService;
 import com.chat.talk.services.RoomListService;
 import com.chat.talk.services.UserService;
@@ -43,7 +43,7 @@ public class ChatAppController
     private DBMsgService dbMsgService;
 
     @Autowired
-    private FilesService filesService;
+    private ProfilesService ProfilesService;
     
     @Autowired
     private UserService userService;
@@ -82,7 +82,7 @@ public class ChatAppController
     public void sendMessage(@DestinationVariable String roomId, @Payload Message chatMessage) {
     	addmessage(roomId,chatMessage);
     	chatMessage.setRoomid(roomId);
-    	chatMessage.setPic(filesService.profile(chatMessage.getSenderid()));
+    	chatMessage.setPic(ProfilesService.profile(chatMessage.getSenderid()));
     	chatMessage.setSex(userService.sex(chatMessage.getSenderid()));
     	chatMessage.setTime(now());
         messagingTemplate.convertAndSend("/room/"+roomId, chatMessage);
@@ -123,6 +123,8 @@ public class ChatAppController
     	String roomId = chatRoom.getRoomid();
         int flag=0;
         //flag : 같은 방인지 판단
+        System.err.println("333333333");
+        System.err.println(chatRoom);
         for(ChatRoom room:rooms)
         {
             if(room.getRoomid().equals(roomId))
